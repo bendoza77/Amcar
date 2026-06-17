@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Mail, Phone, MapPin, LifeBuoy, Send, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,6 +7,9 @@ import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import { useTranslation } from "../hooks/useTranslation";
 import { fadeUp, staggerContainer } from "../lib/motion";
+import Seo from "../seo/Seo";
+import { getRoute } from "../seo/siteMeta";
+import { webPageSchema, breadcrumbSchema } from "../seo/structuredData";
 
 const METHOD_ICONS = [Mail, Phone, MapPin, LifeBuoy];
 
@@ -16,17 +19,26 @@ const METHOD_ICONS = [Mail, Phone, MapPin, LifeBuoy];
  * confirms receipt (no backend wired up yet).
  */
 export default function Contact() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const c = t.pages.contact;
   const f = c.fields;
   const [sent, setSent] = useState(false);
 
-  useEffect(() => {
-    document.title = `${c.title} — ${t.brand}`;
-    return () => {
-      document.title = `${t.brand}`;
-    };
-  }, [c.title, t.brand]);
+  const m = getRoute("/contact").meta[lang];
+  const crumbs = [
+    { name: t.brand, path: "/" },
+    { name: c.title, path: "/contact" },
+  ];
+  const jsonLd = [
+    breadcrumbSchema(crumbs, "/contact"),
+    webPageSchema({
+      path: "/contact",
+      name: m.title,
+      description: m.description,
+      inLanguage: lang,
+      breadcrumb: true,
+    }),
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +47,14 @@ export default function Contact() {
 
   return (
     <section className="pb-24 pt-32 lg:pb-32 lg:pt-40">
+      <Seo
+        title={m.title}
+        description={m.description}
+        keywords={m.keywords}
+        path="/contact"
+        lang={lang}
+        jsonLd={jsonLd}
+      />
       <Container>
         {/* Header */}
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-2xl">

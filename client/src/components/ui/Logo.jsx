@@ -16,7 +16,14 @@ export default function Logo({ tone = "dark", className }) {
 
   return (
     <Link to="/" className={cn("inline-flex items-center", className)} aria-label={t.brand}>
-      <img src={logoImage} alt={t.brand} className="h-12 w-auto object-contain" />
+      <img
+        src={logoImage}
+        alt={`${t.brand} logo`}
+        height={48}
+        loading="eager"
+        decoding="async"
+        className="h-12 w-auto object-contain"
+      />
     </Link>
   );
 }

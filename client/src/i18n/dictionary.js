@@ -320,7 +320,7 @@ export const dictionaries = {
               heading: "თქვენი უფლებები",
               body: [
                 "ნებისმიერ დროს შეგიძლიათ წვდომა, განახლება ან წაშლა მოითხოვოთ თქვენი მონაცემებისთვის.",
-                "მონაცემებთან დაკავშირებული ნებისმიერი მოთხოვნისთვის დაგვიკავშირდით: privacy@amcar.app.",
+                "მონაცემებთან დაკავშირებული ნებისმიერი მოთხოვნისთვის დაგვიკავშირდით: privacy@amcar.ge.",
               ],
             },
           ],
@@ -417,7 +417,7 @@ export const dictionaries = {
             {
               heading: "კონტაქტი",
               body: [
-                "ლიცენზიებთან დაკავშირებული შეკითხვებისთვის მოგვწერეთ: legal@amcar.app.",
+                "ლიცენზიებთან დაკავშირებული შეკითხვებისთვის მოგვწერეთ: legal@amcar.ge.",
               ],
             },
           ],
@@ -429,10 +429,10 @@ export const dictionaries = {
         subtitle:
           "გაქვთ შეკითხვა, წინადადება ან გჭირდებათ დახმარება? ჩვენი გუნდი მზადაა დაგეხმაროთ. აირჩიეთ თქვენთვის სასურველი გზა ან მოგვწერეთ ფორმის მეშვეობით.",
         methods: [
-          { title: "ელფოსტა", value: "hello@amcar.app", desc: "ჩვეულებრივ ვპასუხობთ 24 საათში" },
+          { title: "ელფოსტა", value: "hello@amcar.ge", desc: "ჩვეულებრივ ვპასუხობთ 24 საათში" },
           { title: "ტელეფონი", value: "+995 322 00 00 00", desc: "ორშ.–პარ. 9:00–18:00" },
           { title: "ოფისი", value: "თბილისი, საქართველო", desc: "რუსთაველის გამზ. 12" },
-          { title: "მხარდაჭერა", value: "support@amcar.app", desc: "დახმარება აპლიკაციასთან" },
+          { title: "მხარდაჭერა", value: "support@amcar.ge", desc: "დახმარება აპლიკაციასთან" },
         ],
         formTitle: "გამოგვიგზავნეთ შეტყობინება",
         formSubtitle: "შეავსეთ ფორმა და მალე დაგიკავშირდებით.",
@@ -807,7 +807,7 @@ export const dictionaries = {
               heading: "Your rights",
               body: [
                 "You can request access to, correction of, or deletion of your data at any time.",
-                "For any data request, contact us at privacy@amcar.app.",
+                "For any data request, contact us at privacy@amcar.ge.",
               ],
             },
           ],
@@ -904,7 +904,7 @@ export const dictionaries = {
             {
               heading: "Contact",
               body: [
-                "For licensing questions, email us at legal@amcar.app.",
+                "For licensing questions, email us at legal@amcar.ge.",
               ],
             },
           ],
@@ -916,10 +916,10 @@ export const dictionaries = {
         subtitle:
           "Have a question, a suggestion, or need a hand? Our team is here to help. Pick whatever channel suits you, or send us a message below.",
         methods: [
-          { title: "Email", value: "hello@amcar.app", desc: "We usually reply within 24 hours" },
+          { title: "Email", value: "hello@amcar.ge", desc: "We usually reply within 24 hours" },
           { title: "Phone", value: "+995 322 00 00 00", desc: "Mon–Fri, 9:00–18:00" },
           { title: "Office", value: "Tbilisi, Georgia", desc: "12 Rustaveli Ave" },
-          { title: "Support", value: "support@amcar.app", desc: "Help with the app" },
+          { title: "Support", value: "support@amcar.ge", desc: "Help with the app" },
         ],
         formTitle: "Send us a message",
         formSubtitle: "Fill out the form and we'll get back to you shortly.",

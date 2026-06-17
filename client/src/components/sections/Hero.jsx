@@ -99,7 +99,7 @@ export default function Hero() {
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               style={{ perspective: 1200 }}
             >
-              <PhoneMockup screen="map" float />
+              <PhoneMockup screen="map" float priority />
             </motion.div>
           </motion.div>
         </div>

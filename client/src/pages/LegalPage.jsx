@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarClock } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -6,6 +5,13 @@ import Container from "../components/layout/Container";
 import Badge from "../components/ui/Badge";
 import { useTranslation } from "../hooks/useTranslation";
 import { fadeUp, staggerContainer } from "../lib/motion";
+import Seo from "../seo/Seo";
+import { getRoute } from "../seo/siteMeta";
+import {
+  webPageSchema,
+  breadcrumbSchema,
+  articleSchema,
+} from "../seo/structuredData";
 
 /** Slug a heading so it can anchor the in-page table of contents. */
 const slug = (s) =>
@@ -13,6 +19,9 @@ const slug = (s) =>
     .toLowerCase()
     .replace(/[^\p{L}\p{N}]+/gu, "-")
     .replace(/(^-|-$)/g, "");
+
+/* Map each legal doc's localized "updated" label to an ISO date for schema. */
+const UPDATED_ISO = "2026-06-01";
 
 /**
  * LegalPage — one templated document layout shared by Privacy, Terms, Cookies,
@@ -22,19 +31,44 @@ const slug = (s) =>
  * @param {"privacy"|"terms"|"cookies"|"licenses"} docKey
  */
 export default function LegalPage({ docKey }) {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const doc = t.pages.legal[docKey];
 
-  // Keep the document title in sync with the active page.
-  useEffect(() => {
-    document.title = `${doc.title} — ${t.brand}`;
-    return () => {
-      document.title = `${t.brand}`;
-    };
-  }, [doc.title, t.brand]);
+  const path = `/${docKey}`;
+  const m = getRoute(path).meta[lang];
+  const crumbs = [
+    { name: t.brand, path: "/" },
+    { name: doc.title, path },
+  ];
+  const jsonLd = [
+    breadcrumbSchema(crumbs, path),
+    webPageSchema({
+      path,
+      name: m.title,
+      description: m.description,
+      inLanguage: lang,
+      breadcrumb: true,
+    }),
+    articleSchema({
+      path,
+      headline: doc.title,
+      description: m.description,
+      datePublished: UPDATED_ISO,
+      dateModified: UPDATED_ISO,
+      inLanguage: lang,
+    }),
+  ];
 
   return (
     <article className="pb-24 pt-32 lg:pb-32 lg:pt-40">
+      <Seo
+        title={m.title}
+        description={m.description}
+        path={path}
+        lang={lang}
+        ogType="article"
+        jsonLd={jsonLd}
+      />
       {/* Header */}
       <Container>
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-3xl">

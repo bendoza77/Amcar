@@ -5,30 +5,100 @@
     <link rel="icon" type="image/svg+xml" href="/brand/amcar-favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta (Georgian — the default language) -->
-    <title>Amcar — იპოვეთ სანდო ხელოსნები უფრო სწრაფად</title>
+    <!-- Primary Meta (Georgian — the default language). The React <Seo>
+         component overrides these per route at runtime; these static values are
+         the crawler-safe defaults present in the initial HTML for every route. -->
+    <title>Amcar — იპოვეთ სანდო ავტოხელოსნები უფრო სწრაფად</title>
     <meta
       name="description"
-      content="Amcar ეხმარება მძღოლებს მოძებნონ ახლომდებარე ხელოსნები, შეადარონ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდნენ გზას. ჩამოტვირთეთ აპლიკაცია."
+      content="Amcar ეხმარება მძღოლებს იპოვონ ახლომდებარე სანდო ავტოხელოსნები, შეადარონ სერვისები და ფასები რუკაზე და თავდაჯერებულად დაუბრუნდნენ გზას. ჩამოტვირთეთ Android აპლიკაცია უფასოდ."
     />
+    <meta
+      name="keywords"
+      content="ავტოხელოსანი, ავტოსერვისი, ხელოსნის ძებნა, ზეთის შეცვლა, ავტომობილის შეკეთება, Amcar"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#111111" />
+    <link rel="canonical" href="https://www.amcar.ge/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Amcar — იპოვეთ სანდო ხელოსნები უფრო სწრაფად" />
+    <meta property="og:site_name" content="Amcar" />
+    <meta property="og:title" content="Amcar — იპოვეთ სანდო ავტოხელოსნები უფრო სწრაფად" />
     <meta
       property="og:description"
-      content="იპოვეთ ახლომდებარე ხელოსნები, შეადარეთ სერვისები და თავდაჯერებულად დაუბრუნდით გზას."
+      content="იპოვეთ ახლომდებარე სანდო ხელოსნები, შეადარეთ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდით გზას."
     />
+    <meta property="og:url" content="https://www.amcar.ge/" />
+    <meta property="og:image" content="https://www.amcar.ge/brand/amcar-logo.svg" />
+    <meta property="og:locale" content="ka_GE" />
+    <meta property="og:locale:alternate" content="en_US" />
 
-    <!-- Fonts: Inter -->
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Amcar — იპოვეთ სანდო ავტოხელოსნები უფრო სწრაფად" />
+    <meta
+      name="twitter:description"
+      content="იპოვეთ ახლომდებარე სანდო ხელოსნები, შეადარეთ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდით გზას."
+    />
+    <meta name="twitter:image" content="https://www.amcar.ge/brand/amcar-logo.svg" />
+
+    <!-- Resource hints: warm up the font origins early to protect LCP. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <!-- Inter for Latin, Noto Sans Georgian for ქართული (per-glyph fallback) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Georgian:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Global structured data (Organization + WebSite). Present in the initial
+         HTML of every route so it is readable without executing JS. Per-page
+         nodes injected by React reference these by @id. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.amcar.ge/#organization",
+            "name": "Amcar",
+            "url": "https://www.amcar.ge/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.amcar.ge/brand/amcar-logo.svg"
+            },
+            "email": "hello@amcar.ge",
+            "foundingDate": "2026",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "12 Rustaveli Ave",
+              "addressLocality": "Tbilisi",
+              "addressCountry": "GE"
+            },
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "email": "support@amcar.ge",
+                "telephone": "+995 322 00 00 00",
+                "areaServed": "GE",
+                "availableLanguage": ["ka", "en"]
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.amcar.ge/#website",
+            "url": "https://www.amcar.ge/",
+            "name": "Amcar",
+            "inLanguage": ["ka", "en"],
+            "publisher": { "@id": "https://www.amcar.ge/#organization" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

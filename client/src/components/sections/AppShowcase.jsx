@@ -32,6 +32,7 @@ export default function AppShowcase() {
               item={item}
               screen={SHOWCASE_SCREENS[i]}
               reversed={i % 2 === 1}
+              brand={t.brand}
             />
           ))}
         </div>
@@ -40,7 +41,7 @@ export default function AppShowcase() {
   );
 }
 
-function ShowcaseRow({ item, screen, reversed }) {
+function ShowcaseRow({ item, screen, reversed, brand }) {
   return (
     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
       {/* Copy */}
@@ -82,7 +83,7 @@ function ShowcaseRow({ item, screen, reversed }) {
       >
         {/* glow plate behind device */}
         <div className="absolute top-1/2 left-1/2 size-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-3xl" />
-        <PhoneMockup screen={screen} />
+        <PhoneMockup screen={screen} alt={`${brand} — ${item.title}`} />
       </motion.div>
     </div>
   );
