@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none" role="img" aria-label="Amcar mark">
+  <defs>
+    <linearGradient id="amcarOrange" x1="20" y1="14" x2="108" y2="114" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff8a33"/>
+      <stop offset="0.55" stop-color="#ff6b00"/>
+      <stop offset="1" stop-color="#e85d00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded tile -->
+  <rect x="4" y="4" width="120" height="120" rx="30" fill="url(#amcarOrange)"/>
+
+  <!-- Speed streaks (motion) -->
+  <g fill="#ffffff" opacity="0.55">
+    <rect x="14" y="50" width="20" height="7" rx="3.5"/>
+    <rect x="14" y="62" width="13" height="7" rx="3.5"/>
+    <rect x="14" y="74" width="7"  height="7" rx="3.5"/>
+  </g>
+
+  <!-- Forward-leaning "A" monogram -->
+  <g transform="skewX(-8)" stroke="#ffffff" stroke-width="11"
+     stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M52 96 L72 34 L92 96"/>
+    <path d="M60 74 L84 74"/>
+  </g>
+</svg>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Amcar — Logo Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --orange:#ff6b00; --ink:#111; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#f8f9fb}
+  header{padding:48px 32px 24px;max-width:1100px;margin:0 auto}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.03em;margin:0}
+  p{color:#5b6472;margin:6px 0 0}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px 64px;display:grid;gap:20px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .card{border:1px solid #e5e7eb;border-radius:20px;padding:32px;display:flex;align-items:center;justify-content:center;min-height:180px;background:#fff}
+  .card.dark{background:var(--ink);border-color:#222}
+  .card.orange{background:var(--orange);border-color:transparent}
+  .label{font-size:12px;font-weight:600;color:#5b6472;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+  .swatches{display:flex;gap:14px;flex-wrap:wrap}
+  .sw{border-radius:12px;padding:14px 16px;color:#fff;font-size:13px;font-weight:600;min-width:130px}
+  img{display:block}
+  @media(max-width:720px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Amcar — Logo Kit</h1>
+  <p>Primary lockup, monogram mark, reversed, and favicon. Built on the site brand: orange #ff6b00 + ink #111, Inter.</p>
+</header>
+
+<div class="wrap">
+  <div>
+    <div class="label">Primary lockup</div>
+    <div class="card"><img src="amcar-logo.svg" width="380" alt="Amcar logo"></div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="label">Reversed (dark bg)</div>
+      <div class="card dark"><img src="amcar-logo-white.svg" width="320" alt="Amcar logo white"></div>
+    </div>
+    <div>
+      <div class="label">Mark on orange</div>
+      <div class="card orange"><img src="amcar-mark-mono.svg" width="120" style="color:#fff" alt="Amcar mark mono"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <div class="label">Monogram mark</div>
+      <div class="card"><img src="amcar-mark.svg" width="120" alt="Amcar mark"></div>
+    </div>
+    <div>
+      <div class="label">Favicon @ real sizes</div>
+      <div class="card" style="gap:24px">
+        <img src="amcar-favicon.svg" width="64"  alt="64">
+        <img src="amcar-favicon.svg" width="32"  alt="32">
+        <img src="amcar-favicon.svg" width="16"  alt="16">
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="label">Palette</div>
+    <div class="swatches">
+      <div class="sw" style="background:#ff6b00">Accent<br>#ff6b00</div>
+      <div class="sw" style="background:#e85d00">Deep<br>#e85d00</div>
+      <div class="sw" style="background:#ff8a33">Soft<br>#ff8a33</div>
+      <div class="sw" style="background:#111">Ink<br>#111111</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

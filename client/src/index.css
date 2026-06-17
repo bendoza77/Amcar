@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SANDO — DESIGN SYSTEM
+   Tailwind v4 CSS-first theme. Tokens map to utilities, e.g.
+   --color-accent  ->  bg-accent / text-accent / border-accent
+   ============================================================ */
+
+@theme {
+  /* ---- Color System ---- */
+  --color-ink: #111111; /* primary */
+  --color-ink-soft: #1c1c1f;
+  --color-accent: #ff6b00; /* brand accent */
+  --color-accent-soft: #ff8a33;
+  --color-accent-deep: #e85d00;
+  --color-surface: #f8f9fb; /* muted section bg */
+  --color-line: #e5e7eb; /* borders */
+  --color-text: #0f172a; /* body text */
+  --color-text-muted: #5b6472;
+  --color-success: #22c55e;
+
+  /* ---- Typography ----
+     Inter renders Latin; Georgian glyphs fall back to Noto Sans Georgian
+     automatically (browsers resolve fonts per-glyph). */
+  --font-sans: "Inter", "Noto Sans Georgian", ui-sans-serif, system-ui,
+    -apple-system, sans-serif;
+
+  /* Fluid type scale (mobile -> desktop) */
+  --text-hero: clamp(2.75rem, 6vw, 4.5rem); /* ~44 -> 72px */
+  --text-hero--line-height: 1.02;
+  --text-hero--letter-spacing: -0.03em;
+
+  --text-display: clamp(2rem, 4.5vw, 3rem); /* ~32 -> 48px section titles */
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.025em;
+
+  --text-card: 1.5rem; /* 24px card titles */
+  --text-card--line-height: 1.25;
+  --text-card--letter-spacing: -0.01em;
+
+  --text-body-lg: 1.125rem; /* 18px body */
+  --text-body-lg--line-height: 1.6;
+
+  --text-small: 0.875rem; /* 14px */
+
+  /* ---- Radii ---- */
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
+
+  /* ---- Shadows (soft, premium) ---- */
+  --shadow-soft: 0 2px 8px -2px rgb(15 23 42 / 0.06),
+    0 12px 32px -8px rgb(15 23 42 / 0.08);
+  --shadow-lift: 0 8px 20px -6px rgb(15 23 42 / 0.1),
+    0 24px 48px -12px rgb(15 23 42 / 0.16);
+  --shadow-glow: 0 20px 60px -12px rgb(255 107 0 / 0.45);
+
+  /* ---- Easing / motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Container ---- */
+  --container-page: 1200px;
+}
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #ffffff;
+    color: var(--color-text);
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Cleaner focus ring that matches the brand */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #fff;
+  }
+}
+
+/* ============================================================
+   UTILITIES — reusable design primitives
+   ============================================================ */
+@layer utilities {
+  /* Subtle dotted grid used behind hero / CTA */
+  .bg-grid {
+    background-image: radial-gradient(
+      rgb(15 23 42 / 0.06) 1px,
+      transparent 1px
+    );
+    background-size: 28px 28px;
+  }
+
+  /* Soft radial spotlight */
+  .bg-spotlight {
+    background: radial-gradient(
+      60% 60% at 50% 0%,
+      rgb(255 107 0 / 0.12) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Glassmorphism surface */
+  .glass {
+    background-color: rgb(255 255 255 / 0.7);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+  }
+
+  .glass-dark {
+    background-color: rgb(17 17 17 / 0.55);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(120deg, #111111 0%, #3a3a3a 60%, #ff6b00 140%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Animated conic glow blob */
+  .glow-blob {
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      #ff6b00,
+      #ff8a33,
+      #ffb37a,
+      #ff6b00
+    );
+    filter: blur(60px);
+    opacity: 0.5;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES — used sparingly (Framer Motion handles the rest)
+   ============================================================ */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(20px, -24px) rotate(8deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-float {
+  animation: float 6s var(--ease-out-expo) infinite;
+}
+.animate-drift {
+  animation: drift 14s ease-in-out infinite;
+}
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
