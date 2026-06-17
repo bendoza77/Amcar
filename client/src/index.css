@@ -26,16 +26,16 @@
     -apple-system, sans-serif;
 
   /* Fluid type scale (mobile -> desktop) */
-  --text-hero: clamp(2.75rem, 6vw, 4.5rem); /* ~44 -> 72px */
-  --text-hero--line-height: 1.02;
+  --text-hero: clamp(2.125rem, 6vw, 4.5rem); /* ~34 -> 72px */
+  --text-hero--line-height: 1.14;
   --text-hero--letter-spacing: -0.03em;
 
-  --text-display: clamp(2rem, 4.5vw, 3rem); /* ~32 -> 48px section titles */
-  --text-display--line-height: 1.08;
+  --text-display: clamp(1.625rem, 4.5vw, 3rem); /* ~26 -> 48px section titles */
+  --text-display--line-height: 1.2;
   --text-display--letter-spacing: -0.025em;
 
   --text-card: 1.5rem; /* 24px card titles */
-  --text-card--line-height: 1.25;
+  --text-card--line-height: 1.35;
   --text-card--letter-spacing: -0.01em;
 
   --text-body-lg: 1.125rem; /* 18px body */

@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export const SITE = {
-  name: "ხოდზე",
+  name: "Amcar",
   appStoreUrl: "#app-store",
   playStoreUrl: "#play-store",
 };
@@ -51,9 +51,11 @@ export const STAT_VALUES = [
 /* Benefit icons — paired with t.benefits.items. */
 export const BENEFIT_ICONS = [Clock, ShieldCheck, Tags];
 
-/* Footer link targets — paired with t.footer.{product,company,legal} labels. */
+/* Footer link targets — paired with t.footer.{product,company,legal} labels.
+   In-page sections use "/#id" so they also work from sub-pages; standalone
+   pages use their route path. */
 export const FOOTER_HREFS = {
-  product: ["#features", "#how-it-works", "#testimonials", "#download"],
-  company: ["#", "#", "#", "#"],
-  legal: ["#", "#", "#", "#"],
+  product: ["/#features", "/#how-it-works", "/#testimonials", "/#download"],
+  company: ["/#benefits", "#", "#", "/contact"],
+  legal: ["/privacy", "/terms", "/cookies", "/licenses"],
 };

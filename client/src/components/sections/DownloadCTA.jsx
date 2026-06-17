@@ -26,7 +26,7 @@ export default function DownloadCTA() {
           <div className="relative grid items-center gap-12 lg:grid-cols-2">
             {/* Copy */}
             <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={viewportOnce}>
-              <motion.h2 variants={fadeUp} className="text-hero font-extrabold leading-[1.05] tracking-tight text-balance">
+              <motion.h2 variants={fadeUp} className="text-hero font-extrabold tracking-tight text-balance">
                 {t.cta.title}
               </motion.h2>
 

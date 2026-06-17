@@ -1,33 +1,27 @@
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Hero from "./components/sections/Hero";
-import Features from "./components/sections/Features";
-import AppShowcase from "./components/sections/AppShowcase";
-import HowItWorks from "./components/sections/HowItWorks";
-import Benefits from "./components/sections/Benefits";
-import Testimonials from "./components/sections/Testimonials";
-import DownloadCTA from "./components/sections/DownloadCTA";
-import FAQ from "./components/sections/FAQ";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Home from "./pages/Home";
+import LegalPage from "./pages/LegalPage";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 /**
- * App — top-level page composition for the ხოდზე marketing site.
- * Sections are ordered for conversion: hook → value → product → proof → CTA.
+ * App — route table for the Amcar site. Every route renders inside the shared
+ * Layout (Navbar + Footer). The home route is the marketing landing page; the
+ * legal routes share one templated document page; contact is bespoke.
  */
 export default function App() {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-      <main>
-        <Hero />
-        <Features />
-        <AppShowcase />
-        <HowItWorks />
-        <Benefits />
-        <Testimonials />
-        <DownloadCTA />
-        <FAQ />
-      </main>
-      <Footer />
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/privacy" element={<LegalPage docKey="privacy" />} />
+        <Route path="/terms" element={<LegalPage docKey="terms" />} />
+        <Route path="/cookies" element={<LegalPage docKey="cookies" />} />
+        <Route path="/licenses" element={<LegalPage docKey="licenses" />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }

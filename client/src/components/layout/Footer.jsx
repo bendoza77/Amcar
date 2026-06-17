@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "./Container";
 import Logo from "../ui/Logo";
 import StoreButtons from "../ui/StoreButtons";
@@ -30,6 +31,23 @@ function BrandIcon({ name }) {
   );
 }
 
+/* Internal route ("/contact", "/#features") → SPA Link; bare "#" → plain anchor. */
+function FooterLink({ href, children }) {
+  const className = "text-[0.95rem] text-white/70 transition-colors hover:text-white";
+  if (href.startsWith("/")) {
+    return (
+      <Link to={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  );
+}
+
 function FooterColumn({ title, labels, hrefs }) {
   return (
     <div>
@@ -37,9 +55,7 @@ function FooterColumn({ title, labels, hrefs }) {
       <ul className="mt-4 flex flex-col gap-3">
         {labels.map((label, i) => (
           <li key={label}>
-            <a href={hrefs[i]} className="text-[0.95rem] text-white/70 transition-colors hover:text-white">
-              {label}
-            </a>
+            <FooterLink href={hrefs[i]}>{label}</FooterLink>
           </li>
         ))}
       </ul>

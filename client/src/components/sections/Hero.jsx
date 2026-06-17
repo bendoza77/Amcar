@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { PlayCircle, Apple, Star, Sparkles } from "lucide-react";
+import { PlayCircle, Play, Star, Sparkles } from "lucide-react";
 import Container from "../layout/Container";
 import Button from "../ui/Button";
 import Badge from "../ui/Badge";
@@ -13,7 +13,7 @@ import { fadeUp, fadeLeft, staggerContainer } from "../../lib/motion";
  * Background layers: animated gradient glow, dotted grid, spotlight.
  */
 export default function Hero() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   return (
     <section id="top" className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
       {/* ---- Background layers ---- */}
@@ -37,6 +37,9 @@ export default function Hero() {
             <motion.h1
               variants={fadeUp}
               className="mt-6 text-hero font-extrabold text-ink text-balance"
+              /* Georgian glyphs have tall ascenders/descenders — loosen the
+                 leading so stacked lines don't collide. */
+              style={lang === "ka" ? { lineHeight: 1.18 } : undefined}
             >
               {t.hero.titleBefore}
               <span className="text-gradient">{t.hero.titleHighlight}</span>
@@ -51,7 +54,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-3">
-              <Button variant="primary" size="lg" href="#download" icon={Apple}>
+              <Button variant="primary" size="lg" href="#download" icon={Play}>
                 {t.hero.downloadApp}
               </Button>
               <Button variant="secondary" size="lg" href="#how-it-works" icon={PlayCircle}>

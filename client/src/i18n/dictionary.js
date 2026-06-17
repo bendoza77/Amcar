@@ -35,7 +35,7 @@ export const dictionaries = {
       titleHighlight: "სანდო ხელოსნები",
       titleAfter: " უფრო სწრაფად",
       description:
-        "ხოდზე ეხმარება მძღოლებს მოძებნონ ახლომდებარე ხელოსნები, შეადარონ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდნენ გზას.",
+        "Amcar ეხმარება მძღოლებს მოძებნონ ახლომდებარე ხელოსნები, შეადარონ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდნენ გზას.",
       downloadApp: "აპლიკაციის ჩამოტვირთვა",
       watchDemo: "დემოს ნახვა",
       lovedBy: "ენდობა 10 000-ზე მეტი მძღოლი",
@@ -46,10 +46,10 @@ export const dictionaries = {
     },
 
     features: {
-      eyebrow: "რატომ ხოდზე",
+      eyebrow: "რატომ Amcar",
       title: "ყველაფერი, რაც სწორი ხელოსნის ასარჩევად გჭირდებათ",
       subtitle:
-        "აღარავითარი გამოცნობა და გაუთავებელი ზარები. ხოდზე მძღოლებს წამებში არჩევანის გაკეთების საშუალებას აძლევს.",
+        "აღარავითარი გამოცნობა და გაუთავებელი ზარები. Amcar მძღოლებს წამებში არჩევანის გაკეთების საშუალებას აძლევს.",
       items: [
         {
           title: "იპოვეთ ახლომდებარე ხელოსნები",
@@ -136,7 +136,7 @@ export const dictionaries = {
         {
           title: "მოძებნა",
           description:
-            "გახსენით ხოდზე და მყისიერად ნახეთ ახლომდებარე სანდო ხელოსნები ცოცხალ, ინტერაქტიულ რუკაზე.",
+            "გახსენით Amcar და მყისიერად ნახეთ ახლომდებარე სანდო ხელოსნები ცოცხალ, ინტერაქტიულ რუკაზე.",
         },
         {
           title: "შედარება",
@@ -155,7 +155,7 @@ export const dictionaries = {
       eyebrow: "ციფრებში",
       title: "მძღოლებისა და ხელოსნების ნდობით სარგებლობს",
       subtitle:
-        "ათასობით მძღოლი ეყრდნობა ხოდზეს ყოველ კვირას სწრაფი დახმარებისთვის — და ქსელი მუდმივად იზრდება.",
+        "ათასობით მძღოლი ეყრდნობა Amcar-ს ყოველ კვირას სწრაფი დახმარებისთვის — და ქსელი მუდმივად იზრდება.",
       statLabels: [
         "დახმარებული მძღოლი",
         "გადამოწმებული ხელოსანი",
@@ -185,13 +185,13 @@ export const dictionaries = {
       eyebrow: "მძღოლების რჩეული",
       title: "რეალური ისტორიები გზიდან",
       subtitle:
-        "მძღოლები მთელი ქვეყნის მასშტაბით ენდობიან ხოდზეს, როცა ეს ყველაზე მნიშვნელოვანია.",
+        "მძღოლები მთელი ქვეყნის მასშტაბით ენდობიან Amcar-ს, როცა ეს ყველაზე მნიშვნელოვანია.",
       items: [
         {
           name: "მარიამ ბერიძე",
           role: "ყოველდღიური მძღოლი",
           quote:
-            "ძრავის ნიშანი მგზავრობისას აინთო. ხოდზემ 4 წუთის სავალზე გადამოწმებული სერვისი მიპოვა შესანიშნავი შეფასებებით. ნამდვილი გადამრჩენელი.",
+            "ძრავის ნიშანი მგზავრობისას აინთო. Amcar-მა 4 წუთის სავალზე გადამოწმებული სერვისი მიპოვა შესანიშნავი შეფასებებით. ნამდვილი გადამრჩენელი.",
           initials: "მბ",
         },
         {
@@ -212,7 +212,7 @@ export const dictionaries = {
           name: "გიორგი მაისურაძე",
           role: "მოყვარული ხელოსანი",
           quote:
-            "მეც კი ვიყენებ ხოდზეს, როცა სამუშაო ჩემს შესაძლებლობებს სცდება. რუკა და სერვისების აღწერა ნამდვილად კარგად არის გააზრებული.",
+            "მეც კი ვიყენებ Amcar-ს, როცა სამუშაო ჩემს შესაძლებლობებს სცდება. რუკა და სერვისების აღწერა ნამდვილად კარგად არის გააზრებული.",
           initials: "გმ",
         },
         {
@@ -230,24 +230,24 @@ export const dictionaries = {
       title: "კითხვები, რომლებსაც პასუხი აქვს",
       items: [
         {
-          q: "უფასოა ხოდზეს გამოყენება?",
-          a: "დიახ. ხოდზეს ჩამოტვირთვა და ხელოსნების მოძებნა, შედარება და მათთან ნავიგაცია მძღოლებისთვის სრულიად უფასოა.",
+          q: "უფასოა Amcar-ს გამოყენება?",
+          a: "დიახ. Amcar-ს ჩამოტვირთვა და ხელოსნების მოძებნა, შედარება და მათთან ნავიგაცია მძღოლებისთვის სრულიად უფასოა.",
         },
         {
           q: "როგორ ხდება ხელოსნების გადამოწმება?",
-          a: "ხოდზეში თითოეული სერვისი გადის გადამოწმების პროცესს და მუდმივად ფასდება რეალური მძღოლების მიერ, ასე რომ ჩამონათვალი სანდო რჩება.",
+          a: "Amcar-ში თითოეული სერვისი გადის გადამოწმების პროცესს და მუდმივად ფასდება რეალური მძღოლების მიერ, ასე რომ ჩამონათვალი სანდო რჩება.",
         },
         {
           q: "ნაჩვენები ფასები საბოლოოა?",
           a: "ჩვენ ვაჩვენებთ გამჭვირვალე საწყის ფასებს სამართლიანი შედარებისთვის. საბოლოო ფასი დასტურდება სერვისთან თქვენი კონკრეტული საჭიროების მიხედვით.",
         },
         {
-          q: "რომელ ქალაქებშია ხოდზე ხელმისაწვდომი?",
-          a: "ხოდზე სწრაფად ფართოვდება ძირითად ქალაქებში და უკვე 500-ზე მეტი გადამოწმებული ხელოსანი გვყავს. ახალი რეგიონები ყოველთვიურად ემატება.",
+          q: "რომელ ქალაქებშია Amcar ხელმისაწვდომი?",
+          a: "Amcar სწრაფად ფართოვდება ძირითად ქალაქებში და უკვე 500-ზე მეტი გადამოწმებული ხელოსანი გვყავს. ახალი რეგიონები ყოველთვიურად ემატება.",
         },
         {
           q: "რომელ მოწყობილობებს უჭერს მხარს?",
-          a: "ხოდზე ხელმისაწვდომია iOS-სა და Android-ზე. უბრალოდ ჩამოტვირთეთ App Store-დან ან Google Play-დან.",
+          a: "Amcar ამჟამად ხელმისაწვდომია Android-ზე. უბრალოდ ჩამოტვირთეთ Google Play-დან. iOS ვერსია მალე დაემატება.",
         },
       ],
     },
@@ -255,8 +255,8 @@ export const dictionaries = {
     cta: {
       title: "ყველაფერი ავტომობილის მოვლისთვის — ერთ აპლიკაციაში",
       description:
-        "შემოუერთდით ათასობით მძღოლს, ვინც სანდო ხელოსნებს წამებში პოულობს. ჩამოტვირთეთ ხოდზე და მოიხსენით ავტომობილის მოვლის სტრესი.",
-      perks: ["უფასო ჩამოსატვირთად", "გამოწერის გარეშე", "iOS და Android"],
+        "შემოუერთდით ათასობით მძღოლს, ვინც სანდო ხელოსნებს წამებში პოულობს. ჩამოტვირთეთ Amcar და მოიხსენით ავტომობილის მოვლის სტრესი.",
+      perks: ["უფასო ჩამოსატვირთად", "გამოწერის გარეშე", "Android-ზე"],
     },
 
     footer: {
@@ -266,10 +266,10 @@ export const dictionaries = {
       companyTitle: "კომპანია",
       legalTitle: "იურიდიული",
       product: ["ფუნქციები", "როგორ მუშაობს", "შეფასებები", "ჩამოტვირთვა"],
-      company: ["ჩვენ შესახებ", "კარიერა", "პრესა", "ბლოგი"],
+      company: ["ჩვენ შესახებ", "პრესა", "ბლოგი", "კონტაქტი"],
       legal: ["კონფიდენციალურობა", "პირობები", "ქუქიები", "ლიცენზიები"],
-      getOnPhone: "მიიღეთ ხოდზე თქვენს ტელეფონზე",
-      getOnPhoneSub: "უფასო ჩამოსატვირთად. ხელმისაწვდომია iOS-სა და Android-ზე.",
+      getOnPhone: "მიიღეთ Amcar თქვენს ტელეფონზე",
+      getOnPhoneSub: "უფასო ჩამოსატვირთად. ხელმისაწვდომია Android-ზე.",
       rights: "ყველა უფლება დაცულია.",
       operational: "ყველა სისტემა გამართულად მუშაობს",
     },
@@ -279,6 +279,181 @@ export const dictionaries = {
       appStoreBottom: "App Store",
       playTop: "გადმოწერეთ",
       playBottom: "Google Play",
+    },
+
+    pages: {
+      backHome: "მთავარ გვერდზე დაბრუნება",
+      updatedLabel: "ბოლო განახლება",
+      tocTitle: "ამ გვერდზე",
+      legal: {
+        privacy: {
+          eyebrow: "იურიდიული",
+          title: "კონფიდენციალურობის პოლიტიკა",
+          updated: "2026 წლის 1 ივნისი",
+          intro:
+            "თქვენი კონფიდენციალურობა ჩვენთვის მნიშვნელოვანია. ეს პოლიტიკა განმარტავს, რა მონაცემებს ვაგროვებთ, როგორ ვიყენებთ მათ და რა უფლებები გაქვთ Amcar-ის გამოყენებისას.",
+          sections: [
+            {
+              heading: "რა მონაცემებს ვაგროვებთ",
+              body: [
+                "ანგარიშის მონაცემები, როგორიცაა სახელი, ტელეფონის ნომერი და ელფოსტა, რომელსაც რეგისტრაციისას უთითებთ.",
+                "მდებარეობის მონაცემები, რათა გაჩვენოთ ახლომდებარე ხელოსნები — მხოლოდ თქვენი ნებართვით.",
+                "გამოყენების მონაცემები, როგორიცაა ნანახი ხელოსნები და ძიების ისტორია, რათა გავაუმჯობესოთ სერვისი.",
+              ],
+            },
+            {
+              heading: "როგორ ვიყენებთ თქვენს მონაცემებს",
+              body: [
+                "სანდო ხელოსნების მოსაძებნად, შესადარებლად და მათთან ნავიგაციისთვის.",
+                "აპლიკაციის გასაუმჯობესებლად, უსაფრთხოების უზრუნველსაყოფად და ხარვეზების აღმოსაფხვრელად.",
+                "მნიშვნელოვანი შეტყობინებების გასაგზავნად თქვენი ანგარიშისა და მოთხოვნების შესახებ.",
+              ],
+            },
+            {
+              heading: "მონაცემთა გაზიარება",
+              body: [
+                "ჩვენ არ ვყიდით თქვენს პერსონალურ მონაცემებს. ინფორმაციას ვუზიარებთ მხოლოდ გადამოწმებულ ხელოსნებს, როცა თქვენ თავად იწყებთ კონტაქტს.",
+                "მონაცემები შესაძლოა გავუზიაროთ სანდო სერვის-პროვაიდერებს, რომლებიც გვეხმარებიან აპლიკაციის ფუნქციონირებაში მკაცრი კონფიდენციალურობის პირობებით.",
+              ],
+            },
+            {
+              heading: "თქვენი უფლებები",
+              body: [
+                "ნებისმიერ დროს შეგიძლიათ წვდომა, განახლება ან წაშლა მოითხოვოთ თქვენი მონაცემებისთვის.",
+                "მონაცემებთან დაკავშირებული ნებისმიერი მოთხოვნისთვის დაგვიკავშირდით: privacy@amcar.app.",
+              ],
+            },
+          ],
+        },
+        terms: {
+          eyebrow: "იურიდიული",
+          title: "მომსახურების პირობები",
+          updated: "2026 წლის 1 ივნისი",
+          intro:
+            "ეს პირობები არეგულირებს Amcar-ის გამოყენებას. აპლიკაციით სარგებლობით თქვენ ეთანხმებით ქვემოთ მოცემულ წესებს.",
+          sections: [
+            {
+              heading: "სერვისის გამოყენება",
+              body: [
+                "Amcar დაგეხმარებათ ახლომდებარე ხელოსნების მოძებნაში, შედარებასა და მათთან დაკავშირებაში. სერვისი მძღოლებისთვის უფასოა.",
+                "თქვენ თანახმა ხართ, აპლიკაცია გამოიყენოთ მხოლოდ კანონიერი მიზნებისთვის და არ დააზიანოთ მისი ფუნქციონირება.",
+              ],
+            },
+            {
+              heading: "ანგარიშები",
+              body: [
+                "გარკვეული ფუნქციებისთვის შესაძლოა საჭირო გახდეს ანგარიში. პასუხისმგებელი ხართ თქვენი ანგარიშის უსაფრთხოებაზე.",
+                "უნდა მოგვაწოდოთ ზუსტი ინფორმაცია და დროულად განაახლოთ იგი ცვლილების შემთხვევაში.",
+              ],
+            },
+            {
+              heading: "ხელოსნები და სერვისები",
+              body: [
+                "Amcar არის პლატფორმა, რომელიც აკავშირებს მძღოლებსა და ხელოსნებს. ჩვენ არ ვართ მომსახურების უშუალო მიმწოდებელი.",
+                "ხელოსანთან გაფორმებული ნებისმიერი შეთანხმება დადებულია თქვენსა და ხელოსანს შორის.",
+              ],
+            },
+            {
+              heading: "პასუხისმგებლობის შეზღუდვა",
+              body: [
+                "Amcar არ აგებს პასუხს მესამე მხარის ხელოსნების მიერ გაწეული მომსახურების ხარისხზე.",
+                "სერვისი მოწოდებულია „როგორც არის“ პრინციპით, კანონით დაშვებულ ფარგლებში.",
+              ],
+            },
+          ],
+        },
+        cookies: {
+          eyebrow: "იურიდიული",
+          title: "ქუქი-ფაილების პოლიტიკა",
+          updated: "2026 წლის 1 ივნისი",
+          intro:
+            "ეს პოლიტიკა განმარტავს, როგორ ვიყენებთ ქუქი-ფაილებსა და მსგავს ტექნოლოგიებს Amcar-ის ვებსაიტსა და აპლიკაციაში.",
+          sections: [
+            {
+              heading: "რა არის ქუქი-ფაილები",
+              body: [
+                "ქუქი-ფაილები მცირე ტექსტური ფაილებია, რომლებიც თქვენს მოწყობილობაზე ინახება და გვეხმარება საიტის გამართულ მუშაობაში.",
+              ],
+            },
+            {
+              heading: "როგორ ვიყენებთ მათ",
+              body: [
+                "აუცილებელი ქუქი-ფაილები: საჭიროა საიტის ძირითადი ფუნქციონირებისთვის.",
+                "ანალიტიკური ქუქი-ფაილები: გვეხმარება გავიგოთ, როგორ იყენებთ საიტს, რათა გავაუმჯობესოთ იგი.",
+                "პრეფერენციების ქუქი-ფაილები: იმახსოვრებს თქვენს არჩევანს, მაგალითად, ენას.",
+              ],
+            },
+            {
+              heading: "ქუქი-ფაილების მართვა",
+              body: [
+                "ბრაუზერის პარამეტრებიდან შეგიძლიათ ნებისმიერ დროს დაბლოკოთ ან წაშალოთ ქუქი-ფაილები.",
+                "ზოგიერთი ქუქი-ფაილის გათიშვამ შესაძლოა იმოქმედოს საიტის ფუნქციონირებაზე.",
+              ],
+            },
+          ],
+        },
+        licenses: {
+          eyebrow: "იურიდიული",
+          title: "ლიცენზიები",
+          updated: "2026 წლის 1 ივნისი",
+          intro:
+            "Amcar აგებულია შესანიშნავი ღია წყაროს პროგრამული უზრუნველყოფის გამოყენებით. გულწრფელად ვმადლობთ ამ პროექტების შემქმნელებს.",
+          sections: [
+            {
+              heading: "ღია წყაროს ბიბლიოთეკები",
+              body: [
+                "React, React Router — MIT ლიცენზია.",
+                "Tailwind CSS — MIT ლიცენზია.",
+                "Framer Motion — MIT ლიცენზია.",
+                "Lucide Icons — ISC ლიცენზია.",
+              ],
+            },
+            {
+              heading: "სავაჭრო ნიშნები",
+              body: [
+                "Amcar და Amcar-ის ლოგო Amcar-ის სავაჭრო ნიშნებია. ყველა სხვა სავაჭრო ნიშანი მათი მფლობელების საკუთრებაა.",
+              ],
+            },
+            {
+              heading: "კონტაქტი",
+              body: [
+                "ლიცენზიებთან დაკავშირებული შეკითხვებისთვის მოგვწერეთ: legal@amcar.app.",
+              ],
+            },
+          ],
+        },
+      },
+      contact: {
+        eyebrow: "კონტაქტი",
+        title: "დაგვიკავშირდით",
+        subtitle:
+          "გაქვთ შეკითხვა, წინადადება ან გჭირდებათ დახმარება? ჩვენი გუნდი მზადაა დაგეხმაროთ. აირჩიეთ თქვენთვის სასურველი გზა ან მოგვწერეთ ფორმის მეშვეობით.",
+        methods: [
+          { title: "ელფოსტა", value: "hello@amcar.app", desc: "ჩვეულებრივ ვპასუხობთ 24 საათში" },
+          { title: "ტელეფონი", value: "+995 322 00 00 00", desc: "ორშ.–პარ. 9:00–18:00" },
+          { title: "ოფისი", value: "თბილისი, საქართველო", desc: "რუსთაველის გამზ. 12" },
+          { title: "მხარდაჭერა", value: "support@amcar.app", desc: "დახმარება აპლიკაციასთან" },
+        ],
+        formTitle: "გამოგვიგზავნეთ შეტყობინება",
+        formSubtitle: "შეავსეთ ფორმა და მალე დაგიკავშირდებით.",
+        fields: {
+          name: "სახელი",
+          namePh: "თქვენი სახელი",
+          email: "ელფოსტა",
+          emailPh: "you@example.com",
+          subject: "თემა",
+          subjectPh: "რის შესახებ გვწერთ?",
+          message: "შეტყობინება",
+          messagePh: "მოგვიყევით მეტი…",
+        },
+        send: "შეტყობინების გაგზავნა",
+        success: "გმადლობთ! თქვენი შეტყობინება მიღებულია — მალე დაგიკავშირდებით.",
+      },
+      notFound: {
+        title: "გვერდი ვერ მოიძებნა",
+        subtitle: "ბოდიში, გვერდი, რომელსაც ეძებთ, არ არსებობს ან გადატანილია.",
+        cta: "მთავარ გვერდზე დაბრუნება",
+      },
     },
 
     phone: {
@@ -355,7 +530,7 @@ export const dictionaries = {
       titleHighlight: "trusted mechanics",
       titleAfter: " faster",
       description:
-        "ხოდზე helps drivers locate nearby mechanics, compare services and prices, and get back on the road with confidence.",
+        "Amcar helps drivers locate nearby mechanics, compare services and prices, and get back on the road with confidence.",
       downloadApp: "Download App",
       watchDemo: "Watch Demo",
       lovedBy: "Loved by 10,000+ drivers",
@@ -366,10 +541,10 @@ export const dictionaries = {
     },
 
     features: {
-      eyebrow: "Why ხოდზე",
+      eyebrow: "Why Amcar",
       title: "Everything you need to choose the right mechanic",
       subtitle:
-        "No more guesswork or endless phone calls. ხოდზე gives drivers the clarity to decide in seconds.",
+        "No more guesswork or endless phone calls. Amcar gives drivers the clarity to decide in seconds.",
       items: [
         {
           title: "Find Mechanics Nearby",
@@ -449,7 +624,7 @@ export const dictionaries = {
         {
           title: "Find",
           description:
-            "Open ხოდზე and instantly see trusted mechanics near you on a live, interactive map.",
+            "Open Amcar and instantly see trusted mechanics near you on a live, interactive map.",
         },
         {
           title: "Compare",
@@ -468,7 +643,7 @@ export const dictionaries = {
       eyebrow: "By the numbers",
       title: "Trusted by drivers and mechanics alike",
       subtitle:
-        "Thousands of drivers rely on ხოდზე every week to find help fast — and the network keeps growing.",
+        "Thousands of drivers rely on Amcar every week to find help fast — and the network keeps growing.",
       statLabels: [
         "Drivers helped",
         "Verified mechanics",
@@ -497,13 +672,13 @@ export const dictionaries = {
     testimonials: {
       eyebrow: "Loved by drivers",
       title: "Real stories from the road",
-      subtitle: "Drivers across the country trust ხოდზე when it matters most.",
+      subtitle: "Drivers across the country trust Amcar when it matters most.",
       items: [
         {
           name: "Maya Thompson",
           role: "Daily commuter",
           quote:
-            "My check-engine light came on during a road trip. ხოდზე found a verified shop 4 minutes away with great reviews. Lifesaver.",
+            "My check-engine light came on during a road trip. Amcar found a verified shop 4 minutes away with great reviews. Lifesaver.",
           initials: "MT",
         },
         {
@@ -524,7 +699,7 @@ export const dictionaries = {
           name: "Marcus Lee",
           role: "Weekend mechanic",
           quote:
-            "Even I use ხოდზე when a job's out of my depth. The map and service breakdowns are genuinely well designed.",
+            "Even I use Amcar when a job's out of my depth. The map and service breakdowns are genuinely well designed.",
           initials: "ML",
         },
         {
@@ -542,24 +717,24 @@ export const dictionaries = {
       title: "Questions, answered",
       items: [
         {
-          q: "Is ხოდზე free to use?",
-          a: "Yes. Downloading ხოდზე and finding, comparing, and navigating to mechanics is completely free for drivers.",
+          q: "Is Amcar free to use?",
+          a: "Yes. Downloading Amcar and finding, comparing, and navigating to mechanics is completely free for drivers.",
         },
         {
           q: "How are mechanics verified?",
-          a: "Every shop on ხოდზე goes through a verification process and is continuously rated by real drivers, so listings stay trustworthy.",
+          a: "Every shop on Amcar goes through a verification process and is continuously rated by real drivers, so listings stay trustworthy.",
         },
         {
           q: "Are the prices shown final?",
           a: "We display transparent starting prices so you can compare fairly. Final pricing is confirmed with the shop based on your specific needs.",
         },
         {
-          q: "Which cities is ხოდზე available in?",
-          a: "ხოდზე is expanding fast across major metros with 500+ verified mechanics already on board. New regions are added every month.",
+          q: "Which cities is Amcar available in?",
+          a: "Amcar is expanding fast across major metros with 500+ verified mechanics already on board. New regions are added every month.",
         },
         {
           q: "Which devices are supported?",
-          a: "ხოდზე is available for both iOS and Android. Just download it from the App Store or Google Play to get started.",
+          a: "Amcar is available on Android right now. Just download it from Google Play to get started — an iOS version is coming soon.",
         },
       ],
     },
@@ -567,8 +742,8 @@ export const dictionaries = {
     cta: {
       title: "Everything you need for vehicle maintenance in one app",
       description:
-        "Join thousands of drivers who find trusted mechanics in seconds. Download ხოდზე and take the stress out of car care.",
-      perks: ["Free to download", "No subscription", "iOS & Android"],
+        "Join thousands of drivers who find trusted mechanics in seconds. Download Amcar and take the stress out of car care.",
+      perks: ["Free to download", "No subscription", "On Android"],
     },
 
     footer: {
@@ -578,10 +753,10 @@ export const dictionaries = {
       companyTitle: "Company",
       legalTitle: "Legal",
       product: ["Features", "How it works", "Reviews", "Download"],
-      company: ["About", "Careers", "Press", "Blog"],
+      company: ["About", "Press", "Blog", "Contact"],
       legal: ["Privacy", "Terms", "Cookies", "Licenses"],
-      getOnPhone: "Get ხოდზე on your phone",
-      getOnPhoneSub: "Free to download. Available on iOS and Android.",
+      getOnPhone: "Get Amcar on your phone",
+      getOnPhoneSub: "Free to download. Available on Android.",
       rights: "All rights reserved.",
       operational: "All systems operational",
     },
@@ -591,6 +766,181 @@ export const dictionaries = {
       appStoreBottom: "App Store",
       playTop: "Get it on",
       playBottom: "Google Play",
+    },
+
+    pages: {
+      backHome: "Back to home",
+      updatedLabel: "Last updated",
+      tocTitle: "On this page",
+      legal: {
+        privacy: {
+          eyebrow: "Legal",
+          title: "Privacy Policy",
+          updated: "June 1, 2026",
+          intro:
+            "Your privacy matters to us. This policy explains what data we collect, how we use it, and the rights you have when using Amcar.",
+          sections: [
+            {
+              heading: "What we collect",
+              body: [
+                "Account details such as your name, phone number, and email when you sign up.",
+                "Location data to show nearby mechanics — only with your permission.",
+                "Usage data such as the shops you view and your search history, to improve the service.",
+              ],
+            },
+            {
+              heading: "How we use your data",
+              body: [
+                "To find, compare, and navigate to trusted mechanics for you.",
+                "To improve the app, keep it secure, and fix issues.",
+                "To send you important notices about your account and requests.",
+              ],
+            },
+            {
+              heading: "Data sharing",
+              body: [
+                "We never sell your personal data. We only share information with verified mechanics when you choose to contact them.",
+                "We may share data with trusted service providers who help us run the app, under strict confidentiality terms.",
+              ],
+            },
+            {
+              heading: "Your rights",
+              body: [
+                "You can request access to, correction of, or deletion of your data at any time.",
+                "For any data request, contact us at privacy@amcar.app.",
+              ],
+            },
+          ],
+        },
+        terms: {
+          eyebrow: "Legal",
+          title: "Terms of Service",
+          updated: "June 1, 2026",
+          intro:
+            "These terms govern your use of Amcar. By using the app, you agree to the rules below.",
+          sections: [
+            {
+              heading: "Using the service",
+              body: [
+                "Amcar helps you find, compare, and connect with nearby mechanics. The service is free for drivers.",
+                "You agree to use the app only for lawful purposes and not to disrupt how it works.",
+              ],
+            },
+            {
+              heading: "Accounts",
+              body: [
+                "Some features may require an account. You are responsible for keeping your account secure.",
+                "You must provide accurate information and keep it up to date.",
+              ],
+            },
+            {
+              heading: "Mechanics and services",
+              body: [
+                "Amcar is a platform that connects drivers and mechanics. We are not the direct provider of repair services.",
+                "Any agreement you make with a mechanic is between you and that mechanic.",
+              ],
+            },
+            {
+              heading: "Limitation of liability",
+              body: [
+                "Amcar is not responsible for the quality of services provided by third-party mechanics.",
+                "The service is provided “as is,” to the extent permitted by law.",
+              ],
+            },
+          ],
+        },
+        cookies: {
+          eyebrow: "Legal",
+          title: "Cookie Policy",
+          updated: "June 1, 2026",
+          intro:
+            "This policy explains how we use cookies and similar technologies on the Amcar website and app.",
+          sections: [
+            {
+              heading: "What cookies are",
+              body: [
+                "Cookies are small text files stored on your device that help the site work properly.",
+              ],
+            },
+            {
+              heading: "How we use them",
+              body: [
+                "Essential cookies: required for core site functionality.",
+                "Analytics cookies: help us understand how you use the site so we can improve it.",
+                "Preference cookies: remember your choices, such as language.",
+              ],
+            },
+            {
+              heading: "Managing cookies",
+              body: [
+                "You can block or delete cookies at any time from your browser settings.",
+                "Disabling some cookies may affect how the site works.",
+              ],
+            },
+          ],
+        },
+        licenses: {
+          eyebrow: "Legal",
+          title: "Licenses",
+          updated: "June 1, 2026",
+          intro:
+            "Amcar is built on top of excellent open-source software. We're grateful to the people behind these projects.",
+          sections: [
+            {
+              heading: "Open-source libraries",
+              body: [
+                "React, React Router — MIT License.",
+                "Tailwind CSS — MIT License.",
+                "Framer Motion — MIT License.",
+                "Lucide Icons — ISC License.",
+              ],
+            },
+            {
+              heading: "Trademarks",
+              body: [
+                "Amcar and the Amcar logo are trademarks of Amcar. All other trademarks are the property of their respective owners.",
+              ],
+            },
+            {
+              heading: "Contact",
+              body: [
+                "For licensing questions, email us at legal@amcar.app.",
+              ],
+            },
+          ],
+        },
+      },
+      contact: {
+        eyebrow: "Contact",
+        title: "Get in touch",
+        subtitle:
+          "Have a question, a suggestion, or need a hand? Our team is here to help. Pick whatever channel suits you, or send us a message below.",
+        methods: [
+          { title: "Email", value: "hello@amcar.app", desc: "We usually reply within 24 hours" },
+          { title: "Phone", value: "+995 322 00 00 00", desc: "Mon–Fri, 9:00–18:00" },
+          { title: "Office", value: "Tbilisi, Georgia", desc: "12 Rustaveli Ave" },
+          { title: "Support", value: "support@amcar.app", desc: "Help with the app" },
+        ],
+        formTitle: "Send us a message",
+        formSubtitle: "Fill out the form and we'll get back to you shortly.",
+        fields: {
+          name: "Name",
+          namePh: "Your name",
+          email: "Email",
+          emailPh: "you@example.com",
+          subject: "Subject",
+          subjectPh: "What's this about?",
+          message: "Message",
+          messagePh: "Tell us more…",
+        },
+        send: "Send message",
+        success: "Thanks! Your message has been received — we'll be in touch soon.",
+      },
+      notFound: {
+        title: "Page not found",
+        subtitle: "Sorry, the page you're looking for doesn't exist or has moved.",
+        cta: "Back to home",
+      },
     },
 
     phone: {

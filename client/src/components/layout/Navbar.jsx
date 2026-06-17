@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Apple } from "lucide-react";
+import { Menu, X, Play } from "lucide-react";
 import Container from "./Container";
 import Logo from "../ui/Logo";
 import Button from "../ui/Button";
@@ -41,19 +42,19 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-1 lg:flex">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                to={`/${link.href}`}
                 className="rounded-full px-4 py-2 text-[0.95rem] font-medium text-text-muted transition-colors hover:bg-ink/5 hover:text-ink"
               >
                 {t.nav[link.key]}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
             <LanguageToggle />
-            <Button variant="primary" size="sm" href="#download" icon={Apple}>
+            <Button variant="primary" size="sm" to="/#download" icon={Play}>
               {t.nav.getApp}
             </Button>
           </div>
@@ -85,20 +86,20 @@ export default function Navbar() {
           >
             <Container className="flex flex-col gap-1 py-4">
               {NAV_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={`/${link.href}`}
                   onClick={() => setOpen(false)}
                   className="rounded-xl px-4 py-3 text-base font-medium text-ink transition-colors hover:bg-ink/5"
                 >
                   {t.nav[link.key]}
-                </a>
+                </Link>
               ))}
               <Button
                 variant="primary"
                 size="md"
-                href="#download"
-                icon={Apple}
+                to="/#download"
+                icon={Play}
                 className="mt-2"
                 onClick={() => setOpen(false)}
               >

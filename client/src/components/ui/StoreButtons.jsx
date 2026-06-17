@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Apple, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { SITE } from "../../constants/site";
 import { useTranslation } from "../../hooks/useTranslation";
 import { cn } from "../../lib/utils";
@@ -32,19 +32,13 @@ function StoreBadge({ href, icon: Icon, top, bottom, tone = "dark" }) {
 }
 
 /**
- * StoreButtons — the App Store + Google Play pair, reused across the site.
+ * StoreButtons — Google Play download button. The app launches on Google Play
+ * only at first, so iOS / App Store is intentionally omitted.
  */
 export default function StoreButtons({ tone = "dark", className }) {
   const { t } = useTranslation();
   return (
     <div className={cn("flex flex-wrap gap-3", className)}>
-      <StoreBadge
-        href={SITE.appStoreUrl}
-        icon={Apple}
-        top={t.store.appStoreTop}
-        bottom={t.store.appStoreBottom}
-        tone={tone}
-      />
       <StoreBadge
         href={SITE.playStoreUrl}
         icon={Play}

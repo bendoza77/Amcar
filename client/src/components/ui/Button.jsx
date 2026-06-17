@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { cn } from "../../lib/utils";
+
+const MotionLink = motion.create(Link);
 
 /**
  * Button — the single button component for the whole site.
- * Variants cover every CTA we need; renders as <a> when `href` is passed,
- * otherwise <button>. Motion adds a subtle press + hover lift.
+ * Renders as a react-router <Link> when `to` is passed, an <a> when `href`
+ * is passed, otherwise a <button>. Motion adds a subtle press + hover lift.
  *
  * @param {"primary"|"secondary"|"ghost"|"dark"} variant
  * @param {"sm"|"md"|"lg"} size
@@ -28,17 +31,19 @@ export default function Button({
   variant = "primary",
   size = "md",
   href,
+  to,
   icon: Icon,
   iconRight = false,
   className,
   children,
   ...props
 }) {
-  const Comp = href ? motion.a : motion.button;
+  const Comp = to ? MotionLink : href ? motion.a : motion.button;
+  const linkProps = to ? { to } : href ? { href } : {};
 
   return (
     <Comp
-      href={href}
+      {...linkProps}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
