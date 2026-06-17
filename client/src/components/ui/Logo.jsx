@@ -1,6 +1,6 @@
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
-import logoImage from "../../assets/WhatsApp_Image_2026-06-16_at_12.44.29_PM__1_-removebg-preview.png";
+import logoImage from "../../assets/Screenshot_2026-06-17_144756-removebg-preview.png";
 
 /**
  * Logo — Amcar brand logo image.
@@ -12,7 +12,7 @@ export default function Logo({ tone = "dark", className }) {
 
   return (
     <a href="#top" className={cn("inline-flex items-center", className)} aria-label={t.brand}>
-      <img src={logoImage} alt={t.brand} className="-my-4 h-28 w-auto object-contain" />
+      <img src={logoImage} alt={t.brand} className="h-12 w-auto object-contain" />
     </a>
   );
 }
