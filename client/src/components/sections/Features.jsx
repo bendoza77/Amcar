@@ -37,7 +37,7 @@ export default function Features() {
                   <div className="flex size-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
                     <Icon className="size-6" strokeWidth={2.1} />
                   </div>
-                  <h3 className="mt-5 text-card font-bold text-fg">{item.title}</h3>
+                  <h3 className="mt-5 text-card font-bold text-white">{item.title}</h3>
                   <p className="mt-2 text-[0.975rem] leading-relaxed text-text-muted">{item.description}</p>
                 </Card>
               </motion.div>
