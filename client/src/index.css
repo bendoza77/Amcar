@@ -45,9 +45,12 @@
   --text-display--line-height: 1.2;
   --text-display--letter-spacing: -0.025em;
 
-  --text-card: 1.5rem; /* 24px card titles */
-  --text-card--line-height: 1.35;
-  --text-card--letter-spacing: -0.01em;
+  /* NB: named `cardtitle` (not `card`) on purpose — a `card` key would collide
+     with the `--color-card` surface token and make `text-card` emit a color
+     instead of a font size. */
+  --text-cardtitle: 1.5rem; /* 24px card titles */
+  --text-cardtitle--line-height: 1.35;
+  --text-cardtitle--letter-spacing: -0.01em;
 
   --text-body-lg: 1.125rem; /* 18px body */
   --text-body-lg--line-height: 1.6;

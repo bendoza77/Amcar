@@ -55,7 +55,7 @@ export default function Benefits() {
                     <Icon className="size-6" strokeWidth={2.1} />
                   </div>
                   <div>
-                    <h3 className="text-card font-bold">{item.title}</h3>
+                    <h3 className="text-cardtitle font-bold">{item.title}</h3>
                     <p className="mt-1.5 text-[0.975rem] leading-relaxed text-white/60">{item.description}</p>
                   </div>
                 </motion.div>

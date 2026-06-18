@@ -155,7 +155,7 @@ export default function Contact() {
               </div>
             ) : (
               <>
-                <h2 className="text-card font-extrabold tracking-tight text-fg">{c.formTitle}</h2>
+                <h2 className="text-cardtitle font-extrabold tracking-tight text-fg">{c.formTitle}</h2>
                 <p className="mt-1.5 text-[0.95rem] text-text-muted">{c.formSubtitle}</p>
 
                 <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">

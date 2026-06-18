@@ -60,7 +60,7 @@ export default function HowItWorks() {
                       {STEP_NUMBERS[i]}
                     </span>
                   </div>
-                  <h3 className="mt-7 text-card font-bold text-fg">{item.title}</h3>
+                  <h3 className="mt-7 text-cardtitle font-bold text-fg">{item.title}</h3>
                   <p className="mt-2 max-w-xs text-[0.975rem] leading-relaxed text-text-muted">{item.description}</p>
                 </motion.div>
               );

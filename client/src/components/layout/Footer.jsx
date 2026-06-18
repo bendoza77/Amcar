@@ -104,7 +104,7 @@ export default function Footer() {
         {/* App badges */}
         <div className="mt-14 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-10 lg:flex-row lg:items-center">
           <div>
-            <p className="text-card font-bold tracking-tight">{t.footer.getOnPhone}</p>
+            <p className="text-cardtitle font-bold tracking-tight">{t.footer.getOnPhone}</p>
             <p className="mt-1 text-[0.95rem] text-white/60">{t.footer.getOnPhoneSub}</p>
           </div>
           <StoreButtons tone="light" />

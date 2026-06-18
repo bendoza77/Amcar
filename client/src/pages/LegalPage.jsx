@@ -142,7 +142,7 @@ export default function LegalPage({ docKey }) {
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="scroll-mt-28 border-line py-8 first:pt-0 [&:not(:last-child)]:border-b"
               >
-                <h2 className="flex items-baseline gap-3 text-card font-extrabold tracking-tight text-fg">
+                <h2 className="flex items-baseline gap-3 text-cardtitle font-extrabold tracking-tight text-fg">
                   <span className="text-[0.95rem] font-bold text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
