@@ -430,7 +430,7 @@ export const dictionaries = {
           "გაქვთ შეკითხვა, წინადადება ან გჭირდებათ დახმარება? ჩვენი გუნდი მზადაა დაგეხმაროთ. აირჩიეთ თქვენთვის სასურველი გზა ან მოგვწერეთ ფორმის მეშვეობით.",
         methods: [
           { title: "ტელეფონი", value: "592076515", desc: "" },
-          { title: "მხარდაჭერა", value: "support@amcar.ge", desc: "დახმარება აპლიკაციასთან" },
+          { title: "მხარდაჭერა", value: "amcar2drivers@gmail.com", desc: "დახმარება აპლიკაციასთან" },
         ],
         formTitle: "გამოგვიგზავნეთ შეტყობინება",
         formSubtitle: "შეავსეთ ფორმა და მალე დაგიკავშირდებით.",
@@ -917,7 +917,7 @@ export const dictionaries = {
           "Have a question, a suggestion, or need a hand? Our team is here to help. Pick whatever channel suits you, or send us a message below.",
         methods: [
           { title: "Phone", value: "592076515", desc: "" },
-          { title: "Support", value: "support@amcar.ge", desc: "Help with the app" },
+          { title: "Support", value: "amcar2drivers@gmail.com", desc: "Help with the app" },
         ],
         formTitle: "Send us a message",
         formSubtitle: "Fill out the form and we'll get back to you shortly.",
