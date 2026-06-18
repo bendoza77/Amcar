@@ -152,10 +152,10 @@ export const dictionaries = {
     },
 
     benefits: {
-      eyebrow: "ციფრებში",
-      title: "მძღოლებისა და ხელოსნების ნდობით სარგებლობს",
+      eyebrow: "რატომ Amcar",
+      title: "შექმნილია მძღოლებისა და ხელოსნებისთვის",
       subtitle:
-        "ათასობით მძღოლი ეყრდნობა Amcar-ს ყოველ კვირას სწრაფი დახმარებისთვის — და ქსელი მუდმივად იზრდება.",
+        "Amcar ეხმარება მძღოლებს სწრაფად იპოვონ სანდო დახმარება და უკავშირებს ხელოსნებს ახალ მომხმარებლებს.",
       statLabels: [
         "დახმარებული მძღოლი",
         "გადამოწმებული ხელოსანი",
@@ -243,7 +243,7 @@ export const dictionaries = {
         },
         {
           q: "რომელ ქალაქებშია Amcar ხელმისაწვდომი?",
-          a: "Amcar სწრაფად ფართოვდება ძირითად ქალაქებში და უკვე 500-ზე მეტი გადამოწმებული ხელოსანი გვყავს. ახალი რეგიონები ყოველთვიურად ემატება.",
+          a: "Amcar ახლახ იწყებს მუშაობას — ამ ეტაპზე ვამატებთ გადამოწმებულ ხელოსნებს და ახალ რეგიონებს რეგულარულად დავამატებთ.",
         },
         {
           q: "რომელ მოწყობილობებს უჭერს მხარს?",
@@ -255,7 +255,7 @@ export const dictionaries = {
     cta: {
       title: "ყველაფერი ავტომობილის მოვლისთვის — ერთ აპლიკაციაში",
       description:
-        "შემოუერთდით ათასობით მძღოლს, ვინც სანდო ხელოსნებს წამებში პოულობს. ჩამოტვირთეთ Amcar და მოიხსენით ავტომობილის მოვლის სტრესი.",
+        "იპოვეთ სანდო ხელოსნები წამებში. ჩამოტვირთეთ Amcar და მოიხსენით ავტომობილის მოვლის სტრესი.",
       perks: ["უფასო ჩამოსატვირთად", "გამოწერის გარეშე", "Android-ზე"],
     },
 
@@ -265,7 +265,7 @@ export const dictionaries = {
       productTitle: "პროდუქტი",
       companyTitle: "კომპანია",
       legalTitle: "იურიდიული",
-      product: ["ფუნქციები", "როგორ მუშაობს", "შეფასებები", "ჩამოტვირთვა"],
+      product: ["ფუნქციები", "როგორ მუშაობს", "ჩამოტვირთვა"],
       company: ["ჩვენ შესახებ", "პრესა", "ბლოგი", "კონტაქტი"],
       legal: ["კონფიდენციალურობა", "პირობები", "ქუქიები", "ლიცენზიები"],
       getOnPhone: "მიიღეთ Amcar თქვენს ტელეფონზე",
@@ -429,8 +429,10 @@ export const dictionaries = {
         subtitle:
           "გაქვთ შეკითხვა, წინადადება ან გჭირდებათ დახმარება? ჩვენი გუნდი მზადაა დაგეხმაროთ. აირჩიეთ თქვენთვის სასურველი გზა ან მოგვწერეთ ფორმის მეშვეობით.",
         methods: [
-          { title: "ტელეფონი", value: "592076515", desc: "" },
+          { title: "ტელეფონი", value: "(+995) 592 076 515", desc: "" },
           { title: "მხარდაჭერა", value: "amcar2drivers@gmail.com", desc: "დახმარება აპლიკაციასთან" },
+          { title: "მდებარეობა", value: "თბილისი, საქართველო", desc: "" },
+          { title: "ხელმისაწვდომობა", value: "24/7", desc: "ჩვენ ყოველთვის თქვენს გვერდით ვართ" },
         ],
         formTitle: "გამოგვიგზავნეთ შეტყობინება",
         formSubtitle: "შეავსეთ ფორმა და მალე დაგიკავშირდებით.",
@@ -507,6 +509,7 @@ export const dictionaries = {
 
     a11y: {
       switchLang: "ენის შეცვლა",
+      toggleTheme: "მუქ/ღია რეჟიმის შეცვლა",
     },
   },
 
@@ -640,10 +643,10 @@ export const dictionaries = {
     },
 
     benefits: {
-      eyebrow: "By the numbers",
-      title: "Trusted by drivers and mechanics alike",
+      eyebrow: "Why Amcar",
+      title: "Built for drivers and mechanics alike",
       subtitle:
-        "Thousands of drivers rely on Amcar every week to find help fast — and the network keeps growing.",
+        "Amcar helps drivers find trusted help fast — and connects mechanics with new customers.",
       statLabels: [
         "Drivers helped",
         "Verified mechanics",
@@ -730,7 +733,7 @@ export const dictionaries = {
         },
         {
           q: "Which cities is Amcar available in?",
-          a: "Amcar is expanding fast across major metros with 500+ verified mechanics already on board. New regions are added every month.",
+          a: "Amcar is just launching. We're onboarding verified mechanics now, and new areas are added regularly.",
         },
         {
           q: "Which devices are supported?",
@@ -742,7 +745,7 @@ export const dictionaries = {
     cta: {
       title: "Everything you need for vehicle maintenance in one app",
       description:
-        "Join thousands of drivers who find trusted mechanics in seconds. Download Amcar and take the stress out of car care.",
+        "Find trusted mechanics in seconds. Download Amcar and take the stress out of car care.",
       perks: ["Free to download", "No subscription", "On Android"],
     },
 
@@ -752,7 +755,7 @@ export const dictionaries = {
       productTitle: "Product",
       companyTitle: "Company",
       legalTitle: "Legal",
-      product: ["Features", "How it works", "Reviews", "Download"],
+      product: ["Features", "How it works", "Download"],
       company: ["About", "Press", "Blog", "Contact"],
       legal: ["Privacy", "Terms", "Cookies", "Licenses"],
       getOnPhone: "Get Amcar on your phone",
@@ -916,8 +919,10 @@ export const dictionaries = {
         subtitle:
           "Have a question, a suggestion, or need a hand? Our team is here to help. Pick whatever channel suits you, or send us a message below.",
         methods: [
-          { title: "Phone", value: "592076515", desc: "" },
+          { title: "Phone", value: "(+995) 592 076 515", desc: "" },
           { title: "Support", value: "amcar2drivers@gmail.com", desc: "Help with the app" },
+          { title: "Location", value: "Tbilisi, Georgia", desc: "" },
+          { title: "Availability", value: "24/7", desc: "We're always here to help" },
         ],
         formTitle: "Send us a message",
         formSubtitle: "Fill out the form and we'll get back to you shortly.",
@@ -994,6 +999,7 @@ export const dictionaries = {
 
     a11y: {
       switchLang: "Switch language",
+      toggleTheme: "Toggle dark mode",
     },
   },
 };

@@ -3,7 +3,6 @@ import Features from "../components/sections/Features";
 import AppShowcase from "../components/sections/AppShowcase";
 import HowItWorks from "../components/sections/HowItWorks";
 import Benefits from "../components/sections/Benefits";
-import Testimonials from "../components/sections/Testimonials";
 import DownloadCTA from "../components/sections/DownloadCTA";
 import FAQ from "../components/sections/FAQ";
 import Seo from "../seo/Seo";
@@ -13,7 +12,7 @@ import { useTranslation } from "../hooks/useTranslation";
 
 /**
  * Home — the marketing landing page. Sections are ordered for conversion:
- * hook → value → product → proof → CTA.
+ * hook → value → product → CTA.
  *
  * SEO: the pillar page. Organization + WebSite live globally in index.html;
  * here we layer in the MobileApplication and FAQPage nodes, with the FAQ
@@ -44,7 +43,6 @@ export default function Home() {
       <AppShowcase />
       <HowItWorks />
       <Benefits />
-      <Testimonials />
       <DownloadCTA />
       <FAQ />
     </>

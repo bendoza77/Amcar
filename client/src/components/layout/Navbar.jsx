@@ -6,6 +6,7 @@ import Container from "./Container";
 import Logo from "../ui/Logo";
 import Button from "../ui/Button";
 import LanguageToggle from "../ui/LanguageToggle";
+import ThemeToggle from "../ui/ThemeToggle";
 import { useScrollPosition } from "../../hooks/useScrollPosition";
 import { useTranslation } from "../../hooks/useTranslation";
 import { NAV_LINKS } from "../../constants/site";
@@ -45,7 +46,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 to={`/${link.href}`}
-                className="rounded-full px-4 py-2 text-[0.95rem] font-medium text-text-muted transition-colors hover:bg-ink/5 hover:text-ink"
+                className="rounded-full px-4 py-2 text-[0.95rem] font-medium text-text-muted transition-colors hover:bg-ink/5 hover:text-fg"
               >
                 {t.nav[link.key]}
               </Link>
@@ -53,6 +54,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <ThemeToggle />
             <LanguageToggle />
             <Button variant="primary" size="sm" to="/#download" icon={Play}>
               {t.nav.getApp}
@@ -61,10 +63,11 @@ export default function Navbar() {
 
           {/* Mobile controls */}
           <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
             <LanguageToggle />
             <button
               onClick={() => setOpen((v) => !v)}
-              className="grid size-10 place-items-center rounded-xl text-ink transition-colors hover:bg-ink/5"
+              className="grid size-10 place-items-center rounded-xl text-fg transition-colors hover:bg-ink/5"
               aria-label="Menu"
               aria-expanded={open}
             >
@@ -90,7 +93,7 @@ export default function Navbar() {
                   key={link.href}
                   to={`/${link.href}`}
                   onClick={() => setOpen(false)}
-                  className="rounded-xl px-4 py-3 text-base font-medium text-ink transition-colors hover:bg-ink/5"
+                  className="rounded-xl px-4 py-3 text-base font-medium text-fg transition-colors hover:bg-ink/5"
                 >
                   {t.nav[link.key]}
                 </Link>

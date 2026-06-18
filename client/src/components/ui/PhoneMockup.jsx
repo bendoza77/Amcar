@@ -31,7 +31,7 @@ export default function PhoneMockup({ screen = "map", float = false, alt, priori
     <div className={cn("relative mx-auto w-[270px] sm:w-[300px]", float && "animate-float", className)}>
       {/* Device frame */}
       <div className="relative rounded-[2.8rem] border border-ink/10 bg-ink p-2.5 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.45)]">
-        <div className="relative overflow-hidden rounded-[2.2rem] bg-white">
+        <div className="relative overflow-hidden rounded-[2.2rem] bg-card">
           {/* Notch */}
           <div className="absolute left-1/2 top-2 z-20 h-6 w-28 -translate-x-1/2 rounded-full bg-ink" />
 

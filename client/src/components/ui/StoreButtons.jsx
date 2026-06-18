@@ -19,7 +19,7 @@ function StoreBadge({ href, icon: Icon, top, bottom, tone = "dark" }) {
         "inline-flex items-center gap-3 rounded-2xl px-5 py-3 transition-colors",
         dark
           ? "bg-ink text-white hover:bg-ink-soft"
-          : "border border-line bg-white text-ink hover:border-ink/30"
+          : "border border-line bg-card text-fg hover:border-ink/30"
       )}
     >
       <Icon className="size-7" />

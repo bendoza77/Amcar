@@ -1,14 +1,25 @@
 @import "tailwindcss";
 
+/* Dark mode is driven by a `.dark` class on <html> (toggled by ThemeProvider),
+   not the OS preference, so the `dark:` variant follows our explicit choice. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ============================================================
    SANDO — DESIGN SYSTEM
    Tailwind v4 CSS-first theme. Tokens map to utilities, e.g.
    --color-accent  ->  bg-accent / text-accent / border-accent
+
+   Semantic tokens (fg / bg / card / surface / line / text*) are redefined
+   under `.dark` below, so every utility that references them flips themes
+   automatically — no per-element `dark:` classes needed.
    ============================================================ */
 
 @theme {
   /* ---- Color System ---- */
-  --color-ink: #111111; /* primary */
+  --color-bg: #ffffff; /* page background */
+  --color-fg: #111111; /* primary text / headings */
+  --color-card: #ffffff; /* elevated card surface */
+  --color-ink: #111111; /* fixed dark surface (footer, dark CTAs, badges) */
   --color-ink-soft: #1c1c1f;
   --color-accent: #ff6b00; /* brand accent */
   --color-accent-soft: #ff8a33;
@@ -63,6 +74,29 @@
 }
 
 /* ============================================================
+   DARK THEME — redefine the semantic tokens. Because the utilities
+   reference these CSS variables, the whole UI flips with the class.
+   `ink`/`white` stay as fixed dark accents (footer, dark bands).
+   ============================================================ */
+.dark {
+  --color-bg: #0b0c0f; /* page background */
+  --color-fg: #f4f5f7; /* primary text / headings */
+  --color-card: #16181d; /* elevated card surface */
+  --color-ink: #15171c; /* dark bands sit just above the page */
+  --color-ink-soft: #1e2127;
+  --color-surface: #121317; /* muted section bg */
+  --color-line: #2a2d35; /* borders */
+  --color-text: #e6e8ec; /* body text */
+  --color-text-muted: #9aa3b2;
+
+  /* Soft brand-neutral shadows read as black on a dark canvas. */
+  --shadow-soft: 0 2px 8px -2px rgb(0 0 0 / 0.5), 0 12px 32px -8px rgb(0 0 0 / 0.55);
+  --shadow-lift: 0 8px 20px -6px rgb(0 0 0 / 0.6), 0 24px 48px -12px rgb(0 0 0 / 0.7);
+
+  color-scheme: dark; /* native form controls + scrollbars go dark */
+}
+
+/* ============================================================
    BASE LAYER
    ============================================================ */
 @layer base {
@@ -74,9 +108,10 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #ffffff;
+    background-color: var(--color-bg);
     color: var(--color-text);
     font-feature-settings: "cv11", "ss01";
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Cleaner focus ring that matches the brand */
@@ -147,6 +182,28 @@
     filter: blur(60px);
     opacity: 0.5;
   }
+}
+
+/* ============================================================
+   DARK-THEME UTILITY OVERRIDES
+   A handful of decorative utilities bake in light-mode colors; remap
+   them for dark so glass, grids and gradient text stay legible.
+   ============================================================ */
+.dark .glass {
+  background-color: rgb(18 19 23 / 0.62);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+}
+
+.dark .bg-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px);
+}
+
+.dark .text-gradient {
+  background: linear-gradient(120deg, #ffffff 0%, #c7ccd6 55%, #ff8a33 140%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ============================================================

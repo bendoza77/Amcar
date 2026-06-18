@@ -75,7 +75,7 @@ export default function LegalPage({ docKey }) {
           <motion.div variants={fadeUp}>
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-small font-semibold text-text-muted transition-colors hover:text-ink"
+              className="inline-flex items-center gap-2 text-small font-semibold text-text-muted transition-colors hover:text-fg"
             >
               <ArrowLeft className="size-4" /> {t.pages.backHome}
             </Link>
@@ -87,7 +87,7 @@ export default function LegalPage({ docKey }) {
 
           <motion.h1
             variants={fadeUp}
-            className="mt-5 text-display font-extrabold tracking-tight text-ink text-balance"
+            className="mt-5 text-display font-extrabold tracking-tight text-fg text-balance"
           >
             {doc.title}
           </motion.h1>
@@ -120,7 +120,7 @@ export default function LegalPage({ docKey }) {
                   <li key={i}>
                     <a
                       href={`#${slug(s.heading)}`}
-                      className="-ml-px block border-l-2 border-transparent pl-4 text-[0.9rem] text-text-muted transition-colors hover:border-accent hover:text-ink"
+                      className="-ml-px block border-l-2 border-transparent pl-4 text-[0.9rem] text-text-muted transition-colors hover:border-accent hover:text-fg"
                     >
                       {s.heading}
                     </a>
@@ -142,7 +142,7 @@ export default function LegalPage({ docKey }) {
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="scroll-mt-28 border-line py-8 first:pt-0 [&:not(:last-child)]:border-b"
               >
-                <h2 className="flex items-baseline gap-3 text-card font-extrabold tracking-tight text-ink">
+                <h2 className="flex items-baseline gap-3 text-card font-extrabold tracking-tight text-fg">
                   <span className="text-[0.95rem] font-bold text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>

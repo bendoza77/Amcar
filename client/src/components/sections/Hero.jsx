@@ -1,14 +1,13 @@
 import { motion } from "framer-motion";
-import { PlayCircle, Play, Star, Sparkles } from "lucide-react";
+import { PlayCircle, Play } from "lucide-react";
 import Container from "../layout/Container";
 import Button from "../ui/Button";
-import Badge from "../ui/Badge";
 import PhoneMockup from "../ui/PhoneMockup";
 import { useTranslation } from "../../hooks/useTranslation";
 import { fadeUp, fadeLeft, staggerContainer } from "../../lib/motion";
 
 /**
- * Hero — full-screen opener. Left: headline + CTAs + social proof.
+ * Hero — full-screen opener. Left: headline + CTAs.
  * Right: floating 3D-tilted phone with a live-looking map screen.
  * Background layers: animated gradient glow, dotted grid, spotlight.
  */
@@ -28,15 +27,9 @@ export default function Hero() {
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-8">
           {/* ---- Copy ---- */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-xl">
-            <motion.div variants={fadeUp}>
-              <Badge tone="accent" icon={Sparkles}>
-                {t.hero.badge}
-              </Badge>
-            </motion.div>
-
             <motion.h1
               variants={fadeUp}
-              className="mt-6 text-hero font-extrabold text-ink text-balance"
+              className="text-hero font-extrabold text-fg text-balance"
               /* Georgian glyphs have tall ascenders/descenders — loosen the
                  leading so stacked lines don't collide. */
               style={lang === "ka" ? { lineHeight: 1.18 } : undefined}
@@ -60,29 +53,6 @@ export default function Hero() {
               <Button variant="secondary" size="lg" href="#how-it-works" icon={PlayCircle}>
                 {t.hero.watchDemo}
               </Button>
-            </motion.div>
-
-            {/* Social proof */}
-            <motion.div variants={fadeUp} className="mt-10 flex items-center gap-5">
-              <div className="flex -space-x-3">
-                {["bg-accent", "bg-ink", "bg-success", "bg-accent-soft"].map((bg, i) => (
-                  <span
-                    key={i}
-                    className={`grid size-10 place-items-center rounded-full border-2 border-white text-[11px] font-bold text-white ${bg}`}
-                  >
-                    {["MT", "DR", "AK", "+"][i]}
-                  </span>
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="size-4 fill-accent text-accent" />
-                  ))}
-                  <span className="ml-1 text-small font-bold text-ink">4.9</span>
-                </div>
-                <p className="text-small text-text-muted">{t.hero.lovedBy}</p>
-              </div>
             </motion.div>
           </motion.div>
 

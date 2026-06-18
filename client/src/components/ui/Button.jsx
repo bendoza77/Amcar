@@ -16,9 +16,9 @@ const VARIANTS = {
   primary:
     "bg-accent text-white shadow-[0_8px_24px_-8px_rgba(255,107,0,0.6)] hover:bg-accent-deep",
   secondary:
-    "bg-white text-ink border border-line hover:border-ink/30 hover:shadow-soft",
+    "bg-card text-fg border border-line hover:border-ink/30 hover:shadow-soft",
   dark: "bg-ink text-white hover:bg-ink-soft",
-  ghost: "bg-transparent text-ink hover:bg-ink/5",
+  ghost: "bg-transparent text-fg hover:bg-ink/5",
 };
 
 const SIZES = {

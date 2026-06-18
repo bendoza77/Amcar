@@ -34,7 +34,7 @@ export default function LanguageToggle({ tone = "dark", className }) {
                 ? "text-white"
                 : light
                   ? "text-white/60 hover:text-white"
-                  : "text-text-muted hover:text-ink"
+                  : "text-text-muted hover:text-fg"
             )}
           >
             {active && (

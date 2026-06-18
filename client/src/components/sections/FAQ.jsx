@@ -34,7 +34,7 @@ export default function FAQ() {
                 key={i}
                 variants={fadeUp}
                 className={cn(
-                  "overflow-hidden rounded-2xl border bg-white transition-colors",
+                  "overflow-hidden rounded-2xl border bg-card transition-colors",
                   isOpen ? "border-accent/40 shadow-soft" : "border-line"
                 )}
               >
@@ -43,13 +43,13 @@ export default function FAQ() {
                   className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-[1.05rem] font-bold text-ink">{item.q}</span>
+                  <span className="text-[1.05rem] font-bold text-fg">{item.q}</span>
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.25 }}
                     className={cn(
                       "grid size-8 shrink-0 place-items-center rounded-full transition-colors",
-                      isOpen ? "bg-accent text-white" : "bg-ink/5 text-ink"
+                      isOpen ? "bg-accent text-white" : "bg-ink/5 text-fg"
                     )}
                   >
                     <Plus className="size-5" />

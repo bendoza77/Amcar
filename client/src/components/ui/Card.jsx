@@ -23,8 +23,8 @@ export default function Card({
       className={cn(
         "group relative rounded-3xl p-7",
         glass
-          ? "glass border border-white/60 shadow-soft"
-          : "border border-line bg-white shadow-soft",
+          ? "glass border border-white/60 shadow-soft dark:border-white/10"
+          : "border border-line bg-card shadow-soft",
         interactive &&
           "transition-shadow duration-300 hover:border-accent/30 hover:shadow-lift",
         className

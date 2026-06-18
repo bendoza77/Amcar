@@ -6,7 +6,7 @@ import { cn } from "../../lib/utils";
  */
 const TONES = {
   accent: "bg-accent/10 text-accent ring-accent/20",
-  neutral: "bg-ink/5 text-ink ring-ink/10",
+  neutral: "bg-ink/5 text-fg ring-ink/10",
   success: "bg-success/10 text-success ring-success/20",
 };
 

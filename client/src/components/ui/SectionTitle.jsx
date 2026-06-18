@@ -43,7 +43,7 @@ export default function SectionTitle({
 
       <motion.h2
         variants={fadeUp}
-        className="text-display font-extrabold text-ink text-balance"
+        className="text-display font-extrabold text-fg text-balance"
       >
         {title}
       </motion.h2>

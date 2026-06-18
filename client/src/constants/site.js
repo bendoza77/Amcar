@@ -27,7 +27,6 @@ export const NAV_LINKS = [
   { key: "features", href: "#features" },
   { key: "how", href: "#how-it-works" },
   { key: "about", href: "#benefits" },
-  { key: "reviews", href: "#testimonials" },
 ];
 
 /* Icons in display order — paired with t.features.items by index. */
@@ -40,14 +39,6 @@ export const SHOWCASE_SCREENS = ["home", "map", "service", "profile"];
 export const STEP_ICONS = [Search, GitCompareArrows, Route];
 export const STEP_NUMBERS = ["01", "02", "03"];
 
-/* Numeric stat values (suffix/decimals are presentation, labels come from t). */
-export const STAT_VALUES = [
-  { value: 10000, suffix: "+" },
-  { value: 500, suffix: "+" },
-  { value: 120000, suffix: "+" },
-  { value: 4.9, suffix: "★", decimals: 1 },
-];
-
 /* Benefit icons — paired with t.benefits.items. */
 export const BENEFIT_ICONS = [Clock, ShieldCheck, Tags];
 
@@ -55,7 +46,7 @@ export const BENEFIT_ICONS = [Clock, ShieldCheck, Tags];
    In-page sections use "/#id" so they also work from sub-pages; standalone
    pages use their route path. */
 export const FOOTER_HREFS = {
-  product: ["/#features", "/#how-it-works", "/#testimonials", "/#download"],
+  product: ["/#features", "/#how-it-works", "/#download"],
   company: ["/#benefits", "#", "#", "/contact"],
   legal: ["/privacy", "/terms", "/cookies", "/licenses"],
 };

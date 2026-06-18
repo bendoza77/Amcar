@@ -55,7 +55,7 @@ function ShowcaseRow({ item, screen, reversed, brand }) {
         <motion.div variants={fadeUp}>
           <Badge tone="neutral">{item.eyebrow}</Badge>
         </motion.div>
-        <motion.h3 variants={fadeUp} className="mt-5 text-[2rem] font-extrabold leading-tight tracking-tight text-ink">
+        <motion.h3 variants={fadeUp} className="mt-5 text-[2rem] font-extrabold leading-tight tracking-tight text-fg">
           {item.title}
         </motion.h3>
         <motion.p variants={fadeUp} className="mt-4 text-body-lg text-text-muted">
@@ -63,7 +63,7 @@ function ShowcaseRow({ item, screen, reversed, brand }) {
         </motion.p>
         <motion.ul variants={fadeUp} className="mt-6 flex flex-col gap-3">
           {item.bullets.map((b) => (
-            <li key={b} className="flex items-center gap-3 text-[0.975rem] font-medium text-ink">
+            <li key={b} className="flex items-center gap-3 text-[0.975rem] font-medium text-fg">
               <span className="grid size-6 place-items-center rounded-full bg-success/15 text-success">
                 <Check className="size-3.5" strokeWidth={3} />
               </span>

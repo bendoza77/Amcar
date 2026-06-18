@@ -54,13 +54,13 @@ export default function HowItWorks() {
               return (
                 <motion.div key={i} variants={fadeUp} className="relative flex flex-col items-center text-center">
                   {/* Node */}
-                  <div className="relative grid size-24 place-items-center rounded-3xl bg-white shadow-lift ring-1 ring-line">
+                  <div className="relative grid size-24 place-items-center rounded-3xl bg-card shadow-lift ring-1 ring-line">
                     <Icon className="size-9 text-accent" strokeWidth={2} />
                     <span className="absolute -right-2 -top-2 grid size-8 place-items-center rounded-full bg-ink text-small font-bold text-white">
                       {STEP_NUMBERS[i]}
                     </span>
                   </div>
-                  <h3 className="mt-7 text-card font-bold text-ink">{item.title}</h3>
+                  <h3 className="mt-7 text-card font-bold text-fg">{item.title}</h3>
                   <p className="mt-2 max-w-xs text-[0.975rem] leading-relaxed text-text-muted">{item.description}</p>
                 </motion.div>
               );

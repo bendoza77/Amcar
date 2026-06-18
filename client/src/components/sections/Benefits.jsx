@@ -1,14 +1,13 @@
 import { motion } from "framer-motion";
 import Container from "../layout/Container";
 import Badge from "../ui/Badge";
-import { useCountUp } from "../../hooks/useCountUp";
 import { useTranslation } from "../../hooks/useTranslation";
-import { STAT_VALUES, BENEFIT_ICONS } from "../../constants/site";
+import { BENEFIT_ICONS } from "../../constants/site";
 import { fadeUp, fadeRight, staggerContainer, viewportOnce } from "../../lib/motion";
 
 /**
- * Benefits — dark storytelling band with animated statistics on the left and
- * benefit highlights on the right. The numbers count up when scrolled into view.
+ * Benefits — dark storytelling band: value copy on the left, benefit
+ * highlights on the right.
  */
 export default function Benefits() {
   const { t } = useTranslation();
@@ -34,12 +33,6 @@ export default function Benefits() {
             <motion.p variants={fadeUp} className="mt-5 max-w-md text-body-lg text-white/65">
               {t.benefits.subtitle}
             </motion.p>
-
-            <motion.div variants={fadeUp} className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10">
-              {STAT_VALUES.map((stat, i) => (
-                <Stat key={i} {...stat} label={t.benefits.statLabels[i]} />
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* Right: benefit highlights */}
@@ -73,30 +66,4 @@ export default function Benefits() {
       </Container>
     </section>
   );
-}
-
-function Stat({ value, suffix, label, decimals = 0 }) {
-  const { ref, value: animated } = useCountUp(value);
-  // Integers count up and display compactly (12K); decimals (e.g. 4.9 rating)
-  // show their exact target since rounding mid-animation would look wrong.
-  const shown = decimals > 0 ? Number(value).toFixed(decimals) : formatNumber(animated);
-
-  return (
-    <div ref={ref}>
-      <div className="text-[2.75rem] font-extrabold leading-none tracking-tight text-white">
-        {shown}
-        <span className="text-accent">{suffix}</span>
-      </div>
-      <p className="mt-2 text-[0.95rem] text-white/55">{label}</p>
-    </div>
-  );
-}
-
-/** 12000 -> "12K", 120000 -> "120K" for compact display. */
-function formatNumber(n) {
-  if (n >= 1000) {
-    const k = n / 1000;
-    return `${k % 1 === 0 ? k : k.toFixed(0)}K`;
-  }
-  return String(n);
 }

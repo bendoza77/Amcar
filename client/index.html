@@ -2,6 +2,18 @@
 <html lang="ka">
   <head>
     <meta charset="UTF-8" />
+    <!-- Apply the saved/preferred color theme before paint to avoid a flash. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("amcar-theme");
+          var dark =
+            saved === "dark" ||
+            (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/brand/amcar-favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
