@@ -32,7 +32,7 @@ export default function Features() {
           {t.features.items.map((item, i) => {
             const Icon = FEATURE_ICONS[i];
             return (
-              <motion.div key={item.title} variants={fadeUp}>
+              <motion.div key={i} variants={fadeUp}>
                 <Card interactive className="h-full">
                   <div className="flex size-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
                     <Icon className="size-6" strokeWidth={2.1} />

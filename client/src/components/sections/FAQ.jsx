@@ -31,7 +31,7 @@ export default function FAQ() {
             const isOpen = open === i;
             return (
               <motion.div
-                key={item.q}
+                key={i}
                 variants={fadeUp}
                 className={cn(
                   "overflow-hidden rounded-2xl border bg-white transition-colors",

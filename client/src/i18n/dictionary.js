@@ -429,9 +429,7 @@ export const dictionaries = {
         subtitle:
           "გაქვთ შეკითხვა, წინადადება ან გჭირდებათ დახმარება? ჩვენი გუნდი მზადაა დაგეხმაროთ. აირჩიეთ თქვენთვის სასურველი გზა ან მოგვწერეთ ფორმის მეშვეობით.",
         methods: [
-          { title: "ელფოსტა", value: "hello@amcar.ge", desc: "ჩვეულებრივ ვპასუხობთ 24 საათში" },
-          { title: "ტელეფონი", value: "+995 322 00 00 00", desc: "ორშ.–პარ. 9:00–18:00" },
-          { title: "ოფისი", value: "თბილისი, საქართველო", desc: "რუსთაველის გამზ. 12" },
+          { title: "ტელეფონი", value: "592076515", desc: "" },
           { title: "მხარდაჭერა", value: "support@amcar.ge", desc: "დახმარება აპლიკაციასთან" },
         ],
         formTitle: "გამოგვიგზავნეთ შეტყობინება",
@@ -447,6 +445,8 @@ export const dictionaries = {
           messagePh: "მოგვიყევით მეტი…",
         },
         send: "შეტყობინების გაგზავნა",
+        sending: "იგზავნება…",
+        error: "შეტყობინების გაგზავნა ვერ მოხერხდა. სცადეთ ხელახლა.",
         success: "გმადლობთ! თქვენი შეტყობინება მიღებულია — მალე დაგიკავშირდებით.",
       },
       notFound: {
@@ -916,9 +916,7 @@ export const dictionaries = {
         subtitle:
           "Have a question, a suggestion, or need a hand? Our team is here to help. Pick whatever channel suits you, or send us a message below.",
         methods: [
-          { title: "Email", value: "hello@amcar.ge", desc: "We usually reply within 24 hours" },
-          { title: "Phone", value: "+995 322 00 00 00", desc: "Mon–Fri, 9:00–18:00" },
-          { title: "Office", value: "Tbilisi, Georgia", desc: "12 Rustaveli Ave" },
+          { title: "Phone", value: "592076515", desc: "" },
           { title: "Support", value: "support@amcar.ge", desc: "Help with the app" },
         ],
         formTitle: "Send us a message",
@@ -934,6 +932,8 @@ export const dictionaries = {
           messagePh: "Tell us more…",
         },
         send: "Send message",
+        sending: "Sending…",
+        error: "Couldn't send your message. Please try again.",
         success: "Thanks! Your message has been received — we'll be in touch soon.",
       },
       notFound: {

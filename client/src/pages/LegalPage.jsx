@@ -116,8 +116,8 @@ export default function LegalPage({ docKey }) {
                 {t.pages.tocTitle}
               </p>
               <ul className="mt-4 flex flex-col gap-2.5 border-l border-line">
-                {doc.sections.map((s) => (
-                  <li key={s.heading}>
+                {doc.sections.map((s, i) => (
+                  <li key={i}>
                     <a
                       href={`#${slug(s.heading)}`}
                       className="-ml-px block border-l-2 border-transparent pl-4 text-[0.9rem] text-text-muted transition-colors hover:border-accent hover:text-ink"
@@ -134,7 +134,7 @@ export default function LegalPage({ docKey }) {
           <div className="max-w-2xl">
             {doc.sections.map((s, i) => (
               <motion.section
-                key={s.heading}
+                key={i}
                 id={slug(s.heading)}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}

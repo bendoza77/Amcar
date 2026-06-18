@@ -54,7 +54,7 @@ export default function Benefits() {
               const Icon = BENEFIT_ICONS[i];
               return (
                 <motion.div
-                  key={item.title}
+                  key={i}
                   variants={fadeRight}
                   className="flex gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-colors hover:border-accent/40 hover:bg-white/[0.07]"
                 >

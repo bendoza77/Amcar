@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Mail, Phone, MapPin, LifeBuoy, Send, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Phone, LifeBuoy, Send, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Container from "../components/layout/Container";
 import Badge from "../components/ui/Badge";
@@ -11,7 +11,7 @@ import Seo from "../seo/Seo";
 import { getRoute } from "../seo/siteMeta";
 import { webPageSchema, breadcrumbSchema } from "../seo/structuredData";
 
-const METHOD_ICONS = [Mail, Phone, MapPin, LifeBuoy];
+const METHOD_ICONS = [Phone, LifeBuoy];
 
 /**
  * Contact — a designed contact page: intro, four contact-method cards, and a
@@ -23,6 +23,8 @@ export default function Contact() {
   const c = t.pages.contact;
   const f = c.fields;
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
 
   const m = getRoute("/contact").meta[lang];
   const crumbs = [
@@ -40,9 +42,28 @@ export default function Contact() {
     }),
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
+    setError(false);
+    setSending(true);
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const base = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${base}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setSent(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -88,15 +109,15 @@ export default function Contact() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1"
+            className="grid auto-rows-fr gap-4 self-start sm:grid-cols-2 lg:grid-cols-1"
           >
             {c.methods.map((m, i) => {
               const Icon = METHOD_ICONS[i];
               return (
                 <motion.div
-                  key={m.title}
+                  key={i}
                   variants={fadeUp}
-                  className="flex items-start gap-4 rounded-2xl border border-line bg-white p-5 transition-shadow hover:shadow-soft"
+                  className="flex h-full items-start gap-4 rounded-2xl border border-line bg-white p-5 transition-shadow hover:shadow-soft"
                 >
                   <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
                     <Icon className="size-5" />
@@ -108,7 +129,7 @@ export default function Contact() {
                     <p className="mt-1 break-words text-[1.05rem] font-bold tracking-tight text-ink">
                       {m.value}
                     </p>
-                    <p className="mt-0.5 text-[0.9rem] text-text-muted">{m.desc}</p>
+                    {m.desc && <p className="mt-0.5 text-[0.9rem] text-text-muted">{m.desc}</p>}
                   </div>
                 </motion.div>
               );
@@ -156,9 +177,19 @@ export default function Contact() {
                     as="textarea"
                     required
                   />
-                  <Button type="submit" variant="primary" size="lg" icon={Send} className="mt-2 w-full">
-                    {c.send}
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    icon={Send}
+                    className="mt-2 w-full"
+                    disabled={sending}
+                  >
+                    {sending ? c.sending : c.send}
                   </Button>
+                  {error && (
+                    <p className="text-center text-[0.9rem] font-medium text-red-600">{c.error}</p>
+                  )}
                 </form>
               </>
             )}

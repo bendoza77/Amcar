@@ -52,7 +52,7 @@ export default function HowItWorks() {
             {t.steps.items.map((item, i) => {
               const Icon = STEP_ICONS[i];
               return (
-                <motion.div key={item.title} variants={fadeUp} className="relative flex flex-col items-center text-center">
+                <motion.div key={i} variants={fadeUp} className="relative flex flex-col items-center text-center">
                   {/* Node */}
                   <div className="relative grid size-24 place-items-center rounded-3xl bg-white shadow-lift ring-1 ring-line">
                     <Icon className="size-9 text-accent" strokeWidth={2} />
