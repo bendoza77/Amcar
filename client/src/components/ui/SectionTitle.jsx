@@ -19,6 +19,7 @@ export default function SectionTitle({
   align = "center",
   tone = "accent",
   className,
+  titleClassName,
 }) {
   const isCenter = align === "center";
 
@@ -43,7 +44,7 @@ export default function SectionTitle({
 
       <motion.h2
         variants={fadeUp}
-        className="text-display font-extrabold text-fg text-balance"
+        className={cn("text-display font-extrabold text-fg text-balance", titleClassName)}
       >
         {title}
       </motion.h2>

@@ -32,7 +32,7 @@ export default function Hero() {
               className="text-hero font-extrabold text-fg text-balance"
               /* Georgian glyphs have tall ascenders/descenders — loosen the
                  leading so stacked lines don't collide. */
-              style={lang === "ka" ? { lineHeight: 1.18 } : undefined}
+              style={lang === "ka" ? { lineHeight: 1.08 } : undefined}
             >
               {t.hero.titleBefore}
               <span className="text-gradient">{t.hero.titleHighlight}</span>

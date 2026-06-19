@@ -12,7 +12,7 @@ import { fadeUp, staggerContainer, viewportOnce } from "../../lib/motion";
  * Icons come from constants; copy comes from the active locale.
  */
 export default function Features() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   return (
     <section id="features" className="py-24 lg:py-32">
       <Container>
@@ -20,6 +20,8 @@ export default function Features() {
           eyebrow={t.features.eyebrow}
           title={t.features.title}
           subtitle={t.features.subtitle}
+          /* Georgian glyphs are tall — give the title roomier leading. */
+          titleClassName={lang === "ka" ? "leading-snug" : undefined}
         />
 
         <motion.div

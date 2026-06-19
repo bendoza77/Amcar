@@ -74,7 +74,7 @@ export const dictionaries = {
         {
           title: "ნავიგაცია ერთი შეხებით",
           description:
-            "გააგზავნეთ მარშრუტი თქვენს საყვარელ რუკების აპლიკაციაში და მიდით ყოყმანის გარეშე.",
+            "ერთი შეხებით გახსენით მარშრუტი და შეუდექით გზას.",
         },
         {
           title: "გადამოწმებული და შეფასებული",
@@ -114,7 +114,7 @@ export const dictionaries = {
           eyebrow: "სერვისები",
           title: "შეადარეთ სერვისები და ფასები",
           description:
-            "დაათვალიერეთ საწყისი ფასები და შეთავაზებები სხვადასხვა სერვისში, რათა ყოველთვის სამართლიან ფასს მიიღოთ.",
+            "დაათვალიერეთ საწყისი ფასები და შეთავაზებები სხვადასხვა სერვისში, რათა ყოველთვის სამართლიანი ფასი მიიღოთ.",
           bullets: ["გამჭვირვალე საწყისი ფასები", "სერვისების მკაფიო დაყოფა"],
         },
         {
@@ -320,7 +320,7 @@ export const dictionaries = {
               heading: "თქვენი უფლებები",
               body: [
                 "ნებისმიერ დროს შეგიძლიათ წვდომა, განახლება ან წაშლა მოითხოვოთ თქვენი მონაცემებისთვის.",
-                "მონაცემებთან დაკავშირებული ნებისმიერი მოთხოვნისთვის დაგვიკავშირდით: privacy@amcar.ge.",
+                "მონაცემებთან დაკავშირებული ნებისმიერი მოთხოვნისთვის დაგვიკავშირდით: amcar2drivers@gmail.com.",
               ],
             },
           ],
@@ -417,7 +417,7 @@ export const dictionaries = {
             {
               heading: "კონტაქტი",
               body: [
-                "ლიცენზიებთან დაკავშირებული შეკითხვებისთვის მოგვწერეთ: legal@amcar.ge.",
+                "ლიცენზიებთან დაკავშირებული შეკითხვებისთვის მოგვწერეთ: amcar2drivers@gmail.com.",
               ],
             },
           ],
@@ -810,7 +810,7 @@ export const dictionaries = {
               heading: "Your rights",
               body: [
                 "You can request access to, correction of, or deletion of your data at any time.",
-                "For any data request, contact us at privacy@amcar.ge.",
+                "For any data request, contact us at amcar2drivers@gmail.com.",
               ],
             },
           ],
@@ -907,7 +907,7 @@ export const dictionaries = {
             {
               heading: "Contact",
               body: [
-                "For licensing questions, email us at legal@amcar.ge.",
+                "For licensing questions, email us at amcar2drivers@gmail.com.",
               ],
             },
           ],
