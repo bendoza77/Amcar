@@ -27,6 +27,7 @@ export const NAV_LINKS = [
   { key: "features", href: "#features" },
   { key: "how", href: "#how-it-works" },
   { key: "about", href: "#benefits" },
+  { key: "map", href: "map" },
 ];
 
 /* Icons in display order — paired with t.features.items by index. */

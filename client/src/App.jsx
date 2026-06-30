@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import LegalPage from "./pages/LegalPage";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import MapPage from "./pages/MapPage";
+import Admin from "./pages/Admin";
 
 /**
  * App — route table for the Amcar site. Every route renders inside the shared
@@ -16,6 +18,10 @@ export default function App() {
   return (
     <>
       <Routes>
+        {/* Full-screen pages render outside the shared Layout (no navbar/footer). */}
+        <Route path="/map" element={<MapPage />} />
+        <Route path="/admin" element={<Admin />} />
+
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<LegalPage docKey="privacy" />} />
