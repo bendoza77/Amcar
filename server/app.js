@@ -1,6 +1,8 @@
-require("dotenv").config();
-
 const path = require("path");
+// Load .env from this file's directory so the server works no matter which
+// working directory it's launched from (e.g. `node server/app.js` from root).
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+
 const express = require("express");
 const cors = require("cors");
 
