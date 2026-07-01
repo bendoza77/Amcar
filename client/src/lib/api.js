@@ -23,17 +23,26 @@ export function resolveImage(src) {
   return src;
 }
 
-import { auth } from "./firebase";
+/**
+ * Admin session token — issued by POST /api/admin/login and kept in
+ * localStorage so the admin stays signed in across reloads. No Firebase.
+ */
+const TOKEN_KEY = "amcar_admin_token";
 
-/** Builds the Firebase Bearer auth header from the signed-in admin's ID token. */
+export const adminToken = {
+  get: () => localStorage.getItem(TOKEN_KEY) || "",
+  set: (t) => localStorage.setItem(TOKEN_KEY, t),
+  clear: () => localStorage.removeItem(TOKEN_KEY),
+};
+
+/** Builds the Bearer auth header from the stored admin session token. */
 async function authHeader() {
-  const user = auth.currentUser;
-  if (!user) {
+  const token = adminToken.get();
+  if (!token) {
     const err = new Error("NOT_AUTHENTICATED");
     err.status = 401;
     throw err;
   }
-  const token = await user.getIdToken();
   return { Authorization: `Bearer ${token}` };
 }
 
@@ -104,5 +113,15 @@ export const mechanicsApi = {
 /* ------------------------------- Admin ------------------------------- */
 
 export const adminApi = {
+  /** Logs in with an admin email + shared password; stores the session token. */
+  login: async (email, password) => {
+    const r = await request("/api/admin/login", {
+      method: "POST",
+      body: { email, password },
+    });
+    adminToken.set(r.token);
+    return r;
+  },
   verify: () => request("/api/admin/verify", { admin: true }),
+  logout: () => adminToken.clear(),
 };

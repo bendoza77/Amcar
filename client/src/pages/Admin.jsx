@@ -11,46 +11,41 @@ import {
   Loader2,
   ArrowLeft,
 } from "lucide-react";
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { mechanicsApi, adminApi } from "../lib/api";
-import { auth } from "../lib/firebase";
+import { mechanicsApi, adminApi, adminToken } from "../lib/api";
 import MechanicForm from "../components/admin/MechanicForm";
 
 /**
- * Admin — Firebase-gated dashboard to manage map mechanics. The admin signs in
- * with email/password; the server then verifies the Firebase ID token and that
- * the email is an authorized admin before any create / edit / delete.
+ * Admin — dashboard to manage map mechanics. The admin signs in with an
+ * allowlisted email + the shared admin password; the server issues a session
+ * token that authorizes every create / edit / delete. No Firebase.
  */
 export default function Admin() {
-  const [user, setUser] = useState(null);
-  const [allowed, setAllowed] = useState(false);
+  const [adminEmail, setAdminEmail] = useState(null);
   const [checking, setChecking] = useState(true);
-  const [accessError, setAccessError] = useState("");
 
-  // React to Firebase auth state; once signed in, confirm admin access server-side.
+  // On load, if we already hold a token, confirm it's still a valid admin session.
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (u) => {
-      setUser(u);
-      setAccessError("");
-      if (u) {
-        try {
-          await adminApi.verify();
-          setAllowed(true);
-        } catch (e) {
-          setAllowed(false);
-          setAccessError(
-            e.status === 403
-              ? "This account isn't authorized as an admin."
-              : "Couldn't verify admin access. Try again."
-          );
-        }
-      } else {
-        setAllowed(false);
-      }
+    let alive = true;
+    if (!adminToken.get()) {
       setChecking(false);
-    });
-    return unsub;
+      return;
+    }
+    adminApi
+      .verify()
+      .then((r) => alive && setAdminEmail(r.email))
+      .catch(() => {
+        adminToken.clear();
+      })
+      .finally(() => alive && setChecking(false));
+    return () => {
+      alive = false;
+    };
   }, []);
+
+  const logout = () => {
+    adminApi.logout();
+    setAdminEmail(null);
+  };
 
   if (checking) {
     return (
@@ -60,33 +55,29 @@ export default function Admin() {
     );
   }
 
-  return user && allowed ? (
-    <Dashboard onLogout={() => signOut(auth)} adminEmail={user.email} />
+  return adminEmail ? (
+    <Dashboard onLogout={logout} adminEmail={adminEmail} />
   ) : (
-    <Login signedInNotAdmin={!!user} accessError={accessError} onSignOut={() => signOut(auth)} />
+    <Login onLoggedIn={setAdminEmail} />
   );
 }
 
-/** Maps Firebase auth error codes to friendly copy. */
+/** Maps login error codes from the server to friendly copy. */
 function authMessage(code) {
   switch (code) {
-    case "auth/invalid-email":
-      return "That email address looks invalid.";
-    case "auth/user-disabled":
-      return "This account has been disabled.";
-    case "auth/invalid-credential":
-    case "auth/wrong-password":
-    case "auth/user-not-found":
+    case "NOT_ADMIN":
+      return "This email isn't authorized as an admin.";
+    case "INVALID_CREDENTIALS":
       return "Incorrect email or password.";
-    case "auth/too-many-requests":
-      return "Too many attempts. Try again later.";
+    case "ADMIN_NOT_CONFIGURED":
+      return "Admin login isn't configured on the server.";
     default:
       return "Sign-in failed. Please try again.";
   }
 }
 
 /* ------------------------------- Login ------------------------------- */
-function Login({ signedInNotAdmin, accessError, onSignOut }) {
+function Login({ onLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -97,10 +88,10 @@ function Login({ signedInNotAdmin, accessError, onSignOut }) {
     setErr("");
     setBusy(true);
     try {
-      await signInWithEmailAndPassword(auth, email.trim(), password);
-      // onAuthStateChanged in <Admin> takes over from here.
+      const r = await adminApi.login(email.trim(), password);
+      onLoggedIn(r.email);
     } catch (e2) {
-      setErr(authMessage(e2.code));
+      setErr(authMessage(e2.message));
     } finally {
       setBusy(false);
     }
@@ -123,52 +114,37 @@ function Login({ signedInNotAdmin, accessError, onSignOut }) {
           </div>
         </div>
 
-        {signedInNotAdmin ? (
-          // Authenticated, but the email isn't on the admin allowlist.
-          <div className="space-y-4">
-            <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-600 dark:border-red-500/30 dark:bg-red-500/10">
-              {accessError || "This account isn't authorized as an admin."}
-            </p>
-            <button
-              onClick={onSignOut}
-              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-accent font-semibold text-white transition-colors hover:bg-accent-deep"
-            >
-              Sign in with a different account
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={submit} className="space-y-4">
-            <label className="block">
-              <span className="text-sm font-semibold text-fg">Email</span>
-              <input
-                type="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@amcar.ge"
-                className="mt-1.5 w-full rounded-xl border border-line bg-card px-4 py-3 text-sm text-fg outline-none focus:border-accent focus:ring-4 focus:ring-accent/10"
-              />
-            </label>
-            <label className="block">
-              <span className="text-sm font-semibold text-fg">Password</span>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="mt-1.5 w-full rounded-xl border border-line bg-card px-4 py-3 text-sm text-fg outline-none focus:border-accent focus:ring-4 focus:ring-accent/10"
-              />
-            </label>
-            {err && <p className="text-sm font-medium text-red-500">{err}</p>}
-            <button
-              type="submit"
-              disabled={busy}
-              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-accent font-semibold text-white transition-colors hover:bg-accent-deep disabled:opacity-60"
-            >
-              {busy ? "Signing in…" : "Sign in"}
-            </button>
-          </form>
-        )}
+        <form onSubmit={submit} className="space-y-4">
+          <label className="block">
+            <span className="text-sm font-semibold text-fg">Email</span>
+            <input
+              type="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@amcar.ge"
+              className="mt-1.5 w-full rounded-xl border border-line bg-card px-4 py-3 text-sm text-fg outline-none focus:border-accent focus:ring-4 focus:ring-accent/10"
+            />
+          </label>
+          <label className="block">
+            <span className="text-sm font-semibold text-fg">Password</span>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="mt-1.5 w-full rounded-xl border border-line bg-card px-4 py-3 text-sm text-fg outline-none focus:border-accent focus:ring-4 focus:ring-accent/10"
+            />
+          </label>
+          {err && <p className="text-sm font-medium text-red-500">{err}</p>}
+          <button
+            type="submit"
+            disabled={busy}
+            className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-accent font-semibold text-white transition-colors hover:bg-accent-deep disabled:opacity-60"
+          >
+            {busy ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
 
         <Link to="/home" className="mt-5 inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-fg">
           <ArrowLeft className="size-4" /> Back to site

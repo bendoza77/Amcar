@@ -1,44 +1,33 @@
 const jwt = require("jsonwebtoken");
 
 /**
- * adminAuth — verifies a Firebase ID token sent as `Authorization: Bearer <token>`.
+ * adminAuth — verifies the admin session token sent as
+ * `Authorization: Bearer <token>`.
  *
- * Verification is done without the Firebase Admin SDK / service account: we
- * validate the token's RS256 signature against Google's public x509 certs and
- * check the audience/issuer match this Firebase project. The signed-in user's
- * email must also be in ADMIN_EMAILS (comma-separated) to count as an admin.
+ * The token is issued by POST /api/admin/login (see adminRoutes) after an
+ * email/password check. It is a plain HS256 JWT; we verify the signature and
+ * that the email is still on the ADMIN_EMAILS allowlist. No Firebase / external
+ * calls involved.
  *
- * Required env: FIREBASE_PROJECT_ID. Recommended: ADMIN_EMAILS.
+ * The token is signed with ADMIN_JWT_SECRET if set, otherwise with
+ * ADMIN_PASSWORD itself — so only ADMIN_EMAILS + ADMIN_PASSWORD are required,
+ * and changing the password invalidates every existing session.
+ *
+ * Required env: ADMIN_PASSWORD. Recommended: ADMIN_EMAILS, ADMIN_JWT_SECRET.
  */
-const PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+const JWT_SECRET = process.env.ADMIN_JWT_SECRET || process.env.ADMIN_PASSWORD;
+
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "")
   .split(",")
   .map((s) => s.trim().toLowerCase())
   .filter(Boolean);
 
-const CERT_URL =
-  "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
+/** Shared with adminRoutes so the login handler can reuse the same allowlist. */
+adminAuth.ADMIN_EMAILS = ADMIN_EMAILS;
 
-// Google rotates these certs; cache them until the Cache-Control max-age lapses.
-let certCache = { certs: null, expiresAt: 0 };
-
-async function getCerts() {
-  if (certCache.certs && Date.now() < certCache.expiresAt) return certCache.certs;
-
-  const res = await fetch(CERT_URL);
-  if (!res.ok) throw new Error(`cert fetch failed (${res.status})`);
-  const certs = await res.json();
-
-  const cacheControl = res.headers.get("cache-control") || "";
-  const maxAge = /max-age=(\d+)/.exec(cacheControl);
-  const ttl = maxAge ? parseInt(maxAge[1], 10) * 1000 : 60 * 60 * 1000;
-  certCache = { certs, expiresAt: Date.now() + ttl };
-  return certs;
-}
-
-module.exports = async function adminAuth(req, res, next) {
-  if (!PROJECT_ID) {
-    return res.status(500).json({ ok: false, error: "FIREBASE_NOT_CONFIGURED" });
+function adminAuth(req, res, next) {
+  if (!JWT_SECRET) {
+    return res.status(500).json({ ok: false, error: "ADMIN_NOT_CONFIGURED" });
   }
 
   const header = req.headers.authorization || "";
@@ -46,35 +35,21 @@ module.exports = async function adminAuth(req, res, next) {
   if (!token) return res.status(401).json({ ok: false, error: "UNAUTHORIZED" });
 
   try {
-    // Find the signing key id from the token header.
-    const decoded = jwt.decode(token, { complete: true });
-    const kid = decoded?.header?.kid;
-    if (!kid) return res.status(401).json({ ok: false, error: "INVALID_TOKEN" });
-
-    const certs = await getCerts();
-    const cert = certs[kid];
-    if (!cert) return res.status(401).json({ ok: false, error: "INVALID_TOKEN" });
-
-    const payload = jwt.verify(token, cert, {
-      algorithms: ["RS256"],
-      audience: PROJECT_ID,
-      issuer: `https://securetoken.google.com/${PROJECT_ID}`,
-    });
-
+    const payload = jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });
     const email = (payload.email || "").toLowerCase();
 
-    if (ADMIN_EMAILS.length === 0) {
-      // No allowlist configured — any authenticated Firebase user passes.
-      // Set ADMIN_EMAILS in the environment to restrict to specific admins.
-      console.warn("ADMIN_EMAILS is empty — every authenticated user is treated as admin.");
-    } else if (!ADMIN_EMAILS.includes(email)) {
+    // Re-check the allowlist on every request so removing an email from
+    // ADMIN_EMAILS revokes access even for already-issued tokens.
+    if (ADMIN_EMAILS.length > 0 && !ADMIN_EMAILS.includes(email)) {
       return res.status(403).json({ ok: false, error: "NOT_ADMIN" });
     }
 
-    req.admin = { uid: payload.user_id || payload.sub, email };
+    req.admin = { email };
     next();
   } catch (err) {
     console.error("adminAuth verify error:", err.message);
     return res.status(401).json({ ok: false, error: "INVALID_TOKEN" });
   }
-};
+}
+
+module.exports = adminAuth;
