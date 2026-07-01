@@ -134,6 +134,15 @@
    UTILITIES — reusable design primitives
    ============================================================ */
 @layer utilities {
+  /* Hide the scrollbar while keeping horizontal scroll (map filter chips). */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Subtle dotted grid used behind hero / CTA */
   .bg-grid {
     background-image: radial-gradient(

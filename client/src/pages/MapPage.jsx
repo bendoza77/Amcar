@@ -1,12 +1,29 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { APIProvider, Map, AdvancedMarker, useMap } from "@vis.gl/react-google-maps";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  useMap,
+  useMapsLibrary,
+} from "@vis.gl/react-google-maps";
 import { AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Search, LocateFixed, Wrench, Loader2, SlidersHorizontal } from "lucide-react";
+import {
+  ArrowLeft,
+  Search,
+  LocateFixed,
+  Wrench,
+  Loader2,
+  SlidersHorizontal,
+  X,
+  Navigation,
+} from "lucide-react";
 import "../styles/maps.css";
 
 import { useTheme } from "../hooks/useTheme";
+import { useTranslation } from "../hooks/useTranslation";
 import { mechanicsApi, resolveImage } from "../lib/api";
+import { MECHANIC_CATEGORIES } from "../constants/site";
 import MechanicDetailPanel from "../components/map/MechanicDetailPanel";
 import { cn } from "../lib/utils";
 
@@ -48,6 +65,7 @@ export default function MapPage() {
 
 function MapView() {
   const { isDark } = useTheme();
+  const { t, lang } = useTranslation();
   const map = useMap();
   const gotFirstFix = useRef(false);
 
@@ -64,6 +82,27 @@ function MapView() {
 
   const [query, setQuery] = useState("");
   const [onlyOpen, setOnlyOpen] = useState(false);
+  const [activeCats, setActiveCats] = useState([]); // selected category keys
+
+  // In-map navigation (route drawn on the Amcar map, not an external redirect).
+  const [navTarget, setNavTarget] = useState(null);
+  const [navInfo, setNavInfo] = useState(null); // { distance, duration, approx }
+
+  const toggleCat = (key) =>
+    setActiveCats((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
+
+  const startNavigation = useCallback((m) => {
+    setSelected(null); // close the panel so the route is visible
+    setNavInfo(null);
+    setNavTarget(m);
+  }, []);
+  const stopNavigation = useCallback(() => {
+    setNavTarget(null);
+    setNavInfo(null);
+  }, []);
+  const handleNavInfo = useCallback((info) => setNavInfo(info), []);
 
   /* ----------------------------- data ----------------------------- */
   useEffect(() => {
@@ -106,8 +145,23 @@ function MapView() {
   /* ----------------------------- derived ----------------------------- */
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
+    const cats = MECHANIC_CATEGORIES.filter((c) => activeCats.includes(c.key));
     return mechanics.filter((m) => {
       if (onlyOpen && !m.isOpen) return false;
+
+      // Category chips (match ANY selected category) — searched against the
+      // mechanic's service names + price-list services.
+      if (cats.length) {
+        const hay = [
+          ...(m.services || []),
+          ...(m.priceList || []).map((p) => p.service),
+        ]
+          .join(" ")
+          .toLowerCase();
+        const ok = cats.some((c) => c.keywords.some((k) => hay.includes(k)));
+        if (!ok) return false;
+      }
+
       if (!q) return true;
       return (
         m.name?.toLowerCase().includes(q) ||
@@ -115,7 +169,27 @@ function MapView() {
         m.services?.some((s) => s.toLowerCase().includes(q))
       );
     });
-  }, [mechanics, query, onlyOpen]);
+  }, [mechanics, query, onlyOpen, activeCats]);
+
+  const countText = loading
+    ? t.mapUI.loading
+    : lang === "en"
+    ? `${filtered.length} mechanic${filtered.length === 1 ? "" : "s"}`
+    : `${filtered.length} ${t.mapUI.mechanics}`;
+
+  // Stable origin/destination so the route effect only re-runs when the actual
+  // coordinates change (not on every unrelated re-render, e.g. navInfo updates).
+  const navOrigin = useMemo(
+    () => (userPos ? { lat: userPos[0], lng: userPos[1] } : null),
+    [userPos]
+  );
+  const navDest = useMemo(
+    () =>
+      navTarget?.coordinate
+        ? { lat: navTarget.coordinate.latitude, lng: navTarget.coordinate.longitude }
+        : null,
+    [navTarget]
+  );
 
   /* ----------------------------- actions ----------------------------- */
   const selectMechanic = (m) => {
@@ -212,6 +286,11 @@ function MapView() {
             </AdvancedMarker>
           );
         })}
+
+        {/* Navigation route, drawn on this map from the user to the mechanic. */}
+        {navOrigin && navDest && (
+          <DirectionsLayer origin={navOrigin} destination={navDest} onInfo={handleNavInfo} />
+        )}
       </Map>
 
       {/* ---------------- Floating top bar ---------------- */}
@@ -230,7 +309,7 @@ function MapView() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search mechanics, services, area…"
+              placeholder={t.mapUI.search}
               className="h-11 w-full bg-transparent text-sm text-fg outline-none placeholder:text-text-muted/70"
             />
           </div>
@@ -245,15 +324,46 @@ function MapView() {
             )}
           >
             <SlidersHorizontal className="size-4" />
-            <span className="hidden sm:inline">Open now</span>
+            <span className="hidden sm:inline">{t.mapUI.openNow}</span>
           </button>
+        </div>
+
+        {/* Category filter chips */}
+        <div className="no-scrollbar mx-auto mt-2 flex max-w-3xl gap-2 overflow-x-auto pb-1">
+          {MECHANIC_CATEGORIES.map((c) => {
+            const active = activeCats.includes(c.key);
+            const Icon = c.icon;
+            return (
+              <button
+                key={c.key}
+                onClick={() => toggleCat(c.key)}
+                aria-pressed={active}
+                className={cn(
+                  "pointer-events-auto inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm font-semibold shadow-soft backdrop-blur transition-colors",
+                  active
+                    ? "border-accent bg-accent text-white"
+                    : "border-line bg-card/90 text-fg hover:border-ink/30"
+                )}
+              >
+                <Icon className="size-4" /> {t.mapUI.categories[c.key]}
+              </button>
+            );
+          })}
+          {activeCats.length > 0 && (
+            <button
+              onClick={() => setActiveCats([])}
+              className="pointer-events-auto inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-line bg-card/90 px-3 text-sm font-semibold text-text-muted shadow-soft backdrop-blur transition-colors hover:text-fg"
+            >
+              <X className="size-4" /> {t.mapUI.clear}
+            </button>
+          )}
         </div>
 
         {/* result count */}
         <div className="mx-auto mt-2 max-w-3xl">
           <span className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
             <Wrench className="size-3.5" />
-            {loading ? "Loading…" : `${filtered.length} mechanic${filtered.length === 1 ? "" : "s"}`}
+            {countText}
           </span>
         </div>
       </div>
@@ -278,6 +388,14 @@ function MapView() {
         </div>
       )}
 
+      {!loading && !loadError && filtered.length === 0 && mechanics.length > 0 && (
+        <div className="pointer-events-none absolute inset-x-0 top-36 z-[900] flex justify-center px-4">
+          <span className="rounded-full bg-card/95 px-4 py-2 text-center text-sm font-medium text-fg shadow-soft backdrop-blur">
+            {t.mapUI.noResults}
+          </span>
+        </div>
+      )}
+
       {geoDenied && !loading && (
         <div className="absolute bottom-6 left-4 z-[1000] max-w-xs rounded-2xl border border-line bg-card/95 p-3 text-xs text-text-muted shadow-soft backdrop-blur">
           Location access is off — enable it in your browser to see mechanics near you.
@@ -290,14 +408,43 @@ function MapView() {
         </div>
       )}
 
+      {/* Navigation banner — shown while a route is active on the map. */}
+      {navTarget && (
+        <div className="absolute bottom-6 left-1/2 z-[1050] w-[calc(100%-2rem)] max-w-md -translate-x-1/2">
+          <div className="flex items-center gap-3 rounded-2xl border border-line bg-card/95 p-3 shadow-lift backdrop-blur">
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
+              <Navigation className="size-5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-bold text-fg">{navTarget.name}</p>
+              <p className="truncate text-xs text-text-muted">
+                {!userPos
+                  ? t.mapUI.navNoLocation
+                  : navInfo
+                  ? [navInfo.distance, navInfo.duration, navInfo.approx ? t.mapUI.navApprox : null]
+                      .filter(Boolean)
+                      .join(" · ")
+                  : t.mapUI.loading}
+              </p>
+            </div>
+            <button
+              onClick={stopNavigation}
+              className="shrink-0 rounded-xl border border-line px-3 py-2 text-sm font-semibold text-fg transition-colors hover:border-ink/30"
+            >
+              {t.mapUI.navExit}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ---------------- Detail panel ---------------- */}
       <AnimatePresence>
         {selected && (
           <MechanicDetailPanel
             key={selected._id}
             mechanic={selected}
-            userPos={userPos}
             onClose={() => setSelected(null)}
+            onNavigate={startNavigation}
             onUpdated={(updated) => {
               setSelected(updated);
               setMechanics((list) => list.map((m) => (m._id === updated._id ? updated : m)));
@@ -307,6 +454,95 @@ function MapView() {
       </AnimatePresence>
     </div>
   );
+}
+
+/** Straight-line distance in km between two {lat,lng} points (haversine). */
+function haversineKm(a, b) {
+  const R = 6371;
+  const toRad = (d) => (d * Math.PI) / 180;
+  const dLat = toRad(b.lat - a.lat);
+  const dLng = toRad(b.lng - a.lng);
+  const s =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+
+/**
+ * DirectionsLayer — draws the route from the user to the mechanic ON this map.
+ * Prefers the Google Directions API (real driving route + distance/ETA); if
+ * that's unavailable (e.g. the Directions API isn't enabled on the key) it
+ * falls back to a straight line + straight-line distance, so navigation still
+ * happens on the Amcar map and never redirects to Google Maps.
+ */
+function DirectionsLayer({ origin, destination, onInfo }) {
+  const map = useMap();
+  const routesLib = useMapsLibrary("routes");
+  const rendererRef = useRef(null);
+  const lineRef = useRef(null);
+
+  useEffect(() => {
+    if (!map || !origin || !destination) return undefined;
+    let cancelled = false;
+
+    const clear = () => {
+      rendererRef.current?.setMap(null);
+      rendererRef.current = null;
+      lineRef.current?.setMap(null);
+      lineRef.current = null;
+    };
+    clear();
+
+    const drawStraight = () => {
+      const path = [origin, destination];
+      lineRef.current = new window.google.maps.Polyline({
+        map,
+        path,
+        strokeColor: "#ff6b00",
+        strokeOpacity: 0.9,
+        strokeWeight: 4,
+      });
+      const bounds = new window.google.maps.LatLngBounds();
+      path.forEach((p) => bounds.extend(p));
+      map.fitBounds(bounds, 80);
+      onInfo?.({ distance: `${haversineKm(origin, destination).toFixed(1)} km`, approx: true });
+    };
+
+    if (routesLib) {
+      const service = new routesLib.DirectionsService();
+      const renderer = new routesLib.DirectionsRenderer({
+        map,
+        suppressMarkers: true,
+        preserveViewport: false,
+        polylineOptions: { strokeColor: "#ff6b00", strokeOpacity: 0.95, strokeWeight: 5 },
+      });
+      rendererRef.current = renderer;
+      service.route(
+        { origin, destination, travelMode: routesLib.TravelMode.DRIVING },
+        (res, status) => {
+          if (cancelled) return;
+          if (status === "OK" && res) {
+            renderer.setDirections(res);
+            const leg = res.routes?.[0]?.legs?.[0];
+            onInfo?.({ distance: leg?.distance?.text, duration: leg?.duration?.text, approx: false });
+          } else {
+            renderer.setMap(null);
+            rendererRef.current = null;
+            drawStraight();
+          }
+        }
+      );
+    } else {
+      drawStraight();
+    }
+
+    return () => {
+      cancelled = true;
+      clear();
+    };
+  }, [map, routesLib, origin, destination, onInfo]);
+
+  return null;
 }
 
 /** Draws a translucent accuracy circle around the user's position. */

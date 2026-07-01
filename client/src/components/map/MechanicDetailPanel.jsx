@@ -14,24 +14,38 @@ import {
 import Stars from "./Stars";
 import { mechanicsApi, resolveImage } from "../../lib/api";
 
+/** Builds a wa.me link from a stored local phone ("599 123 456"). Georgia's
+ *  country code (995) is prepended when the number is a bare local one. */
+function whatsappHref(phone) {
+  let d = String(phone || "").replace(/\D/g, "");
+  if (!d) return "";
+  if (!d.startsWith("995")) d = `995${d}`;
+  return `https://wa.me/${d}`;
+}
+
+/** WhatsApp glyph (lucide has no brand icon). */
+function WhatsAppIcon({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.14-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.6-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.55-.88-2.12-.23-.55-.47-.48-.64-.49-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38 0 1.4 1.02 2.76 1.17 2.95.15.19 2.02 3.08 4.9 4.32.68.29 1.22.47 1.63.6.69.22 1.31.19 1.8.11.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34m-5.42 7.4h-.01a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.64-.24-.37a9.86 9.86 0 01-1.51-5.26c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 012.89 6.99c0 5.45-4.44 9.89-9.89 9.89m8.42-18.31A11.82 11.82 0 0012.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.96L.06 24l6.3-1.65a11.9 11.9 0 005.69 1.45h.01c6.55 0 11.89-5.34 11.9-11.9a11.82 11.82 0 00-3.48-8.43" />
+    </svg>
+  );
+}
+
 /**
  * MechanicDetailPanel — the full profile of a clicked mechanic. Slides in from
  * the right on desktop and up as a sheet on mobile. Includes a photo gallery,
  * contact + directions actions, services, price list, opening hours, reviews
  * and a review form.
  */
-export default function MechanicDetailPanel({ mechanic, userPos, onClose, onUpdated }) {
+export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onUpdated }) {
   const [active, setActive] = useState(0);
   const [showReview, setShowReview] = useState(false);
 
   if (!mechanic) return null;
 
   const gallery = mechanic.images?.length ? mechanic.images : mechanic.image ? [mechanic.image] : [];
-  const { latitude, longitude } = mechanic.coordinate || {};
-
-  const directionsHref = userPos
-    ? `https://www.google.com/maps/dir/?api=1&origin=${userPos[0]},${userPos[1]}&destination=${latitude},${longitude}`
-    : `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+  const waHref = whatsappHref(mechanic.phone);
 
   return (
     <motion.aside
@@ -110,20 +124,21 @@ export default function MechanicDetailPanel({ mechanic, userPos, onClose, onUpda
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-3">
-          <a
-            href={directionsHref}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            type="button"
+            onClick={() => onNavigate?.(mechanic)}
             className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent font-semibold text-white transition-colors hover:bg-accent-deep"
           >
-            <Navigation className="size-4" /> Directions
-          </a>
-          {mechanic.phone ? (
+            <Navigation className="size-4" /> Navigate
+          </button>
+          {waHref ? (
             <a
-              href={`tel:${mechanic.phone}`}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-line bg-card font-semibold text-fg transition-colors hover:border-ink/30"
+              href={waHref}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#25D366] font-semibold text-white transition-colors hover:bg-[#1ebe5b]"
             >
-              <Phone className="size-4" /> Call
+              <WhatsAppIcon className="size-4" /> WhatsApp
             </a>
           ) : (
             <span className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-line bg-surface font-semibold text-text-muted">

@@ -30,6 +30,27 @@ export const dictionaries = {
       getAppFull: "აპლიკაციის ჩამოტვირთვა",
     },
 
+    mapUI: {
+      search: "მოძებნეთ ხელოსანი, სერვისი, უბანი…",
+      openNow: "ღიაა ახლა",
+      clear: "გასუფთავება",
+      loading: "იტვირთება…",
+      mechanics: "ხელოსანი",
+      noResults: "შედეგი ვერ მოიძებნა — შეცვალეთ ფილტრები.",
+      filters: "ფილტრები",
+      navExit: "დასრულება",
+      navApprox: "სავარაუდო",
+      navNoLocation: "ნავიგაციისთვის ჩართეთ ლოკაცია",
+      categories: {
+        oil: "ზეთი",
+        tires: "საბურავები",
+        brakes: "მუხრუჭები",
+        electrics: "ელექტრო",
+        diagnostics: "დიაგნოსტიკა",
+        body: "ძარა",
+      },
+    },
+
     hero: {
       badge: "უკვე ხელმისაწვდომია 40-ზე მეტ ქალაქში",
       titleBefore: "იპოვეთ ",
@@ -527,6 +548,27 @@ export const dictionaries = {
       map: "Map",
       getApp: "Get App",
       getAppFull: "Get the App",
+    },
+
+    mapUI: {
+      search: "Search mechanics, services, area…",
+      openNow: "Open now",
+      clear: "Clear",
+      loading: "Loading…",
+      mechanics: "mechanics",
+      noResults: "No matches — try adjusting your filters.",
+      filters: "Filters",
+      navExit: "Exit",
+      navApprox: "approx.",
+      navNoLocation: "Enable location to navigate",
+      categories: {
+        oil: "Oil",
+        tires: "Tires",
+        brakes: "Brakes",
+        electrics: "Electrics",
+        diagnostics: "Diagnostics",
+        body: "Body",
+      },
     },
 
     hero: {

@@ -1,8 +1,11 @@
 import { useRef, useState } from "react";
 import { Plus, Trash2, X, Camera, Loader2, ArrowLeft } from "lucide-react";
-import { mechanicsApi, resolveImage } from "../../lib/api";
+import { resolveImage } from "../../lib/api";
+import { uploadMechanicImage } from "../../lib/cloudinary";
 
 const MAX_PHOTOS = 4;
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX_BYTES = 5 * 1024 * 1024;
 
 /* ------------------------------ phone helpers ------------------------------ */
 // Stored as the local 9-digit number grouped 3 / 3 / 3 ("599 123 456"). Any
@@ -94,17 +97,28 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
     if (!files.length) return;
     const room = MAX_PHOTOS - form.images.length;
     const chosen = files.slice(0, room);
+
+    // Validate up front (we upload straight to Firebase Storage, so there's no
+    // server multer to reject bad files anymore).
+    if (chosen.some((f) => !ALLOWED_TYPES.includes(f.type))) {
+      return setErr("Photos must be JPEG, PNG or WebP.");
+    }
+    if (chosen.some((f) => f.size > MAX_BYTES)) {
+      return setErr("Each photo must be 5 MB or smaller.");
+    }
+
     setUploading(true);
     setErr("");
     try {
-      const paths = await mechanicsApi.uploadPhotos(chosen);
-      set({ images: [...form.images, ...paths].slice(0, MAX_PHOTOS) });
+      // Uploads to the shared Cloudinary account and returns full public URLs —
+      // so the mobile app can display them too.
+      const urls = [];
+      for (const f of chosen) urls.push(await uploadMechanicImage(f));
+      set({ images: [...form.images, ...urls].slice(0, MAX_PHOTOS) });
     } catch (e2) {
       setErr(
-        e2.message === "FILE_TOO_LARGE"
-          ? "Each photo must be 5 MB or smaller."
-          : e2.message === "UNSUPPORTED_FILE_TYPE"
-          ? "Photos must be JPEG, PNG or WebP."
+        e2.message === "CLOUDINARY_NOT_CONFIGURED"
+          ? "Image uploads aren't configured yet (set VITE_CLOUDINARY_* in client/.env)."
           : "Photo upload failed. Please try again."
       );
     } finally {

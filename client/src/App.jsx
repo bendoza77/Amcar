@@ -23,7 +23,9 @@ export default function App() {
         {/* Full-screen pages render outside the shared Layout (no navbar/footer). */}
         <Route path="/" element={<MapPage />} />
         <Route path="/map" element={<MapPage />} />
-        <Route path="/admin" element={<Admin />} />
+        {/* Admin lives at an obscure, unadvertised path (kept out of robots.txt
+            and the sitemap on purpose). */}
+        <Route path="/amcar-best-panel" element={<Admin />} />
 
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />

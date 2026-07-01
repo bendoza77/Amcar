@@ -4,17 +4,22 @@
  * same-origin server is used.
  */
 const BASE = import.meta.env.VITE_API_URL || "";
+// Where the mechanic image files are actually served from. Mobile-app uploads
+// live on a different host than this web API, so the image origin is decoupled
+// from VITE_API_URL. Falls back to the API host, then same-origin.
+const IMAGE_BASE = import.meta.env.VITE_IMAGE_BASE || BASE;
 
 /**
  * resolveImage — mechanic images are stored either as full URLs (https://…) or
  * as server-relative upload paths (/uploads/mechanics/…). Relative paths are
- * resolved against the API host so they load from wherever the backend serves
- * uploads. Returns "" for empty values so callers can fall back to a placeholder.
+ * resolved against VITE_IMAGE_BASE (the host that actually serves the upload
+ * files) so they load regardless of which API host the data came from. Returns
+ * "" for empty values so callers can fall back to a placeholder.
  */
 export function resolveImage(src) {
   if (!src) return "";
   if (/^(https?:|data:|blob:)/i.test(src)) return src;
-  if (src.startsWith("/")) return `${BASE}${src}`;
+  if (src.startsWith("/")) return `${IMAGE_BASE}${src}`;
   return src;
 }
 

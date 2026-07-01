@@ -14,6 +14,12 @@ import {
   Search,
   GitCompareArrows,
   Route,
+  Droplet,
+  Disc3,
+  Gauge,
+  Zap,
+  Activity,
+  Car,
 } from "lucide-react";
 
 export const SITE = {
@@ -30,6 +36,19 @@ export const NAV_LINKS = [
   { key: "how", href: "home#how-it-works" },
   { key: "about", href: "home#benefits" },
   { key: "map", href: "map" },
+];
+
+/* Map filter categories. `key` maps into t.mapUI.categories for the label;
+   `keywords` are matched (case-insensitively, as substrings) against each
+   mechanic's service names. Georgian stems come first so inflected forms match
+   (e.g. "ზეთ" catches ზეთი / ზეთის), with English fallbacks for mixed data. */
+export const MECHANIC_CATEGORIES = [
+  { key: "oil", icon: Droplet, keywords: ["ზეთ", "oil"] },
+  { key: "tires", icon: Disc3, keywords: ["საბურავ", "ბალონ", "tire", "tyre"] },
+  { key: "brakes", icon: Gauge, keywords: ["მუხრუჭ", "სამუხრუჭ", "brake"] },
+  { key: "electrics", icon: Zap, keywords: ["ელექტ", "electr"] },
+  { key: "diagnostics", icon: Activity, keywords: ["დიაგნოსტ", "diagnos", "scan"] },
+  { key: "body", icon: Car, keywords: ["ძარ", "ღებვ", "ტენექ", "body", "paint"] },
 ];
 
 /* Icons in display order — paired with t.features.items by index. */
