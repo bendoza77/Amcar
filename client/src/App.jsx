@@ -10,20 +10,23 @@ import MapPage from "./pages/MapPage";
 import Admin from "./pages/Admin";
 
 /**
- * App — route table for the Amcar site. Every route renders inside the shared
- * Layout (Navbar + Footer). The home route is the marketing landing page; the
- * legal routes share one templated document page; contact is bespoke.
+ * App — route table for the Amcar site. The map is the front door ("/"): it's
+ * the product's core function, so first-time visitors land straight on it. The
+ * marketing landing page lives at "/home"; legal routes share one templated
+ * document page; contact is bespoke. Full-screen pages (map, admin) render
+ * outside the shared Layout (no navbar/footer).
  */
 export default function App() {
   return (
     <>
       <Routes>
         {/* Full-screen pages render outside the shared Layout (no navbar/footer). */}
+        <Route path="/" element={<MapPage />} />
         <Route path="/map" element={<MapPage />} />
         <Route path="/admin" element={<Admin />} />
 
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/privacy" element={<LegalPage docKey="privacy" />} />
           <Route path="/terms" element={<LegalPage docKey="terms" />} />
           <Route path="/cookies" element={<LegalPage docKey="cookies" />} />

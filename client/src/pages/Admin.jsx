@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ShieldCheck,
   LogOut,
   Plus,
-  Pencil,
   Trash2,
   Wrench,
   MapPin,
-  Star,
   Loader2,
-  X,
   ArrowLeft,
 } from "lucide-react";
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { mechanicsApi, adminApi, resolveImage } from "../lib/api";
+import { mechanicsApi, adminApi } from "../lib/api";
 import { auth } from "../lib/firebase";
 import MechanicForm from "../components/admin/MechanicForm";
 
@@ -173,7 +170,7 @@ function Login({ signedInNotAdmin, accessError, onSignOut }) {
           </form>
         )}
 
-        <Link to="/" className="mt-5 inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-fg">
+        <Link to="/home" className="mt-5 inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-fg">
           <ArrowLeft className="size-4" /> Back to site
         </Link>
       </motion.div>
@@ -182,6 +179,9 @@ function Login({ signedInNotAdmin, accessError, onSignOut }) {
 }
 
 /* ----------------------------- Dashboard ----------------------------- */
+// Two screens, matching the mobile admin panel: a Mechanics List and a shared
+// Add/Edit Form. `editing` selects the screen: null → List, "new" → Form
+// (create), a mechanic object → Form (edit).
 function Dashboard({ onLogout, adminEmail }) {
   const [mechanics, setMechanics] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -212,8 +212,8 @@ function Dashboard({ onLogout, adminEmail }) {
     try {
       if (editing === "new") await mechanicsApi.create(payload);
       else await mechanicsApi.update(editing._id, payload);
-      setEditing(null);
-      load();
+      setEditing(null); // back to the List…
+      load(); // …which refreshes.
     } catch (e) {
       alert(`Save failed: ${e.message}${e.detail ? ` — ${e.detail}` : ""}`);
     } finally {
@@ -231,17 +231,32 @@ function Dashboard({ onLogout, adminEmail }) {
     }
   };
 
+  // Screen B — the Add/Edit Form (full screen, own header + fixed Save footer).
+  if (editing) {
+    return (
+      <div className="min-h-screen bg-bg">
+        <MechanicForm
+          initial={editing === "new" ? null : editing}
+          onSubmit={save}
+          onCancel={() => setEditing(null)}
+          busy={busy}
+        />
+      </div>
+    );
+  }
+
+  // Screen A — the Mechanics List.
   return (
-    <div className="min-h-screen bg-bg">
-      {/* Top bar */}
+    <div className="flex min-h-screen flex-col bg-bg">
+      {/* Header */}
       <header className="sticky top-0 z-30 border-b border-line bg-card/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <span className="grid size-9 place-items-center rounded-xl bg-accent/10 text-accent">
               <ShieldCheck className="size-5" />
             </span>
             <div>
-              <h1 className="text-base font-extrabold tracking-tight text-fg">Amcar Admin</h1>
+              <h1 className="text-base font-extrabold tracking-tight text-fg">Admin</h1>
               <p className="text-xs text-text-muted">
                 {mechanics.length} mechanics{adminEmail ? ` · ${adminEmail}` : ""}
               </p>
@@ -255,12 +270,6 @@ function Dashboard({ onLogout, adminEmail }) {
               <MapPin className="size-4" /> View map
             </Link>
             <button
-              onClick={() => setEditing("new")}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-sm font-semibold text-white hover:bg-accent-deep"
-            >
-              <Plus className="size-4" /> Add mechanic
-            </button>
-            <button
               onClick={onLogout}
               className="grid size-9 place-items-center rounded-xl border border-line text-text-muted hover:text-red-500"
               title="Log out"
@@ -271,8 +280,8 @@ function Dashboard({ onLogout, adminEmail }) {
         </div>
       </header>
 
-      {/* List */}
-      <main className="mx-auto max-w-6xl px-4 py-6">
+      {/* List body */}
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6">
         {loading ? (
           <div className="grid place-items-center py-24">
             <Loader2 className="size-6 animate-spin text-accent" />
@@ -280,77 +289,68 @@ function Dashboard({ onLogout, adminEmail }) {
         ) : mechanics.length === 0 ? (
           <Empty onAdd={() => setEditing("new")} />
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="space-y-2">
             {mechanics.map((m) => (
-              <MechanicCard key={m._id} m={m} onEdit={() => setEditing(m)} onDelete={() => remove(m)} />
+              <MechanicRow key={m._id} m={m} onEdit={() => setEditing(m)} onDelete={() => remove(m)} />
             ))}
-          </div>
+          </ul>
         )}
       </main>
 
-      {/* Editor modal */}
-      <AnimatePresence>
-        {editing && (
-          <Modal title={editing === "new" ? "New mechanic" : `Edit · ${editing.name}`} onClose={() => setEditing(null)}>
-            <MechanicForm
-              initial={editing === "new" ? null : editing}
-              onSubmit={save}
-              onCancel={() => setEditing(null)}
-              busy={busy}
-            />
-          </Modal>
-        )}
-      </AnimatePresence>
+      {/* Fixed "Add mechanic" footer */}
+      <footer className="sticky bottom-0 border-t border-line bg-card/85 px-4 py-3 backdrop-blur">
+        <div className="mx-auto max-w-2xl">
+          <button
+            onClick={() => setEditing("new")}
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent font-semibold text-white hover:bg-accent-deep"
+          >
+            <Plus className="size-5" /> Add mechanic
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }
 
-function MechanicCard({ m, onEdit, onDelete }) {
+/** One list row: wrench badge · name + address/coords · status dot · delete. */
+function MechanicRow({ m, onEdit, onDelete }) {
+  const subline =
+    m.address ||
+    (m.coordinate
+      ? `${Number(m.coordinate.latitude).toFixed(4)}, ${Number(m.coordinate.longitude).toFixed(4)}`
+      : "");
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-card shadow-soft">
-      <div className="relative h-32 bg-surface">
-        {m.image ? (
-          <img src={resolveImage(m.image)} alt="" className="size-full object-cover" />
-        ) : (
-          <div className="grid size-full place-items-center text-text-muted">
-            <Wrench className="size-8 opacity-40" />
-          </div>
-        )}
-        <span
-          className={`absolute left-3 top-3 rounded-full px-2.5 py-0.5 text-xs font-bold text-white ${
-            m.isOpen ? "bg-emerald-500" : "bg-red-500"
-          }`}
-        >
-          {m.isOpen ? "Open" : "Closed"}
+    <li>
+      <div
+        onClick={onEdit}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onEdit()}
+        className="flex cursor-pointer items-center gap-3 rounded-2xl border border-line bg-card p-3 shadow-soft transition-colors hover:border-ink/30"
+      >
+        <span className="grid size-10 shrink-0 place-items-center rounded-full bg-accent/10 text-accent">
+          <Wrench className="size-5" />
         </span>
-      </div>
-      <div className="p-4">
-        <h3 className="truncate font-bold tracking-tight text-fg">{m.name}</h3>
-        <div className="mt-1 flex items-center gap-1.5 text-sm text-text-muted">
-          <Star className="size-4 fill-amber-400 text-amber-400" />
-          {Number(m.rating || 0).toFixed(1)} · {m.reviews || 0} reviews
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-bold tracking-tight text-fg">{m.name}</p>
+          {subline && <p className="truncate text-sm text-text-muted">{subline}</p>}
         </div>
-        {m.address && (
-          <p className="mt-1.5 flex items-start gap-1.5 text-xs text-text-muted">
-            <MapPin className="mt-0.5 size-3.5 shrink-0" /> <span className="line-clamp-1">{m.address}</span>
-          </p>
-        )}
-        <div className="mt-4 flex gap-2">
-          <button
-            onClick={onEdit}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-line py-2 text-sm font-semibold text-fg hover:border-ink/30"
-          >
-            <Pencil className="size-4" /> Edit
-          </button>
-          <button
-            onClick={onDelete}
-            className="grid size-9 place-items-center rounded-lg border border-line text-text-muted hover:border-red-300 hover:text-red-500"
-          >
-            <Trash2 className="size-4" />
-          </button>
-        </div>
+        <span
+          className={`size-2.5 shrink-0 rounded-full ${m.isOpen ? "bg-emerald-500" : "bg-red-500"}`}
+          title={m.isOpen ? "Open" : "Closed"}
+        />
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="grid size-9 shrink-0 place-items-center rounded-full bg-red-500/10 text-red-500 hover:bg-red-500/20"
+          title="Delete"
+        >
+          <Trash2 className="size-4" />
+        </button>
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -369,37 +369,5 @@ function Empty({ onAdd }) {
         <Plus className="size-4" /> Add mechanic
       </button>
     </div>
-  );
-}
-
-function Modal({ title, children, onClose }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 24, scale: 0.98 }}
-        transition={{ type: "spring", stiffness: 280, damping: 28 }}
-        onClick={(e) => e.stopPropagation()}
-        className="my-8 w-full max-w-2xl rounded-3xl border border-line bg-card shadow-lift"
-      >
-        <div className="sticky top-0 z-10 flex items-center justify-between rounded-t-3xl border-b border-line bg-card/95 px-6 py-4 backdrop-blur">
-          <h2 className="text-lg font-extrabold tracking-tight text-fg">{title}</h2>
-          <button
-            onClick={onClose}
-            className="grid size-9 place-items-center rounded-xl text-text-muted hover:bg-ink/5 hover:text-fg"
-          >
-            <X className="size-5" />
-          </button>
-        </div>
-        <div className="p-6">{children}</div>
-      </motion.div>
-    </motion.div>
   );
 }

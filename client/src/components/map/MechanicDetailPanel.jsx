@@ -42,23 +42,22 @@ export default function MechanicDetailPanel({ mechanic, userPos, onClose, onUpda
       transition={{ type: "spring", stiffness: 260, damping: 30 }}
       className="pointer-events-auto absolute inset-x-0 bottom-0 top-auto z-[1100] max-h-[82vh] w-full overflow-y-auto rounded-t-3xl border border-line bg-card shadow-lift sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[420px] sm:rounded-none sm:rounded-l-3xl"
     >
-      {/* Gallery / header */}
+      {/* Gallery — the photo stays uncovered; the close button is the only
+          overlay. Name, rating and open/closed status live below the image. */}
       <div className="relative">
         {gallery.length > 0 ? (
           <img
             src={resolveImage(gallery[active])}
             alt={mechanic.name}
-            className="h-56 w-full object-cover sm:h-64"
+            className="h-72 w-full object-cover sm:h-80"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
         ) : (
-          <div className="grid h-56 w-full place-items-center bg-surface text-text-muted sm:h-64">
+          <div className="grid h-72 w-full place-items-center bg-surface text-text-muted sm:h-80">
             <Wrench className="size-12 opacity-40" />
           </div>
         )}
 
-        {/* gradient + close */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/0 to-black/10" />
         <button
           onClick={onClose}
           className="absolute right-4 top-4 grid size-9 place-items-center rounded-full bg-black/45 text-white backdrop-blur transition-colors hover:bg-black/65"
@@ -66,29 +65,6 @@ export default function MechanicDetailPanel({ mechanic, userPos, onClose, onUpda
         >
           <X className="size-5" />
         </button>
-
-        {/* open/closed badge */}
-        <span
-          className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold backdrop-blur ${
-            mechanic.isOpen ? "bg-emerald-500/90 text-white" : "bg-red-500/90 text-white"
-          }`}
-        >
-          {mechanic.isOpen ? "Open now" : "Closed"}
-        </span>
-
-        {/* name overlaid */}
-        <div className="absolute inset-x-0 bottom-0 p-4">
-          <h2 className="text-2xl font-extrabold tracking-tight text-white drop-shadow">
-            {mechanic.name}
-          </h2>
-          <div className="mt-1 flex items-center gap-2">
-            <Stars value={mechanic.rating} size={15} />
-            <span className="text-sm font-semibold text-white/90">
-              {Number(mechanic.rating || 0).toFixed(1)}
-            </span>
-            <span className="text-sm text-white/70">({mechanic.reviews || 0})</span>
-          </div>
-        </div>
       </div>
 
       {/* Thumbnails */}
@@ -98,7 +74,7 @@ export default function MechanicDetailPanel({ mechanic, userPos, onClose, onUpda
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`size-14 shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
+              className={`size-16 shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
                 i === active ? "border-accent" : "border-transparent opacity-70 hover:opacity-100"
               }`}
             >
@@ -109,6 +85,29 @@ export default function MechanicDetailPanel({ mechanic, userPos, onClose, onUpda
       )}
 
       <div className="space-y-6 p-5">
+        {/* Title + rating + open/closed status */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-2xl font-extrabold tracking-tight text-fg">{mechanic.name}</h2>
+            <div className="mt-1 flex items-center gap-2">
+              <Stars value={mechanic.rating} size={15} />
+              <span className="text-sm font-semibold text-fg">
+                {Number(mechanic.rating || 0).toFixed(1)}
+              </span>
+              <span className="text-sm text-text-muted">({mechanic.reviews || 0})</span>
+            </div>
+          </div>
+          <span
+            className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${
+              mechanic.isOpen
+                ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+                : "bg-red-500/15 text-red-600 dark:text-red-400"
+            }`}
+          >
+            {mechanic.isOpen ? "Open now" : "Closed"}
+          </span>
+        </div>
+
         {/* Actions */}
         <div className="grid grid-cols-2 gap-3">
           <a

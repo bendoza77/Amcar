@@ -21,7 +21,7 @@ export default function Logo({ tone, className }) {
   const logoImage = isLight ? logoLight : logoDark;
 
   return (
-    <Link to="/" className={cn("inline-flex items-center", className)} aria-label={t.brand}>
+    <Link to="/home" className={cn("inline-flex items-center", className)} aria-label={t.brand}>
       {/* The two artworks have different aspect ratios/padding, so we constrain
           by width (not height) — that keeps the wordmark the same visual size
           in both light and dark themes. */}

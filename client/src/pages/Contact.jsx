@@ -81,7 +81,7 @@ export default function Contact() {
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-2xl">
           <motion.div variants={fadeUp}>
             <Link
-              to="/"
+              to="/home"
               className="inline-flex items-center gap-2 text-small font-semibold text-text-muted transition-colors hover:text-fg"
             >
               <ArrowLeft className="size-4" /> {t.pages.backHome}

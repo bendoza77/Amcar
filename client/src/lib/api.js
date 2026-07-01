@@ -72,6 +72,28 @@ export const mechanicsApi = {
   remove: (id) => request(`/api/mechanics/${id}`, { method: "DELETE", admin: true }),
   addComment: (id, comment) =>
     request(`/api/mechanics/${id}/comments`, { method: "POST", body: comment }).then((r) => r.data),
+  /** Uploads image files (admin) and returns their server-relative paths. */
+  uploadPhotos: async (files) => {
+    const fd = new FormData();
+    for (const f of files) fd.append("photos", f);
+    const res = await fetch(`${BASE}/api/mechanics/upload`, {
+      method: "POST",
+      headers: await authHeader(), // don't set Content-Type; the browser adds the multipart boundary
+      body: fd,
+    });
+    let json = null;
+    try {
+      json = await res.json();
+    } catch {
+      /* non-JSON response */
+    }
+    if (!res.ok || (json && json.ok === false)) {
+      const err = new Error((json && json.error) || `Upload failed (${res.status})`);
+      err.status = res.status;
+      throw err;
+    }
+    return json.paths;
+  },
 };
 
 /* ------------------------------- Admin ------------------------------- */

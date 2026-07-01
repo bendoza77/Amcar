@@ -33,7 +33,7 @@ export default function Home() {
         title={m.title}
         description={m.description}
         keywords={m.keywords}
-        path="/"
+        path="/home"
         lang={lang}
         ogType="website"
         jsonLd={jsonLd}

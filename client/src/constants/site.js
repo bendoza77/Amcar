@@ -22,11 +22,13 @@ export const SITE = {
   playStoreUrl: "#play-store",
 };
 
-/* Nav: `key` maps into t.nav, `href` is the scroll target. */
+/* Nav: `key` maps into t.nav, `href` is the link target (rendered as `/${href}`).
+   The marketing sections now live under /home, so their anchors are prefixed.
+   `map` points at the root map — the site's primary function. */
 export const NAV_LINKS = [
-  { key: "features", href: "#features" },
-  { key: "how", href: "#how-it-works" },
-  { key: "about", href: "#benefits" },
+  { key: "features", href: "home#features" },
+  { key: "how", href: "home#how-it-works" },
+  { key: "about", href: "home#benefits" },
   { key: "map", href: "map" },
 ];
 
@@ -47,7 +49,7 @@ export const BENEFIT_ICONS = [Clock, ShieldCheck, Tags];
    In-page sections use "/#id" so they also work from sub-pages; standalone
    pages use their route path. */
 export const FOOTER_HREFS = {
-  product: ["/#features", "/#how-it-works", "/#download"],
-  company: ["/#benefits", "#", "#", "/contact"],
+  product: ["/home#features", "/home#how-it-works", "/home#download"],
+  company: ["/home#benefits", "#", "#", "/contact"],
   legal: ["/privacy", "/terms", "/cookies", "/licenses"],
 };

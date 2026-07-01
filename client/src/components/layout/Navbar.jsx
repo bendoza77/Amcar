@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Play } from "lucide-react";
+import { Menu, X, Play, MapPin } from "lucide-react";
 import Container from "./Container";
 import Logo from "../ui/Logo";
 import Button from "../ui/Button";
@@ -40,23 +40,36 @@ export default function Navbar() {
         <Container className="flex items-center justify-between">
           <Logo />
 
-          {/* Desktop nav */}
+          {/* Desktop nav. The Map link is styled as a filled accent pill — it's
+              the site's primary function, so it stands apart from the marketing
+              section links. */}
           <nav className="hidden items-center gap-1 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                to={`/${link.href}`}
-                className="rounded-full px-4 py-2 text-[0.95rem] font-medium text-text-muted transition-colors hover:bg-ink/5 hover:text-fg"
-              >
-                {t.nav[link.key]}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.key === "map" ? (
+                <Link
+                  key={link.href}
+                  to={`/${link.href}`}
+                  className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-4 py-2 text-[0.95rem] font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+                >
+                  <MapPin className="size-4" />
+                  {t.nav[link.key]}
+                </Link>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={`/${link.href}`}
+                  className="rounded-full px-4 py-2 text-[0.95rem] font-medium text-text-muted transition-colors hover:bg-ink/5 hover:text-fg"
+                >
+                  {t.nav[link.key]}
+                </Link>
+              )
+            )}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
             <ThemeToggle />
             <LanguageToggle />
-            <Button variant="primary" size="sm" to="/#download" icon={Play}>
+            <Button variant="primary" size="sm" to="/home#download" icon={Play}>
               {t.nav.getApp}
             </Button>
           </div>
@@ -88,20 +101,32 @@ export default function Navbar() {
             className="glass border-b border-line lg:hidden"
           >
             <Container className="flex flex-col gap-1 py-4">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  to={`/${link.href}`}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-4 py-3 text-base font-medium text-fg transition-colors hover:bg-ink/5"
-                >
-                  {t.nav[link.key]}
-                </Link>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.key === "map" ? (
+                  <Link
+                    key={link.href}
+                    to={`/${link.href}`}
+                    onClick={() => setOpen(false)}
+                    className="inline-flex items-center gap-2 rounded-xl bg-accent/10 px-4 py-3 text-base font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+                  >
+                    <MapPin className="size-5" />
+                    {t.nav[link.key]}
+                  </Link>
+                ) : (
+                  <Link
+                    key={link.href}
+                    to={`/${link.href}`}
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl px-4 py-3 text-base font-medium text-fg transition-colors hover:bg-ink/5"
+                  >
+                    {t.nav[link.key]}
+                  </Link>
+                )
+              )}
               <Button
                 variant="primary"
                 size="md"
-                to="/#download"
+                to="/home#download"
                 icon={Play}
                 className="mt-2"
                 onClick={() => setOpen(false)}

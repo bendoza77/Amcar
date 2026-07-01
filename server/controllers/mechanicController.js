@@ -206,6 +206,25 @@ async function addComment(req, res) {
   }
 }
 
+/**
+ * POST /api/mechanics/upload — admin only. Accepts one or more image files
+ * (field name "photos") and returns their server-relative /uploads paths. The
+ * admin panel stores these paths in the mechanic's `images` array.
+ */
+async function uploadPhotos(req, res) {
+  try {
+    const files = req.files || [];
+    if (files.length === 0) {
+      return res.status(400).json({ ok: false, error: "NO_FILES" });
+    }
+    const paths = files.map((f) => `/uploads/mechanics/${f.filename}`);
+    return res.status(201).json({ ok: true, paths });
+  } catch (err) {
+    console.error("uploadPhotos error:", err.message);
+    return res.status(500).json({ ok: false, error: "SERVER_ERROR" });
+  }
+}
+
 module.exports = {
   getMechanics,
   getMechanicById,
@@ -213,4 +232,5 @@ module.exports = {
   updateMechanic,
   deleteMechanic,
   addComment,
+  uploadPhotos,
 };

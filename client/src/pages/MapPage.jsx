@@ -31,7 +31,7 @@ export default function MapPage() {
           <p className="mt-2 text-sm text-text-muted">
             Set <code>VITE_GOOGLE_MAPS_API_KEY</code> in the client environment to load the map.
           </p>
-          <Link to="/" className="mt-4 inline-flex text-sm font-semibold text-accent">
+          <Link to="/home" className="mt-4 inline-flex text-sm font-semibold text-accent">
             ← Back home
           </Link>
         </div>
@@ -142,6 +142,7 @@ function MapView() {
         defaultZoom={DEFAULT_ZOOM}
         gestureHandling="greedy"
         disableDefaultUI
+        clickableIcons={false}
         colorScheme={isDark ? "DARK" : "LIGHT"}
         className="size-full"
       >
@@ -217,9 +218,9 @@ function MapView() {
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[1000] p-3 sm:p-4">
         <div className="mx-auto flex max-w-3xl items-center gap-2">
           <Link
-            to="/"
+            to="/home"
             className="pointer-events-auto grid size-11 shrink-0 place-items-center rounded-2xl border border-line bg-card/90 text-fg shadow-soft backdrop-blur transition-colors hover:border-ink/30"
-            aria-label="Back home"
+            aria-label="Back to site"
           >
             <ArrowLeft className="size-5" />
           </Link>

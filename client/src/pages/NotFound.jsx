@@ -28,7 +28,7 @@ export default function NotFound() {
         <h1 className="mt-4 text-display font-extrabold tracking-tight text-fg">{n.title}</h1>
         <p className="mx-auto mt-4 max-w-md text-body-lg text-text-muted text-pretty">{n.subtitle}</p>
         <div className="mt-8 flex justify-center">
-          <Button to="/" variant="primary" size="lg" icon={Home}>
+          <Button to="/home" variant="primary" size="lg" icon={Home}>
             {n.cta}
           </Button>
         </div>
