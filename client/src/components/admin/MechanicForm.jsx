@@ -119,6 +119,8 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
       setErr(
         e2.message === "CLOUDINARY_NOT_CONFIGURED"
           ? "Image uploads aren't configured yet (set VITE_CLOUDINARY_* in client/.env)."
+          : e2.message && e2.message !== "UPLOAD_FAILED"
+          ? `Photo upload failed: ${e2.message}`
           : "Photo upload failed. Please try again."
       );
     } finally {
