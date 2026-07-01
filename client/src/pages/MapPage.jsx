@@ -76,9 +76,12 @@ function MapView() {
   const [selected, setSelected] = useState(null);
   const [userPos, setUserPos] = useState(null); // [lat, lng]
   const [accuracy, setAccuracy] = useState(null);
-  const [geoDenied, setGeoDenied] = useState(
-    () => typeof navigator !== "undefined" && !("geolocation" in navigator)
-  );
+  const [locating, setLocating] = useState(false);
+  // geoError: null = fine, otherwise { code } describing why we have no fix.
+  // code 1 = permission/secure-context, 2 = unavailable, 3 = timeout, 0 = unsupported.
+  const [geoError, setGeoError] = useState(null);
+  const watchId = useRef(null);
+  const userPosRef = useRef(null); // latest fix, read by the error handler
 
   const [query, setQuery] = useState("");
   const [onlyOpen, setOnlyOpen] = useState(false);
@@ -118,19 +121,73 @@ function MapView() {
   }, []);
 
   /* ---------------------- real-time geolocation ---------------------- */
-  useEffect(() => {
-    if (!("geolocation" in navigator)) return;
-    const id = navigator.geolocation.watchPosition(
-      (pos) => {
-        const { latitude, longitude, accuracy } = pos.coords;
-        setUserPos([latitude, longitude]);
-        setAccuracy(accuracy);
-        setGeoDenied(false);
-      },
-      () => setGeoDenied(true),
-      { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
+  // Geolocation on the web (especially iOS Safari) requires a secure context.
+  // localhost is exempt so dev still works over http.
+  const supportsGeo =
+    typeof navigator !== "undefined" && "geolocation" in navigator;
+  const isSecureCtx =
+    typeof window !== "undefined" &&
+    (window.isSecureContext ||
+      ["localhost", "127.0.0.1"].includes(window.location.hostname));
+
+  const onGeoSuccess = useCallback((pos) => {
+    const { latitude, longitude, accuracy } = pos.coords;
+    setUserPos([latitude, longitude]);
+    setAccuracy(accuracy);
+    setGeoError(null);
+    setLocating(false);
+  }, []);
+
+  const onGeoError = useCallback((err) => {
+    setLocating(false);
+    // Don't wipe a fix we already have; just record why refinement failed.
+    setGeoError((prev) =>
+      userPosRef.current ? prev : { code: err?.code ?? 2 }
     );
-    return () => navigator.geolocation.clearWatch(id);
+  }, []);
+
+  // Precise, live tracking. Idempotent — a watch is only ever started once.
+  const startWatch = useCallback(() => {
+    if (!supportsGeo || watchId.current != null) return;
+    watchId.current = navigator.geolocation.watchPosition(
+      onGeoSuccess,
+      onGeoError,
+      { enableHighAccuracy: true, maximumAge: 15000, timeout: 27000 }
+    );
+  }, [supportsGeo, onGeoSuccess, onGeoError]);
+
+  // Two-stage request: an instant coarse fix for perceived speed, then a
+  // high-accuracy watch that refines it. Safe to call from a user tap, which
+  // is the reliable way to trigger the permission prompt on iOS.
+  const requestLocation = useCallback(() => {
+    if (!supportsGeo) return setGeoError({ code: 0 });
+    if (!isSecureCtx) return setGeoError({ code: 1 });
+    setLocating(true);
+    // 1) Fast, low-power fix — accepts a cached position, returns near-instantly.
+    navigator.geolocation.getCurrentPosition(onGeoSuccess, () => {}, {
+      enableHighAccuracy: false,
+      maximumAge: 60000,
+      timeout: 8000,
+    });
+    // 2) Precise, continuous tracking to sharpen the marker over time.
+    startWatch();
+  }, [supportsGeo, isSecureCtx, onGeoSuccess, startWatch]);
+
+  // Keep a ref of the latest position so onGeoError can read it without
+  // re-subscribing the watch on every fix.
+  useEffect(() => {
+    userPosRef.current = userPos;
+  }, [userPos]);
+
+  useEffect(() => {
+    requestLocation();
+    return () => {
+      if (watchId.current != null) {
+        navigator.geolocation.clearWatch(watchId.current);
+        watchId.current = null;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Center on the user once, as soon as both the map and a fix are available.
@@ -204,6 +261,10 @@ function MapView() {
     if (userPos && map) {
       map.panTo({ lat: userPos[0], lng: userPos[1] });
       map.setZoom(15);
+    } else {
+      // No fix yet — this tap is a user gesture, the reliable trigger for the
+      // iOS permission prompt.
+      requestLocation();
     }
   };
 
@@ -371,12 +432,15 @@ function MapView() {
       {/* ---------------- Recenter button ---------------- */}
       <button
         onClick={recenter}
-        disabled={!userPos}
-        className="absolute bottom-6 right-4 z-[1000] grid size-12 place-items-center rounded-2xl border border-line bg-card text-fg shadow-lift transition-colors hover:border-accent hover:text-accent disabled:opacity-50 sm:right-[calc(420px+1rem)]"
-        aria-label="Recenter on my location"
-        title={userPos ? "My location" : "Locating…"}
+        className="absolute bottom-6 right-4 z-[1000] grid size-12 place-items-center rounded-2xl border border-line bg-card text-fg shadow-lift transition-colors hover:border-accent hover:text-accent sm:right-[calc(420px+1rem)]"
+        aria-label={userPos ? "Recenter on my location" : "Find my location"}
+        title={userPos ? "My location" : locating ? "Locating…" : "Find my location"}
       >
-        <LocateFixed className="size-5" />
+        {locating && !userPos ? (
+          <Loader2 className="size-5 animate-spin text-accent" />
+        ) : (
+          <LocateFixed className="size-5" />
+        )}
       </button>
 
       {/* ---------------- States / toasts ---------------- */}
@@ -396,9 +460,17 @@ function MapView() {
         </div>
       )}
 
-      {geoDenied && !loading && (
+      {geoError && !userPos && !loading && (
         <div className="absolute bottom-6 left-4 z-[1000] max-w-xs rounded-2xl border border-line bg-card/95 p-3 text-xs text-text-muted shadow-soft backdrop-blur">
-          Location access is off — enable it in your browser to see mechanics near you.
+          {geoError.code === 1
+            ? isSecureCtx
+              ? "Location is blocked. Allow location access for this site in your browser/iOS settings, then tap the locate button."
+              : "Location needs a secure (https) connection. Open Amcar over https to see mechanics near you."
+            : geoError.code === 3
+            ? "Couldn't get a location fix in time — tap the locate button to retry."
+            : geoError.code === 0
+            ? "This browser doesn't support location."
+            : "Location is unavailable right now — tap the locate button to retry."}
         </div>
       )}
 
