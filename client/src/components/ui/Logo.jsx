@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { useTranslation } from "../../hooks/useTranslation";
 import { useTheme } from "../../hooks/useTheme";
-import logoDark from "../../assets/Screenshot_2026-06-17_144756-removebg-preview.png";
-import logoLight from "../../assets/Screenshot_2026-06-17_153655-removebg-preview.png";
+import logoDark from "../../assets/logo-dark.webp";
+import logoLight from "../../assets/logo-light.webp";
 
 /**
  * Logo — Amcar brand logo image. Uses the light-mode artwork on dark

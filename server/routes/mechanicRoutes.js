@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const adminAuth = require("../middleware/adminAuth");
 const upload = require("../middleware/upload");
+const { commentLimiter } = require("../middleware/security");
 const {
   getMechanics,
   getMechanicById,
@@ -15,7 +16,8 @@ const {
 // Public reads
 router.get("/", getMechanics);
 router.get("/:id", getMechanicById);
-router.post("/:id/comments", addComment);
+// Rate-limited (10/hour/IP) to keep review spam out.
+router.post("/:id/comments", commentLimiter, addComment);
 
 // Admin writes (protected by Firebase admin auth)
 router.post("/upload", adminAuth, upload.array("photos", 10), uploadPhotos);

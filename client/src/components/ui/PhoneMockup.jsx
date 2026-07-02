@@ -1,8 +1,8 @@
 import { cn } from "../../lib/utils";
-import screenHome from "../../assets/b74cd315-8a62-4b0b-aefc-8b27878db6b2.jpg";
-import screenMap from "../../assets/0dec1cc5-5efa-41c2-a150-c2dd09ae57bd.jpg";
-import screenService from "../../assets/download (5).jpg";
-import screenProfile from "../../assets/download (6).jpg";
+import screenHome from "../../assets/screen-home.webp";
+import screenMap from "../../assets/screen-map.webp";
+import screenService from "../../assets/screen-service.webp";
+import screenProfile from "../../assets/screen-profile.webp";
 
 /* Descriptive, keyword-relevant fallback alt text per screen (used when the
    caller doesn't supply its own localized alt). Never generic "image". */

@@ -15,10 +15,25 @@ const IMAGE_BASE = import.meta.env.VITE_IMAGE_BASE || BASE;
  * resolved against VITE_IMAGE_BASE (the host that actually serves the upload
  * files) so they load regardless of which API host the data came from. Returns
  * "" for empty values so callers can fall back to a placeholder.
+ *
+ * Optional { w, h } request a right-sized variant. For Cloudinary URLs this
+ * injects an on-the-fly transformation (`w_…,c_fill,q_auto,f_auto`), which
+ * turns a multi-MB camera original into a few-kB AVIF/WebP thumb — pass the
+ * CSS size × 2 for retina. Non-Cloudinary sources are returned untouched.
  */
-export function resolveImage(src) {
+const CLOUDINARY_UPLOAD_RE = /^(https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\/)(.+)$/i;
+
+export function resolveImage(src, { w, h } = {}) {
   if (!src) return "";
-  if (/^(https?:|data:|blob:)/i.test(src)) return src;
+  if (/^(https?:|data:|blob:)/i.test(src)) {
+    const m = w && CLOUDINARY_UPLOAD_RE.exec(src);
+    if (m && !/^[a-z]+_[^/]*\//.test(m[2])) {
+      // No existing transformation segment — safe to inject ours.
+      const size = h ? `w_${w},h_${h},c_fill` : `w_${w},c_limit`;
+      return `${m[1]}${size},q_auto,f_auto/${m[2]}`;
+    }
+    return src;
+  }
   if (src.startsWith("/")) return `${IMAGE_BASE}${src}`;
   return src;
 }
@@ -124,4 +139,11 @@ export const adminApi = {
   },
   verify: () => request("/api/admin/verify", { admin: true }),
   logout: () => adminToken.clear(),
+  /**
+   * Short-lived signature for a direct-to-Cloudinary signed upload. Throws
+   * CLOUDINARY_NOT_CONFIGURED (501) while the server has no API secret set —
+   * the upload helper falls back to the unsigned preset in that case.
+   */
+  cloudinarySignature: () =>
+    request("/api/admin/cloudinary-signature", { method: "POST", admin: true }),
 };

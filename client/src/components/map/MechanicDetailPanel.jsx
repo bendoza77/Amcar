@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   X,
@@ -43,14 +43,34 @@ function WhatsAppIcon({ className }) {
 export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onUpdated }) {
   const [active, setActive] = useState(0);
   const [showReview, setShowReview] = useState(false);
+  const [fetched, setFetched] = useState(null); // full record incl. comments
   const { t } = useTranslation();
   const nowTs = useNow(); // ticks each minute so the status stays live
+
+  // The map list omits `comments` to keep its payload light, so the full
+  // record (reviews included) is fetched when the panel opens.
+  const mechanicId = mechanic?._id;
+  const hasComments = mechanic?.comments !== undefined;
+  useEffect(() => {
+    if (!mechanicId || hasComments) return undefined;
+    let alive = true;
+    mechanicsApi
+      .get(mechanicId)
+      .then((full) => alive && setFetched(full))
+      .catch(() => alive && setFetched({ _id: mechanicId, comments: [] }));
+    return () => {
+      alive = false;
+    };
+  }, [mechanicId, hasComments]);
 
   if (!mechanic) return null;
 
   const gallery = mechanic.images?.length ? mechanic.images : mechanic.image ? [mechanic.image] : [];
   const waHref = whatsappHref(mechanic.phone);
   const openNow = getOpenStatus(mechanic, new Date(nowTs)).open;
+  // undefined → still loading; [] → genuinely none yet.
+  const comments =
+    mechanic.comments ?? (fetched && fetched._id === mechanic._id ? fetched.comments : undefined);
 
   return (
     <motion.aside
@@ -66,7 +86,7 @@ export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onU
       <div className="relative">
         {gallery.length > 0 ? (
           <img
-            src={resolveImage(gallery[active])}
+            src={resolveImage(gallery[active], { w: 840 })}
             alt={mechanic.name}
             className="h-72 w-full object-cover sm:h-80"
             onError={(e) => (e.currentTarget.style.display = "none")}
@@ -97,7 +117,12 @@ export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onU
                 i === active ? "border-accent" : "border-transparent opacity-70 hover:opacity-100"
               }`}
             >
-              <img src={resolveImage(src)} alt="" className="size-full object-cover" />
+              <img
+                src={resolveImage(src, { w: 128, h: 128 })}
+                alt=""
+                loading="lazy"
+                className="size-full object-cover"
+              />
             </button>
           ))}
         </div>
@@ -209,7 +234,7 @@ export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onU
 
         {/* Reviews */}
         <Section
-          title={`Reviews (${mechanic.comments?.length || 0})`}
+          title={`Reviews (${comments?.length ?? mechanic.reviews ?? 0})`}
           action={
             <button
               onClick={() => setShowReview((v) => !v)}
@@ -230,8 +255,10 @@ export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onU
           )}
 
           <div className="mt-3 space-y-3">
-            {mechanic.comments?.length ? (
-              [...mechanic.comments]
+            {comments === undefined ? (
+              <p className="text-sm text-text-muted">Loading reviews…</p>
+            ) : comments.length ? (
+              [...comments]
                 .reverse()
                 .map((c, i) => (
                   <div key={i} className="rounded-xl border border-line bg-surface p-3">

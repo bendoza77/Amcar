@@ -42,7 +42,7 @@
       content="იპოვეთ ახლომდებარე სანდო ხელოსნები, შეადარეთ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდით გზას."
     />
     <meta property="og:url" content="https://www.amcar.ge/" />
-    <meta property="og:image" content="https://www.amcar.ge/brand/amcar-logo.svg" />
+    <meta property="og:image" content="https://www.amcar.ge/brand/og-image.png" />
     <meta property="og:locale" content="ka_GE" />
     <meta property="og:locale:alternate" content="en_US" />
 
@@ -53,15 +53,20 @@
       name="twitter:description"
       content="იპოვეთ ახლომდებარე სანდო ხელოსნები, შეადარეთ სერვისები და ფასები და თავდაჯერებულად დაუბრუნდით გზას."
     />
-    <meta name="twitter:image" content="https://www.amcar.ge/brand/amcar-logo.svg" />
+    <meta name="twitter:image" content="https://www.amcar.ge/brand/og-image.png" />
 
-    <!-- Resource hints: warm up the font origins early to protect LCP. -->
+    <!-- Resource hints: warm up every origin the map (the front door) needs —
+         fonts, Google Maps JS + tiles, and Cloudinary mechanic photos — so
+         DNS/TCP/TLS overlap with the JS download instead of following it. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <!-- Inter for Latin, Noto Sans Georgian for ქართული (per-glyph fallback) -->
+    <link rel="preconnect" href="https://maps.googleapis.com" />
+    <link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <!-- Inter for Latin, Noto Sans Georgian for ქართული (per-glyph fallback).
+         Weights limited to the ones actually used (400–800; 900 is unused). -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Georgian:wght@400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Georgian:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 

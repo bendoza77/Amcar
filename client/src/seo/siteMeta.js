@@ -56,9 +56,9 @@ export const ORG = {
   foundingYear: "2026",
 };
 
-/* Default social-share image (absolute path within public/). Replace with a
-   purpose-built 1200x630 OG image when available. */
-export const DEFAULT_OG_IMAGE = "/brand/amcar-logo.svg";
+/* Default social-share image: a purpose-built 1200×630 raster card (crawlers
+   generally don't render SVG og:images). */
+export const DEFAULT_OG_IMAGE = "/brand/og-image.png";
 
 /**
  * ROUTES — every indexable URL plus its per-language meta. Keep this list and

@@ -4,6 +4,24 @@ const Mechanic = require("../models/Mechanic");
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 /**
+ * audit — one structured JSON line per admin mutation, so there is always a
+ * record of WHO changed WHAT and WHEN (greppable in the host's log stream:
+ * search for `"audit"`). Deliberately console-based: no extra infra, and every
+ * PaaS retains stdout logs.
+ */
+function audit(action, req, extra = {}) {
+  console.log(
+    JSON.stringify({
+      audit: action,
+      admin: req.admin?.email || "unknown",
+      ip: req.ip,
+      at: new Date().toISOString(),
+      ...extra,
+    })
+  );
+}
+
+/**
  * Normalises the body sent by the admin panel into the shape the schema
  * expects. Strips empty strings/rows and clamps `images` to 4 photos.
  */
@@ -52,8 +70,14 @@ function buildMechanicPayload(body = {}) {
  * List mechanics. Optional ?lat=&lng=&radius= (metres) returns only shops near
  * a point, sorted nearest-first, using the 2dsphere index.
  */
+/** Mechanic data changes a few times a week — let browsers/CDNs reuse it for
+ *  a minute (and serve stale for 5 while revalidating) instead of a full
+ *  round-trip per page view. Writes still show up within ≤60s. */
+const LIST_CACHE = "public, max-age=60, stale-while-revalidate=300";
+
 async function getMechanics(req, res) {
   try {
+    res.set("Cache-Control", LIST_CACHE);
     const { lat, lng, radius } = req.query;
 
     if (lat !== undefined && lng !== undefined) {
@@ -72,12 +96,17 @@ async function getMechanics(req, res) {
             $maxDistance: maxDistance,
           },
         },
-      }).lean();
+      })
+        .select("-comments")
+        .lean();
 
       return res.json({ ok: true, count: mechanics.length, data: mechanics });
     }
 
-    const mechanics = await Mechanic.find().sort({ createdAt: -1 }).lean();
+    // The list powers the map (pins + filters + detail header). Full review
+    // text is by far the heaviest field and is only needed once a mechanic is
+    // opened — the detail panel fetches it via GET /api/mechanics/:id.
+    const mechanics = await Mechanic.find().sort({ createdAt: -1 }).select("-comments").lean();
     return res.json({ ok: true, count: mechanics.length, data: mechanics });
   } catch (err) {
     console.error("getMechanics error:", err.message);
@@ -94,6 +123,7 @@ async function getMechanicById(req, res) {
     const mechanic = await Mechanic.findById(id).lean();
     if (!mechanic) return res.status(404).json({ ok: false, error: "NOT_FOUND" });
 
+    res.set("Cache-Control", LIST_CACHE);
     return res.json({ ok: true, data: mechanic });
   } catch (err) {
     console.error("getMechanicById error:", err.message);
@@ -118,6 +148,7 @@ async function createMechanic(req, res) {
     }
 
     const mechanic = await Mechanic.create(payload);
+    audit("mechanic.create", req, { id: mechanic._id, name: mechanic.name });
     return res.status(201).json({ ok: true, data: mechanic });
   } catch (err) {
     console.error("createMechanic error:", err.message);
@@ -143,6 +174,7 @@ async function updateMechanic(req, res) {
     );
     if (!mechanic) return res.status(404).json({ ok: false, error: "NOT_FOUND" });
 
+    audit("mechanic.update", req, { id: mechanic._id, name: mechanic.name, fields: Object.keys(payload) });
     return res.json({ ok: true, data: mechanic });
   } catch (err) {
     console.error("updateMechanic error:", err.message);
@@ -162,6 +194,7 @@ async function deleteMechanic(req, res) {
     const mechanic = await Mechanic.findByIdAndDelete(id);
     if (!mechanic) return res.status(404).json({ ok: false, error: "NOT_FOUND" });
 
+    audit("mechanic.delete", req, { id: mechanic._id, name: mechanic.name });
     return res.json({ ok: true });
   } catch (err) {
     console.error("deleteMechanic error:", err.message);

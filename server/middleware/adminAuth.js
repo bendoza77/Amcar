@@ -22,6 +22,14 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "")
   .map((s) => s.trim().toLowerCase())
   .filter(Boolean);
 
+/**
+ * Emergency kill-switch: set ADMIN_SESSIONS_REVOKED_BEFORE to an ISO date
+ * (e.g. "2026-07-02T15:00:00Z") and restart — every token issued before that
+ * moment is rejected, without rotating the JWT secret or touching passwords.
+ * Use it if a token is ever stolen. Unset/invalid → no revocation.
+ */
+const REVOKED_BEFORE_MS = Date.parse(process.env.ADMIN_SESSIONS_REVOKED_BEFORE || "") || 0;
+
 /** Shared with adminRoutes so the login handler can reuse the same allowlist. */
 adminAuth.ADMIN_EMAILS = ADMIN_EMAILS;
 
@@ -36,6 +44,12 @@ function adminAuth(req, res, next) {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });
+
+    // Reject tokens issued before the revocation cutoff (see REVOKED_BEFORE_MS).
+    if (REVOKED_BEFORE_MS && (payload.iat || 0) * 1000 < REVOKED_BEFORE_MS) {
+      return res.status(401).json({ ok: false, error: "SESSION_REVOKED" });
+    }
+
     const email = (payload.email || "").toLowerCase();
 
     // Re-check the allowlist on every request so removing an email from

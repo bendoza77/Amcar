@@ -238,7 +238,12 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
                 key={`${src}-${i}`}
                 className="group relative aspect-square overflow-hidden rounded-xl border border-line bg-surface"
               >
-                <img src={resolveImage(src)} alt="" className="size-full object-cover" />
+                <img
+                  src={resolveImage(src, { w: 320, h: 320 })}
+                  alt=""
+                  loading="lazy"
+                  className="size-full object-cover"
+                />
                 {i === 0 && (
                   <span className="absolute left-1.5 top-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white">
                     Cover

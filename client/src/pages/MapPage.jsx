@@ -72,6 +72,14 @@ function MapView() {
   // Live clock (ticks each minute) so open/closed status stays real-time.
   const nowTs = useNow();
 
+  // Google fixes a map's colorScheme at init, so switching theme remounts the
+  // <Map> (via its key). Track the camera in a ref so the remounted map opens
+  // exactly where the user was, instead of resetting to the city default.
+  const viewRef = useRef({ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM });
+  const handleCameraChanged = useCallback((ev) => {
+    viewRef.current = { center: ev.detail.center, zoom: ev.detail.zoom };
+  }, []);
+
   const [mechanics, setMechanics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -278,8 +286,9 @@ function MapView() {
       <Map
         key={isDark ? "dark" : "light"}
         mapId={MAP_ID}
-        defaultCenter={DEFAULT_CENTER}
-        defaultZoom={DEFAULT_ZOOM}
+        defaultCenter={viewRef.current.center}
+        defaultZoom={viewRef.current.zoom}
+        onCameraChanged={handleCameraChanged}
         gestureHandling="greedy"
         disableDefaultUI
         clickableIcons={false}
@@ -327,10 +336,18 @@ function MapView() {
                 </div>
                 <div className="gpin__tip" />
 
-                {/* Hover preview */}
+                {/* Hover preview. loading="lazy" matters: without it every
+                    mechanic's photo downloads on map load even though the
+                    tooltip is hidden until hover. */}
                 <div className="gtip">
                   {m.image ? (
-                    <img src={resolveImage(m.image)} alt="" className="gtip__img" />
+                    <img
+                      src={resolveImage(m.image, { w: 88, h: 88 })}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="gtip__img"
+                    />
                   ) : (
                     <div className="gtip__img grid place-items-center">
                       <Wrench className="size-5 text-text-muted" />

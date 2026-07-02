@@ -70,6 +70,8 @@ function authMessage(code) {
       return "This email isn't authorized as an admin.";
     case "INVALID_CREDENTIALS":
       return "Incorrect email or password.";
+    case "TOO_MANY_REQUESTS":
+      return "Too many attempts — wait 15 minutes and try again.";
     case "ADMIN_NOT_CONFIGURED":
       return "Admin login isn't configured on the server.";
     default:
