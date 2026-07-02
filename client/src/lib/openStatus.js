@@ -27,14 +27,15 @@ const DAY_TOKENS = {
   thu: 4, thur: 4, thurs: 4, thursday: 4,
   fri: 5, friday: 5,
   sat: 6, saturday: 6,
-  // Georgian (full + short forms)
-  კვირა: 0,
-  ორშაბათი: 1, ორშ: 1,
-  სამშაბათი: 2, სამშ: 2,
-  ოთხშაბათი: 3, ოთხშ: 3,
-  ხუთშაბათი: 4, ხუთშ: 4,
+  // Georgian (full + short forms). The "-ო" endings (ორშაბათო…) are common
+  // informal spellings of the standard "-ი" names and are treated the same.
+  კვირა: 0, კვირადღე: 0,
+  ორშაბათი: 1, ორშაბათო: 1, ორშ: 1,
+  სამშაბათი: 2, სამშაბათო: 2, სამშ: 2,
+  ოთხშაბათი: 3, ოთხშაბათო: 3, ოთხშ: 3,
+  ხუთშაბათი: 4, ხუთშაბათო: 4, ხუთშ: 4,
   პარასკევი: 5, პარ: 5,
-  შაბათი: 6, შაბ: 6,
+  შაბათი: 6, შაბათო: 6, შაბ: 6,
 };
 
 const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
