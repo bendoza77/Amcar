@@ -9,7 +9,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft,
+  Home,
   Search,
   LocateFixed,
   Wrench,
@@ -23,6 +23,7 @@ import "../styles/maps.css";
 import { useTheme } from "../hooks/useTheme";
 import { useTranslation } from "../hooks/useTranslation";
 import { mechanicsApi, resolveImage } from "../lib/api";
+import { getOpenStatus, useNow } from "../lib/openStatus";
 import { MECHANIC_CATEGORIES } from "../constants/site";
 import MechanicDetailPanel from "../components/map/MechanicDetailPanel";
 import { cn } from "../lib/utils";
@@ -68,6 +69,8 @@ function MapView() {
   const { t, lang } = useTranslation();
   const map = useMap();
   const gotFirstFix = useRef(false);
+  // Live clock (ticks each minute) so open/closed status stays real-time.
+  const nowTs = useNow();
 
   const [mechanics, setMechanics] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -200,11 +203,13 @@ function MapView() {
   }, [map, userPos]);
 
   /* ----------------------------- derived ----------------------------- */
+  const now = useMemo(() => new Date(nowTs), [nowTs]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     const cats = MECHANIC_CATEGORIES.filter((c) => activeCats.includes(c.key));
     return mechanics.filter((m) => {
-      if (onlyOpen && !m.isOpen) return false;
+      if (onlyOpen && !getOpenStatus(m, now).open) return false;
 
       // Category chips (match ANY selected category) — searched against the
       // mechanic's service names + price-list services.
@@ -226,7 +231,7 @@ function MapView() {
         m.services?.some((s) => s.toLowerCase().includes(q))
       );
     });
-  }, [mechanics, query, onlyOpen, activeCats]);
+  }, [mechanics, query, onlyOpen, activeCats, now]);
 
   const countText = loading
     ? t.mapUI.loading
@@ -302,6 +307,7 @@ function MapView() {
           const lat = m.coordinate?.latitude;
           const lng = m.coordinate?.longitude;
           if (typeof lat !== "number" || typeof lng !== "number") return null;
+          const openNow = getOpenStatus(m, now).open;
           return (
             <AdvancedMarker
               key={m._id}
@@ -312,7 +318,7 @@ function MapView() {
               <div
                 className={cn(
                   "gpin",
-                  !m.isOpen && "gpin--closed",
+                  !openNow && "gpin--closed",
                   selected?._id === m._id && "gpin--active"
                 )}
               >
@@ -337,8 +343,8 @@ function MapView() {
                       <span className="gtip__dot">•</span>
                       <span>{m.reviews || 0}</span>
                       <span className="gtip__dot">•</span>
-                      <span className={m.isOpen ? "gtip__open" : "gtip__closed"}>
-                        {m.isOpen ? "Open" : "Closed"}
+                      <span className={openNow ? "gtip__open" : "gtip__closed"}>
+                        {openNow ? t.mapUI.open : t.mapUI.closed}
                       </span>
                     </div>
                   </div>
@@ -359,10 +365,12 @@ function MapView() {
         <div className="mx-auto flex max-w-3xl items-center gap-2">
           <Link
             to="/home"
-            className="pointer-events-auto grid size-11 shrink-0 place-items-center rounded-2xl border border-line bg-card/90 text-fg shadow-soft backdrop-blur transition-colors hover:border-ink/30"
-            aria-label="Back to site"
+            className="pointer-events-auto inline-flex h-11 shrink-0 items-center gap-2 rounded-2xl border border-line bg-card/90 pl-3 pr-3.5 font-semibold text-fg shadow-soft backdrop-blur transition-colors hover:border-accent hover:text-accent sm:pr-4"
+            aria-label={t.mapUI.home}
+            title={t.mapUI.home}
           >
-            <ArrowLeft className="size-5" />
+            <Home className="size-5 shrink-0" />
+            <span className="text-sm">{t.mapUI.home}</span>
           </Link>
 
           <div className="pointer-events-auto flex flex-1 items-center gap-2 rounded-2xl border border-line bg-card/90 px-3 shadow-soft backdrop-blur">

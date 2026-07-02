@@ -49,7 +49,6 @@ function toForm(m) {
       longitude: "",
       services: [{ service: "", price: "" }],
       hours: [{ day: "", start: "", end: "" }],
-      isOpen: true,
     };
   }
   // Prefer priceList (service + price); fall back to the plain services array.
@@ -68,7 +67,6 @@ function toForm(m) {
     longitude: m.coordinate?.longitude != null ? String(m.coordinate.longitude) : "",
     services: services.length ? services : [{ service: "", price: "" }],
     hours: m.hours?.length ? m.hours.map(parseHour) : [{ day: "", start: "", end: "" }],
-    isOpen: m.isOpen ?? true,
   };
 }
 
@@ -79,8 +77,8 @@ const input =
 /**
  * MechanicForm — create/edit a mechanic. Field order & rules mirror the mobile
  * admin panel: Name → Address → Phone → Photos → Latitude+Longitude →
- * Services (service+price) → Working hours → Open-now. Does NOT edit rating,
- * reviews or customer comments.
+ * Services (service+price) → Working hours. Open/closed is derived live from the
+ * hours, so there's no manual toggle. Does NOT edit rating, reviews or comments.
  */
 export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
   const [form, setForm] = useState(() => toForm(initial));
@@ -177,7 +175,6 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
       priceList: services.map((s) => ({ service: s.service.trim(), price: s.price.trim() })),
       services: services.map((s) => s.service.trim()),
       hours: hours.map(hourToStored),
-      isOpen: form.isOpen,
     });
   };
 
@@ -386,29 +383,10 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
             <AddBtn onClick={addHour}>Add day</AddBtn>
           </div>
           <p className="mt-2 text-xs text-text-muted">
-            A day with no times is saved as “Closed”.
+            A day with no times is saved as “Closed”. Open/closed is detected
+            live from these hours — no manual toggle needed.
           </p>
         </Field>
-
-        {/* 8. Open now */}
-        <div className="flex items-center justify-between rounded-xl border border-line p-4">
-          <span className={label}>Open now</span>
-          <button
-            type="button"
-            onClick={() => set({ isOpen: !form.isOpen })}
-            className={`flex h-9 w-16 items-center rounded-full p-1 transition-colors ${
-              form.isOpen ? "bg-emerald-500" : "bg-line"
-            }`}
-            role="switch"
-            aria-checked={form.isOpen}
-          >
-            <span
-              className={`size-7 rounded-full bg-white shadow transition-transform ${
-                form.isOpen ? "translate-x-7" : ""
-              }`}
-            />
-          </button>
-        </div>
 
         {err && <p className="text-sm font-medium text-red-500">{err}</p>}
       </div>

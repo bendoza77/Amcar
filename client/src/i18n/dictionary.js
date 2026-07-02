@@ -33,6 +33,9 @@ export const dictionaries = {
     mapUI: {
       search: "მოძებნეთ ხელოსანი, სერვისი, უბანი…",
       openNow: "ღიაა ახლა",
+      home: "მთავარი",
+      open: "ღიაა",
+      closed: "დაკეტილია",
       clear: "გასუფთავება",
       loading: "იტვირთება…",
       mechanics: "ხელოსანი",
@@ -553,6 +556,9 @@ export const dictionaries = {
     mapUI: {
       search: "Search mechanics, services, area…",
       openNow: "Open now",
+      home: "Home",
+      open: "Open",
+      closed: "Closed",
       clear: "Clear",
       loading: "Loading…",
       mechanics: "mechanics",

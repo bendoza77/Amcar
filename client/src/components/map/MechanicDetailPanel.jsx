@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import Stars from "./Stars";
 import { mechanicsApi, resolveImage } from "../../lib/api";
+import { getOpenStatus, useNow } from "../../lib/openStatus";
+import { useTranslation } from "../../hooks/useTranslation";
 
 /** Builds a wa.me link from a stored local phone ("599 123 456"). Georgia's
  *  country code (995) is prepended when the number is a bare local one. */
@@ -41,11 +43,14 @@ function WhatsAppIcon({ className }) {
 export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onUpdated }) {
   const [active, setActive] = useState(0);
   const [showReview, setShowReview] = useState(false);
+  const { t } = useTranslation();
+  const nowTs = useNow(); // ticks each minute so the status stays live
 
   if (!mechanic) return null;
 
   const gallery = mechanic.images?.length ? mechanic.images : mechanic.image ? [mechanic.image] : [];
   const waHref = whatsappHref(mechanic.phone);
+  const openNow = getOpenStatus(mechanic, new Date(nowTs)).open;
 
   return (
     <motion.aside
@@ -112,13 +117,16 @@ export default function MechanicDetailPanel({ mechanic, onClose, onNavigate, onU
             </div>
           </div>
           <span
-            className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${
-              mechanic.isOpen
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${
+              openNow
                 ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
                 : "bg-red-500/15 text-red-600 dark:text-red-400"
             }`}
           >
-            {mechanic.isOpen ? "Open now" : "Closed"}
+            <span
+              className={`size-1.5 rounded-full ${openNow ? "bg-emerald-500" : "bg-red-500"}`}
+            />
+            {openNow ? t.mapUI.openNow : t.mapUI.closed}
           </span>
         </div>
 

@@ -12,6 +12,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { mechanicsApi, adminApi, adminToken } from "../lib/api";
+import { getOpenStatus } from "../lib/openStatus";
 import MechanicForm from "../components/admin/MechanicForm";
 
 /**
@@ -295,6 +296,7 @@ function MechanicRow({ m, onEdit, onDelete }) {
     (m.coordinate
       ? `${Number(m.coordinate.latitude).toFixed(4)}, ${Number(m.coordinate.longitude).toFixed(4)}`
       : "");
+  const openNow = getOpenStatus(m).open;
   return (
     <li>
       <div
@@ -312,8 +314,8 @@ function MechanicRow({ m, onEdit, onDelete }) {
           {subline && <p className="truncate text-sm text-text-muted">{subline}</p>}
         </div>
         <span
-          className={`size-2.5 shrink-0 rounded-full ${m.isOpen ? "bg-emerald-500" : "bg-red-500"}`}
-          title={m.isOpen ? "Open" : "Closed"}
+          className={`size-2.5 shrink-0 rounded-full ${openNow ? "bg-emerald-500" : "bg-red-500"}`}
+          title={openNow ? "Open" : "Closed"}
         />
         <button
           onClick={(e) => {
