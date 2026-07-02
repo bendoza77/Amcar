@@ -364,9 +364,13 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
                   </button>
                 </div>
                 <div className="mt-2 flex items-center gap-2">
+                  {/* lang="en-GB" forces a 24-hour picker (no AM/PM), regardless
+                      of the browser's locale. */}
                   <input
                     className={input}
                     type="time"
+                    lang="en-GB"
+                    step="60"
                     value={h.start}
                     onChange={(e) => setHour(i, "start", e.target.value)}
                   />
@@ -374,6 +378,8 @@ export default function MechanicForm({ initial, onSubmit, onCancel, busy }) {
                   <input
                     className={input}
                     type="time"
+                    lang="en-GB"
+                    step="60"
                     value={h.end}
                     onChange={(e) => setHour(i, "end", e.target.value)}
                   />
